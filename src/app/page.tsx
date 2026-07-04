@@ -1,10 +1,7 @@
-
+import HomeTemplate from "../templates/home/HomeTemplate";
 
 const IndexPage = () => (
-  <>
-
-    <p>Hello, I'm the index page</p>
-  </>
+  <HomeTemplate/>
 );
 
 export default IndexPage;

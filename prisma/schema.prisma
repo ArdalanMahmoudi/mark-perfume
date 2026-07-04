@@ -1,0 +1,104 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum OrderStatus {
+  PENDING
+  SHIPPED
+  PAID
+  DELIVERED
+  CANCELED
+}
+
+model User {
+  id        String   @id @default(cuid())
+  username  String?
+  email     String   @unique
+  password  String
+  role      Role     @default(USER)
+  orders    Order[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id            String                 @id
+  name          String
+  latinName     String?
+  slug          String                 @unique
+  description   String
+  details       String?
+  price         Int                    @default(0)
+  discount      Int                    @default(0)
+  volume        String?
+  categoryId    String
+  category      Category               @relation(fields: [categoryId], references: [id])
+  images        ProductImage[]
+  specification ProductSpecification[]
+  createdAt     DateTime               @default(now())
+  updatedAt     DateTime               @updatedAt
+  orderItems    OrderItem[]
+}
+
+model ProductSpecification {
+  id        String   @id @default(cuid())
+  key       String
+  value     String
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ProductImage {
+  id        String   @id @default(cuid())
+  url       String
+  alt       String?
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id         String      @default(cuid()) @unique
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+  status     OrderStatus @default(PENDING)
+  totalPrice Float
+  orderItems OrderItem[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model OrderItem {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity  Int
+  price     Float
+  createdAt DateTime @default(now())
+}
+
+model Category {
+  id       String    @id @default(cuid())
+  name     String
+  slug     String    @unique
+  products Product[]
+}
+
+datasource db {
+  provider = "sqlite"
+}
