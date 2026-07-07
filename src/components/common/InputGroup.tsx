@@ -20,13 +20,13 @@ export function InputGroupInlineStart({
   ...props
 }: InputGroupProps) {
   return (
-    <Field className="max-w-sm">
+    <Field className="max-w-sm text-start">
       <FieldLabel htmlFor="inline-start-input">{label}</FieldLabel>
       <InputGroup className="bg-white rounded-md px-2.5  h-12 w-full flex items-center transition-all duration-100 ease-in border border-grey220">
         <InputGroupInput aria-invalid={error ? true : false}  className="h-full w-full " {...props} />
         <InputGroupAddon align="inline-end">{icon}</InputGroupAddon>
       </InputGroup>
-      <FieldDescription>{description}</FieldDescription>
+      <FieldDescription className="text-start text-red-500">{description}</FieldDescription>
     </Field>
   );
 }

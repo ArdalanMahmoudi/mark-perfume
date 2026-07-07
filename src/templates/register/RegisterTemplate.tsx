@@ -1,22 +1,15 @@
 "use client";
 import { InputGroupInlineStart } from "@/src/components/common/InputGroup";
-import { registerAction } from "@/src/lib/actions/auth";
 import { registerSchema } from "@/src/lib/schemas/register.schema";
-import { Eye, Mail, User } from "lucide-react";
+import { Eye, EyeClosed, Mail, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { startTransition, useActionState, useState } from "react";
+import { useState } from "react";
 
-const initialState = {
-  message: "",
-};
 const RegisterTemplate = () => {
-  const [state, formAction, pending] = useActionState(
-    registerAction,
-    initialState,
-  );
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [clientError, setClientError] = useState({});
-
   const [values, setValues] = useState({
     username: "",
     email: "",
@@ -28,7 +21,7 @@ const RegisterTemplate = () => {
     setValues((prev) => ({ ...prev, [field]: e.target.value })); // exampl -> ...prev, email:e.target.value
   }; // Curry fn
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const result = registerSchema.safeParse(values);
     if (!result.success) {
@@ -42,23 +35,43 @@ const RegisterTemplate = () => {
       return;
     }
     setClientError({});
-    const formData = new FormData();
-    Object.entries(values).forEach(([key, value]) =>
-      formData.append(key, value),
-    );
-    startTransition(() => {
-      formAction(formData);
+    const res = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
     });
+    const data = await res.json();
+    switch (res.status) {
+      case 201:
+        console.log(data.message);
+        break;
+      case 409:
+        console.log(data.message);
+        break;
+      case 400:
+        console.log(data.error);
+        setClientError(data.errors);
+        break;
+      case 500:
+        console.log(data.message);
+        break;
+      default:
+        break;
+    }
   };
+  // const data = await res.json()
+
   return (
     <main>
       <section>
         <div className="w-screen h-screen p-5 py-4 flex items-center justify-center">
           <div className="w-full max-w-225 flex  shadow-lg rounded-lg overflow-hidden">
             <div className="p-7.5 bg-secondary w-1/2">
-              <Link href={"/"} className="flex justify-center mb-8">
+              <Link href={"/"} className="flex justify-center mb-6">
                 <Image
-                  className="max-w-62.5 w-62.5"
+                  className="max-w-50 w-50"
                   width={600}
                   height={300}
                   src={"/images/logo.png"}
@@ -101,8 +114,20 @@ const RegisterTemplate = () => {
                   label="رمز عبور"
                   id="password"
                   name="password"
-                  type="text"
-                  icon={<Eye className="size-5 text-primary" />}
+                  type={showPassword ? "text" : "password"}
+                  icon={
+                    <button
+                      type="button"
+                      className="cursor-pointer"
+                      onClick={() => setShowPassword((prev) => !prev)}
+                    >
+                      {showPassword ? (
+                        <EyeClosed className="size-5 text-primary" />
+                      ) : (
+                        <Eye className="size-5 text-primary" />
+                      )}
+                    </button>
+                  }
                 />
                 <InputGroupInlineStart
                   onChange={handleChange("confirmPassword")}
@@ -112,12 +137,23 @@ const RegisterTemplate = () => {
                   label="تکرار رمز عبور"
                   id="confirmPassword"
                   name="confirmPassword"
-                  type="text"
-                  icon={<Eye className="size-5 text-primary" />}
+                  type={showConfirmPassword ? "text" : "password"}
+                  icon={
+                    <button
+                      type="button"
+                      className="cursor-pointer"
+                      onClick={() => setShowConfirmPassword((prev) => !prev)}
+                    >
+                      {showConfirmPassword ? (
+                        <EyeClosed className="size-5 text-primary" />
+                      ) : (
+                        <Eye className="size-5 text-primary" />
+                      )}
+                    </button>
+                  }
                 />
                 <button
                   type="submit"
-                  disabled={pending ? true : false}
                   className="py-1 px-6 transition-all duration-200 bg-primary rounded-xs cursor-pointer  border border-grey220 text-white hover:bg-white hover:text-primary"
                 >
                   ثبت نام

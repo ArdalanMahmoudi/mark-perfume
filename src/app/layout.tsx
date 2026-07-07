@@ -2,6 +2,7 @@ import "../style/global.css";
 import localFont from "next/font/local";
 import { Inter } from "next/font/google";
 import { cn } from "@/src/lib/utils";
+import ToastContainer from "../components/common/ToastContainer";
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
@@ -22,7 +23,10 @@ export default function RootLayout({
 }) {
   return (
     <html className={cn("antialiased", vazir_m.variable, "font-sans", inter.variable)} lang="fa" dir="rtl">
-      <body>{children}</body>
+      <body>
+        {children}
+       {/* <ToastContainer /> */}
+        </body>
     </html>
   );
 }

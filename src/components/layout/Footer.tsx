@@ -131,7 +131,7 @@ const Footer = () => {
                 </nav>
               </div>
               {/* col-4 */}
-              <div className="col-span-2">
+              <div >
                 <p className="font-bold text-primary border-b-2 border-primary text-balance lg:text-lg flex items-center pb-1">
                   <AwardIcon className="size-4.5  ml-1" />
                 مجوزها

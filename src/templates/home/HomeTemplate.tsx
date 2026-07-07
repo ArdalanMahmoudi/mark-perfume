@@ -1,3 +1,4 @@
+'use client'
 import Header from "@/src/components/layout/Header";
 import React from "react";
 import HeroSection from "./_components/HeroSection";
@@ -14,9 +15,11 @@ import Footer from "@/src/components/layout/Footer";
 import ProductCard from "@/src/components/common/ProductCard";
 
 
+
 const HomeTemplate = () => {
   return (
     <>
+
       <Header />
       <main>
         <HeroSection />
