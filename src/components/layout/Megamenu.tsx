@@ -120,7 +120,7 @@ function Megamenu() {
             <span>دسته بندی محصولات</span>
           </div>
 
-          <div className="absolute top-full -right-2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 transition-all duration-300 ease-out delay-100">
+          <div className="absolute top-full z-999 -right-2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 transition-all duration-300 ease-out delay-100 border border-grey220">
             <div className="lg:w-200 flex bg-secondary  shadow-lg border border-gray-100 overflow-hidden">
               {/*  right column */}
               <ul className="flex flex-col border-l border-gray-100 bg-gray-50/50 w-48">
@@ -155,8 +155,8 @@ function Megamenu() {
 
                     {/* Content Bottom */}
                     <div className="grid grid-cols-3 gap-x-8 gap-y-4  mt-3 ">
-                      {subitem.submenu.map((item) => (
-                        <div className="flex flex-col gap-4">
+                      {subitem.submenu.map((item, idx) => (
+                        <div key={idx} className="flex flex-col gap-4">
                           <span className="border-r-4 border-primary py-1 px-2">{item.title}</span>
                           {item.submenuItem.map((links, idx) => (
                             

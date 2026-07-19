@@ -1,15 +1,20 @@
 "use client";
+import { useToast } from "@/src/app/ToastProvider";
 import { InputGroupInlineStart } from "@/src/components/common/InputGroup";
 import { registerSchema } from "@/src/lib/schemas/register.schema";
 import { Eye, EyeClosed, Mail, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const RegisterTemplate = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const toast = useToast();
+  const router = useRouter()
   const [clientError, setClientError] = useState({});
+  const [loading, setLoading] = useState(false);
   const [values, setValues] = useState({
     username: "",
     email: "",
@@ -35,38 +40,43 @@ const RegisterTemplate = () => {
       return;
     }
     setClientError({});
-    const res = await fetch("/api/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
-    const data = await res.json();
-    switch (res.status) {
-      case 201:
-        console.log(data.message);
-        break;
-      case 409:
-        console.log(data.message);
-        break;
-      case 400:
-        console.log(data.error);
-        setClientError(data.errors);
-        break;
-      case 500:
-        console.log(data.message);
-        break;
-      default:
-        break;
+    setLoading(true)
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+      const data = await res.json();
+      switch (res.status) {
+        case 201:
+          toast.success(data.message);
+        router.push('/')
+          break;
+        case 409:
+          toast?.error(data.message);
+          break;
+        case 400:
+          setClientError(data.errors);
+          break;
+        case 500:
+          toast.error(data.message);
+          break;
+        default:
+          break;
+      }
+    } finally {
+      setLoading(false);
     }
   };
   // const data = await res.json()
 
   return (
-    <main>
+  
       <section>
-        <div className="w-screen h-screen p-5 py-4 flex items-center justify-center">
+        <div className="w-screen h-screen p-5 py-4 flex items-center justify-center my-12">
           <div className="w-full max-w-225 flex  shadow-lg rounded-lg overflow-hidden">
             <div className="p-7.5 bg-secondary w-1/2">
               <Link href={"/"} className="flex justify-center mb-6">
@@ -83,6 +93,7 @@ const RegisterTemplate = () => {
                 className="flex flex-col items-center gap-4"
               >
                 <InputGroupInlineStart
+                  element="input"
                   onChange={handleChange("username")}
                   value={values.username}
                   error={clientError.username}
@@ -95,6 +106,7 @@ const RegisterTemplate = () => {
                   placeholder="مثال:اردلان محمودی"
                 />
                 <InputGroupInlineStart
+                  element="input"
                   onChange={handleChange("email")}
                   value={values.email}
                   error={clientError.email}
@@ -107,6 +119,7 @@ const RegisterTemplate = () => {
                   placeholder="email@example.com"
                 />
                 <InputGroupInlineStart
+                  element="input"
                   onChange={handleChange("password")}
                   error={clientError.password}
                   description={clientError.password}
@@ -130,6 +143,7 @@ const RegisterTemplate = () => {
                   }
                 />
                 <InputGroupInlineStart
+                  element="input"
                   onChange={handleChange("confirmPassword")}
                   error={clientError.confirmPassword}
                   description={clientError.confirmPassword}
@@ -170,7 +184,7 @@ const RegisterTemplate = () => {
           </div>
         </div>
       </section>
-    </main>
+
   );
 };
 

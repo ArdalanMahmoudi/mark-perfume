@@ -36,9 +36,9 @@ export async function POST(req: Request) {
       },{status:401});
     }
 
-    await createSession(user.id);
+    await createSession({id:user.id, role:user.role});
     return NextResponse.json({
-        message:'ورود موفق بود',
+        message:'ورود به حساب موفق بود',
         success:true
     },{status:200})
   } catch (error) {

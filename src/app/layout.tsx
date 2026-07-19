@@ -2,9 +2,13 @@ import "../style/global.css";
 import localFont from "next/font/local";
 import { Inter } from "next/font/google";
 import { cn } from "@/src/lib/utils";
+import { ToastProvider } from "./ToastProvider";
 import ToastContainer from "../components/common/ToastContainer";
+import Header from "../components/layout/Header";
+import Footer from "../components/layout/Footer";
+import { getCurrentUser } from "../lib/dal";
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata = {
   title: "Next.js",
@@ -13,20 +17,32 @@ export const metadata = {
 
 const vazir_m = localFont({
   src: "../../public/font/Vazir-Regular.woff2",
-  variable: "--font-vazir"
+  variable: "--font-vazir",
 });
 
-export default function RootLayout({
+export  default  function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+
   return (
-    <html className={cn("antialiased", vazir_m.variable, "font-sans", inter.variable)} lang="fa" dir="rtl">
+    <html
+      className={cn(
+        "antialiased",
+        vazir_m.variable,
+        "font-sans",
+        inter.variable,
+      )}
+      lang="fa"
+      dir="rtl"
+    >
       <body>
-        {children}
-       {/* <ToastContainer /> */}
-        </body>
+        <ToastProvider>
+          {children}
+        </ToastProvider>
+        <div id="toast-root"></div>
+      </body>
     </html>
   );
 }

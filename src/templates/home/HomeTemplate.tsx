@@ -19,8 +19,6 @@ import ProductCard from "@/src/components/common/ProductCard";
 const HomeTemplate = () => {
   return (
     <>
-
-      <Header />
       <main>
         <HeroSection />
         <CategorySection />
@@ -33,7 +31,6 @@ const HomeTemplate = () => {
         <LatestBlog />
 
       </main>
-      <Footer/>
     </>
   );
 };

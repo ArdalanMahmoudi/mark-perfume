@@ -3,9 +3,9 @@ import Link from "next/link";
 import React from "react";
 import Button from "./Button";
 
-const ProductCard = () => {
+const ProductCard = ({className}:{className?:string}) => {
   return (
-    <Link href={"/"} className="group">
+    <Link href={"/"} className={`group ${className}`}>
       {/* p-top */}
       <div className="relative h-62.5 border border-grey220 w-full items-end  flex bg-center bg-cover bg-no-repeat rounded-t-[50%] bg-[url('/images/product/product1.png')]"></div>
       {/* p-bottom */}

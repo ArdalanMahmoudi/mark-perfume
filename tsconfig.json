@@ -33,7 +33,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
-  ],
+, "src/templates/product/_components/GalleryThumb.tss", "next-seo.config.js"  ],
   "exclude": [
     "node_modules"
   ]

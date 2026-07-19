@@ -10,11 +10,12 @@ import { AccordionHeaderMobile } from "./AccordionHeaderMobile";
 
 
 const MobileHeaderTabs = () => {
+  const activeTabStyle = 'data-[state=active]:bg-primary data-[state=active]:text-white'
   return (
     <Tabs dir="rtl" defaultValue="pages" className="w-full overflow-y-auto">
       <TabsList className="text-lg w-full" dir="rtl">
-        <TabsTrigger value="pages">صفحات</TabsTrigger>
-        <TabsTrigger value="category">دسته‌بندی ها</TabsTrigger>
+        <TabsTrigger className={activeTabStyle} value="pages">صفحات</TabsTrigger>
+        <TabsTrigger className={activeTabStyle} value="category">دسته‌بندی ها</TabsTrigger>
       </TabsList>
       <TabsContent value="pages">
         <div>

@@ -47,7 +47,7 @@ const Footer = () => {
                 راحت‌تر است.
               </p>
             </div>
-            <div className="col-span-3 lg:col-span-2 grid grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="col-span-3 lg:col-span-2 grid grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-hidden">
               {/* col-2 */}
               <div className=" ">
                 <p className="font-bold text-primary border-b-2 border-primary text-balance lg:text-lg flex items-center pb-1">
@@ -131,7 +131,7 @@ const Footer = () => {
                 </nav>
               </div>
               {/* col-4 */}
-              <div >
+              <div className="col-span-3 lg:col-span-1">
                 <p className="font-bold text-primary border-b-2 border-primary text-balance lg:text-lg flex items-center pb-1">
                   <AwardIcon className="size-4.5  ml-1" />
                 مجوزها

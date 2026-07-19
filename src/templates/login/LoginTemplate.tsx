@@ -1,9 +1,11 @@
 "use client";
+import { useToast } from "@/src/app/ToastProvider";
 import { InputGroupInlineStart } from "@/src/components/common/InputGroup";
 import { loginSchema } from "@/src/lib/schemas/login.schema";
 import { Eye, EyeClosed, Loader2Icon, Mail } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const LoginTemplate = () => {
@@ -17,6 +19,8 @@ const LoginTemplate = () => {
     setValues((prev) => ({ ...prev, [field]: e.target.value }));
   };
   const [loading, setLoading] = useState(false);
+  const toast = useToast();
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,35 +46,34 @@ const LoginTemplate = () => {
       const data = await res.json();
       switch (res.status) {
         case 200:
-          console.log(data.message);
+          toast.success(data.message);
           setValues({ email: "", password: "" });
+          router.push('/')
           break;
         case 409:
-          console.log(data.message);
+          toast.error(data.message);
           break;
         case 400:
-          console.log(data.message);
+          toast.error(data.message);
           setClientError(data.errors);
           break;
         case 401:
-          console.log(data.message);
+          toast.error(data.message);
           setClientError(data.message);
           break;
         case 500:
-          console.log(data.message);
+          toast.error(data.message);
           break;
         default:
           break;
       }
-    } catch (err) {
-      console.log(err);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <main>
+
       <section>
         <div className="w-screen h-screen p-5 py-4 flex items-center justify-center">
           <div className="w-full max-w-225 flex  shadow-lg rounded-lg overflow-hidden">
@@ -89,6 +92,7 @@ const LoginTemplate = () => {
                 className="flex flex-col items-center gap-4"
               >
                 <InputGroupInlineStart
+                  element="input"
                   onChange={handleChange("email")}
                   value={values.email}
                   error={clientError.email}
@@ -102,6 +106,7 @@ const LoginTemplate = () => {
                   autoComplete="email"
                 />
                 <InputGroupInlineStart
+                  element="input"
                   onChange={handleChange("password")}
                   error={clientError.password}
                   description={clientError.password}
@@ -157,7 +162,7 @@ const LoginTemplate = () => {
           </div>
         </div>
       </section>
-    </main>
+
   );
 };
 
