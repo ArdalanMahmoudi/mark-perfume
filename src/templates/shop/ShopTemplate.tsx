@@ -10,9 +10,7 @@ import { MobileFilter } from "./_components/MobileFilter";
 
 
 const ShopTemplate = () => {
-  type LinkBreadCrumbs = {
-    link: { href: string; label: string };
-  };
+  
 
   const links = [
     { href: "/", label: "خانه" },
@@ -24,7 +22,7 @@ const ShopTemplate = () => {
 
       <MobileFilter />
       <main>
-        <BreadCrumbs links={links} textClass="text-primary" />
+        <BreadCrumbs classNameWrapper={true} links={links} textClass="text-primary" />
         <section>
           <Container>
             <div className="grid grid-cols-7 gap-9 mt-8 mb-12 flex-wrap relative">

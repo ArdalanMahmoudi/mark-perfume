@@ -11,6 +11,7 @@ type BreadCrumbsProps = {
   separator?: string;
   textClass?: string;
   secondTextClass?: string;
+  classNameWrapper?:boolean
 };
 
 const BreadCrumbs = ({
@@ -18,10 +19,12 @@ const BreadCrumbs = ({
   separator = "/",
   textClass = "",
   secondTextClass = "",
+  classNameWrapper = false
 }: BreadCrumbsProps) => {
+  const isClassNameWrapper = "my-8 bg-secondary py-4 text-primary border border-grey220"
   return (
     <section>
-      <div className="my-8 bg-secondary py-4 text-primary border border-grey220">
+      <div className={classNameWrapper === true && isClassNameWrapper}>
         <div className="m-auto text-sm max-w-7xl px-5">
           <ol className="flex list-none ">
             {links?.map((link, idx) => (
@@ -37,7 +40,7 @@ const BreadCrumbs = ({
                   <span className={`${secondTextClass}`}>{link.label}</span>
                 )}
                 {idx < links.length - 1 && (
-                  <span className="mx-2 text-primary">{separator}</span>
+                  <span className="mx-2 ">{separator}</span>
                 )}
               </li>
             ))}

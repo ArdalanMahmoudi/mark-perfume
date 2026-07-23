@@ -18,7 +18,7 @@ import React from "react";
 
 const Sidebar = () => {
   return (
-    <div className="sticky top-8 h-fit w-full flex flex-col gap-4 border border-grey220 p-5 rounded-lg bg-secondary">
+    <div className="sticky top-8 h-fit w-full flex flex-col gap-4 border border-grey220 p-5 rounded-lg bg-secondary min-w-60">
       {/* user image */}
       <div className="flex justify-center">
         <Image
