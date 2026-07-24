@@ -42,12 +42,15 @@ export const createProductAction = async (
   const thumbnailUrl = await uploadFile(thumbnail);
   const galleryUrl = await Promise.all(gallery.map((file) => uploadFile(file)));
 
-  await prisma.product.create({
-    data: {
-      thumbnail: thumbnailUrl,
-      gallery:galleryUrl ,
-    },
-  });
+  console.log("product", product);
+  
+  // await prisma.product.create({
+  //   data: {
+  //     ...product,
+  //     thumbnail: thumbnailUrl,
+  //     gallery:galleryUrl ,
+  //   },
+  // });
 
-  return { success: true, message: "دوره با موفقیت ایجاد شد" };
+  return { success: true, message: "محصول با موفقیت ایجاد شد" };
 };

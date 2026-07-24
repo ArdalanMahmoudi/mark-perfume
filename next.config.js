@@ -8,5 +8,6 @@ module.exports = {
       },
     ];
   },
-  devIndicators:false
+  devIndicators:false,
+
 };

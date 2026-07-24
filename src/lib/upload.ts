@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto"
-import { mkdir, writeFile } from "fs"
+import { mkdir, writeFile } from "fs/promises"
 import path from "path"
 
 export async function uploadFile(file:File, folder="products") {

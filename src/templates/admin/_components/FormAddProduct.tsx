@@ -1,13 +1,14 @@
 "use client";
 import { InputGroupInlineStart } from "@/src/components/common/InputGroup";
 import { CloudUploadIcon, Plus, TrashIcon } from "lucide-react";
-import { useFieldArray, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import ThumbnailUploader from "./ThumbnailUploader";
 import GalleryUploader from "./GalleryUploader";
 import { createProductAction } from "@/src/lib/actions/product.action";
 import { useToast } from "@/src/app/ToastProvider";
 import { createProductSchema } from "@/src/lib/schemas/createProduct.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { SimpleEditor } from "@/src/components/tiptap-templates/simple/simple-editor";
 
 const initialState = {
   name: "",
@@ -153,15 +154,16 @@ const FormAddProduct = () => {
           classNameField="mb-12"
           caption={errors.description?.message}
         />
-        <InputGroupInlineStart
-          element="textarea"
-          label="توضیحات(تکمیلی)"
-          {...register("details")}
-          classNameLabel="text-base"
-          classNameInput="h-52"
-          classNameField="mb-12"
-          caption={errors.details?.message}
-        />
+        <div className="w-full text-start mb-12">
+          <label htmlFor="" className="mb-2">توضیحات تکمیلی</label>
+          <Controller
+            name="details"
+            control={control}
+            render={({ field }) => (
+              <SimpleEditor value={field.value} onChange={field.onChange} />
+            )}
+          />
+        </div>
       </div>
       {/* specification */}
       <div className="flex flex-col items-start my-8">
@@ -189,7 +191,9 @@ const FormAddProduct = () => {
               </button>
             </div>
           ))}
-          <p className="text-error500 text-sm">{errors.specification?.message}</p>
+          <p className="text-error500 text-sm">
+            {errors.specification?.message}
+          </p>
         </div>
         <button
           type="button"
@@ -219,6 +223,7 @@ const FormAddProduct = () => {
           icon={"ml(میلی لیتر)"}
           type="number"
           min={0}
+          max={100}
           caption={errors.volume?.message}
         />
         <InputGroupInlineStart
@@ -226,7 +231,11 @@ const FormAddProduct = () => {
           label="آدرس URL محصول"
           {...register("slug")}
           classNameLabel="text-base"
-          caption={errors.slug ? errors.slug.message : "در آدرس صفحه محصول استفاده میشود. فقط از حروف انگلیسی اعداد و خط تیره (-) استفاده کنید "}
+          caption={
+            errors.slug
+              ? errors.slug.message
+              : "در آدرس صفحه محصول استفاده میشود. فقط از حروف انگلیسی اعداد و خط تیره (-) استفاده کنید "
+          }
         />
       </div>
       {/* images */}
@@ -238,7 +247,6 @@ const FormAddProduct = () => {
             name="thumbnail"
             setValue={setValue}
             watch={watch}
-          
           />
         </div>
         <div className="">
