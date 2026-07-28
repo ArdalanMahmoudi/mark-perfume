@@ -3,12 +3,12 @@ import Link from "next/link";
 import React from "react";
 
 type CategoryItemProps = {
-  image: string;
+  thumbnail: string;
   category: string;
   desc: string;
 };
 
-const CategoryItem = ({ image, category, desc }: CategoryItemProps) => {
+const CategoryItem = ({ thumbnail, category, desc }: CategoryItemProps) => {
   return (
 
       <Link
@@ -20,7 +20,7 @@ const CategoryItem = ({ image, category, desc }: CategoryItemProps) => {
             className="w-fit rounded-full max-w-17.5"
             width={200}
             height={200}
-            src={image}
+            src={thumbnail}
             alt="category image"
           />
         </div>

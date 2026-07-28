@@ -34,7 +34,7 @@ const BreadCrumbs = ({
                     className={`${textClass} cursor-pointer`}
                     href={link?.href}
                   >
-                    <span className={`${secondTextClass}`}>{link?.label}</span>
+                    <span>{link?.label}</span>
                   </Link>
                 ) : (
                   <span className={`${secondTextClass}`}>{link.label}</span>

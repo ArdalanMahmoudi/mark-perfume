@@ -16,20 +16,21 @@ import ProductCard from "@/src/components/common/ProductCard";
 
 
 
-const HomeTemplate = () => {
+const HomeTemplate = ({products}) => {
+
+  
   return (
     <>
       <main>
         <HeroSection />
         <CategorySection />
-        <OfferSection />
+        <OfferSection products={products}/>
         <AboutusSection />
-        <BestSellerSection />
+        <BestSellerSection products={products}/>
         <FavorSection />
-        <NewestProductSection />
+        <NewestProductSection products={products}/>
         <ShopIntroductionSection />
         <LatestBlog />
-
       </main>
     </>
   );

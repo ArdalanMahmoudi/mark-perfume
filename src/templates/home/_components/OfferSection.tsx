@@ -5,8 +5,9 @@ import { Flame } from "lucide-react";
 import Image from "next/image";
 import Slider from "@/src/components/common/Slider";
 import ProductCard from "@/src/components/common/ProductCard";
+import { ProductType } from "@/src/lib/types/product.type";
 
-const OfferSection = () => {
+const OfferSection = ({products}) => {
   return (
     <section>
       <Container>
@@ -54,8 +55,8 @@ const OfferSection = () => {
                 loop
                 autoplay
                 slidesToShow={{ default: 1, sm: 1, md: 2, lg: 3 }}
-                slides={Array.from({ length: 5 }).map((p) => (
-                  <ProductCard />
+                slides={products.map((product) => (
+                  <ProductCard key={product.id}  product={product}/>
                 ))}
               />
             </div>

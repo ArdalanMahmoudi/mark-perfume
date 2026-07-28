@@ -7,7 +7,7 @@ import Slider from "@/src/components/common/Slider";
 
 const LatestBlog = () => {
   return (
-    <section className="my-24">
+    <section className="my-24 pt-20">
       <Container>
         <SectionTitle title="آخرین اخبار و  آموزش ها" icon={<FileText />} />
           <Slider

@@ -1,12 +1,9 @@
-import "../style/global.css";
+import "@/styles/global.css";
 import localFont from "next/font/local";
 import { Inter } from "next/font/google";
 import { cn } from "@/src/lib/utils";
 import { ToastProvider } from "./ToastProvider";
-import ToastContainer from "../components/common/ToastContainer";
-import Header from "../components/layout/Header";
-import Footer from "../components/layout/Footer";
-import { getCurrentUser } from "../lib/dal";
+
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 

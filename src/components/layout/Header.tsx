@@ -26,18 +26,13 @@ import { MobileHeader } from "./MobileHeader";
 import { useToast } from "@/src/app/ToastProvider";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
-enum Role {
-  ADMIN,
-  USER,
-}
-type UserProp = {
-  id: string;
-  username: string;
-  email: string;
-  role: Role;
-  image?: string;
-};
-const Header = ({ isLoggedIn }: { isLoggedIn: UserProp  }) => {
+import { roles } from "@/src/lib/constant";
+import { UserType } from "@/src/lib/types/user.type";
+
+
+
+
+const Header = ({ isLoggedIn }: { isLoggedIn: UserType  }) => {
   const toast = useToast();
   const router = useRouter();
   const handleLogout = async () => {
@@ -101,10 +96,10 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserProp  }) => {
             <div className="flex gap-2">
               {isLoggedIn ? (
                 <div className="relative group ">
-                  <button className="flex text-sm cursor-pointer items-center gap-1 p-2 rounded-full bg-white text-primary hover:text-white border border-grey220 hover:bg-primary transition-colors">
-                    <UserIcon className="size-6" />
-                    ورود به حساب کاربری
-                  </button>
+                  <Link href={"/dashboard"} className="flex text-sm cursor-pointer items-center gap-1 p-2 justify-center rounded-full bg-white text-primary hover:text-white border border-grey220 hover:bg-primary transition-colors">
+                    <UserIcon className="size-4" />
+                   <span className="lg:block hidden text-nowrap"> ورود به حساب کاربری</span>
+                  </Link>
                   <div className="absolute right-0  w-48 bg-secondary rounded-md shadow-lg border border-grey220 z-50 mt-20 invisible opacity-0 group-hover:opacity-100 group-hover:mt-2 group-hover:visible transition-all duration-500  ">
                     <div className="py-1 font-Vazir-L backdrop-blur-3xl">
                       <Link

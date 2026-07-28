@@ -9,16 +9,19 @@ import Autoplay, { AutoplayOptionsType } from 'embla-carousel-autoplay'
 
 
 type ProductGalleryType = {
-  images:{
-    id?:string,
-    url:string,
-    alt?:string  
+  gallery:{
+     alt: string | null;
+    id: string;
+    createdAt: Date;
+    updatedAt: Date;
+    url: string;
+    productId: string;
   }[]
   plugins?:EmblaPluginType[]
 }
 
 const Gallery = (props: ProductGalleryType) => {
-  const { images, plugins} = props
+  const { gallery, plugins} = props
   const [selectedIndex, setSelectedIndex] = useState({})
   const [emblaMainRef, emblaMainApi] = useEmblaCarousel({direction:'rtl'},plugins)
   const [emblaThumbsRef, emblaThumbsApi] = useEmblaCarousel({
@@ -52,7 +55,7 @@ const Gallery = (props: ProductGalleryType) => {
     <div className="embla">
       <div className="embla__viewport" ref={emblaMainRef} >
         <div className="embla__container">
-          {images.map((item,idx) => (
+          {gallery.map((item,idx) => (
             <div className="embla__slide" key={idx}>
               <div className="embla__slide__number"><Image className='w-full h-full border-2 border-primary rounded-lg' src={item.url} alt={item.alt?? ''}  width={500} height={500} /></div>
             </div>
@@ -63,7 +66,7 @@ const Gallery = (props: ProductGalleryType) => {
       <div className="embla-thumbs">
         <div className="embla-thumbs__viewport" ref={emblaThumbsRef}>
           <div className="embla-thumbs__container">
-            {images.map((item,idx) => (
+            {gallery.map((item,idx) => (
               <GalleryThumb
                 key={idx}
                 onClick={() => onThumbClick(idx)}

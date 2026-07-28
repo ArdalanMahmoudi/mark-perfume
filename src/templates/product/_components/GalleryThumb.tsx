@@ -24,7 +24,7 @@ export const GalleryThumb = (props: PropType) => {
           type="button"
           className="embla-thumbs__slide__number"
         >
-          <Image width={500} height={500} className="max-w-18 max-h-18 border-2 border-primary rounded-sm" src={image.url} alt={image.alt ?? ''}  /> 
+          <Image width={500} height={500} className="lg:w-18 lg:h-18 w-14 h-14 border-2 border-primary rounded-sm" src={image.url} alt={image.alt ?? ''}  /> 
         </button>
       
     </div>

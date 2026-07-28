@@ -8,22 +8,22 @@ import { SwiperSlide } from "swiper/react";
 
 const categoryItems = [
   {
-    image: "/images/category/category1.png",
+    thumbnail: "/images/category/category1.png",
     category: "انواع برند عطر",
     desc: "معروفترین برند‌های عطر و ادکلن",
   },
   {
-    image: "/images/category/category2.png",
+    thumbnail: "/images/category/category2.png",
     category: "انواع برند عطر",
     desc: "انواع اسپری و بادی اسپلش",
   },
   {
-    image: "/images/category/category3.png",
+    thumbnail: "/images/category/category3.png",
     category: "انواع ادکلن مردانه",
     desc: "معروفترین برند‌های عطر و ادکلن",
   },
   {
-    image: "/images/category/category4.png",
+    thumbnail: "/images/category/category4.png",
     category: "انواع ادکلن زنانه",
     desc: "معروفترین برند‌های عطر و ادکلن",
   },
@@ -44,7 +44,7 @@ const CategorySection = () => {
           slidesToShow={{default:1, sm:2, md:3, lg:4}}
             slides={categoryItems.map((item) => (
               <CategoryItem
-                image={item.image}
+                thumbnail={item.thumbnail}
                 category={item.category}
                 desc={item.desc}
               />

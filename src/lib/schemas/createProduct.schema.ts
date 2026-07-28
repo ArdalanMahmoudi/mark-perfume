@@ -16,10 +16,7 @@ export const createProductSchema = z.object({
     .min(3, "نام محصول حداقل باید  3 حرف یا کاراکتر باشد")
     .max(100),
   latinName: z.string().optional().or(z.literal("")),
-  slug: z
-    .string()
-    .min(3, "آدرس URL محصول نباید کمتر از 3 حرف یا کاراکتر باشد")
-    .max(100),
+
   price: z.coerce.number().int().min(0, "قیمت را وارد کنید"),
   discount: z.coerce
     .number()
@@ -27,7 +24,7 @@ export const createProductSchema = z.object({
     .max(100, "تخفیف باید بین 0-100 باشد"),
   stock: z.coerce.number().int().min(0, "موجودی را وارد کنید"),
   volume: z.coerce.number().optional().or(z.literal(0)),
-  category: z.string().min(1, "دسته بندی را انتخاب کنید"),
+  categoryId: z.string().min(1, "دسته بندی را انتخاب کنید"),
   description: z
     .string()
     .trim()

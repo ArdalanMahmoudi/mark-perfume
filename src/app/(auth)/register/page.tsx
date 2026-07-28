@@ -1,4 +1,5 @@
-import { getCurrentUser } from '@/src/lib/dal';
+
+import { getCurrentUser } from '@/src/lib/queries/user.queries';
 import RegisterTemplate from '@/src/templates/register/RegisterTemplate';
 import { redirect } from 'next/navigation';
 import React from 'react';

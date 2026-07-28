@@ -1,7 +1,5 @@
 import BreadCrumbs from "@/src/components/common/BreadCrumbs";
 import Container from "@/src/components/common/Container";
-import Footer from "@/src/components/layout/Footer";
-import Header from "@/src/components/layout/Header";
 import SidebarFilter from "./_components/SidebarFilter";
 import { SliderRange } from "./_components/SliderRange";
 import ProductCard from "@/src/components/common/ProductCard";
@@ -9,7 +7,7 @@ import { PaginationDemo } from "@/src/components/common/Pagination";
 import { MobileFilter } from "./_components/MobileFilter";
 
 
-const ShopTemplate = () => {
+const ShopTemplate = ({categories, products}) => {
   
 
   const links = [
@@ -30,22 +28,13 @@ const ShopTemplate = () => {
               <div className="hidden lg:block lg:col-span-2">
                 <div className="flex flex-col gap-5 sticky top-8">
                   <SidebarFilter title="دسته بندی ها">
+                    {categories.map(cat => (
                     <div className="flex items-center gap-1 w-fit ">
-                      <input type="checkbox" name="" id="" />
-                      <label htmlFor="#">Chanel</label>
+                      <input type="checkbox" value={cat.slug} />
+                      <label htmlFor="#">{cat.name}</label>
                     </div>
-                    <div className="flex items-center gap-1 w-fit ">
-                      <input type="checkbox" name="" id="" />
-                      <label htmlFor="#">Dior</label>
-                    </div>
-                    <div className="flex items-center gap-1 w-fit ">
-                      <input type="checkbox" name="" id="" />
-                      <label htmlFor="#">Calvin klein</label>
-                    </div>
-                    <div className="flex items-center gap-1 w-fit ">
-                      <input type="checkbox" name="" id="" />
-                      <label htmlFor="#">Versace</label>
-                    </div>
+
+                    ))}
                   </SidebarFilter>
                   <SidebarFilter title="قیمت">
                     <SliderRange />
@@ -82,7 +71,12 @@ const ShopTemplate = () => {
                 </div>
                 {/* Products */}
                 <div className="mt-5 grid grid-cols-1 lg:grid-cols-3 gap-8">
-                  <ProductCard className="hover:scale-105 transition-all duration-300 ease-in-out" />
+                  {
+                    products.map(product => (
+
+                      <ProductCard key={product.id} product={product} className="hover:scale-105 transition-all duration-300 ease-in-out" />
+                    ))
+                  }
                   <ProductCard className="hover:scale-105 transition-all duration-300 ease-in-out" />
                   <ProductCard className="hover:scale-105 transition-all duration-300 ease-in-out" />
                   <ProductCard className="hover:scale-105 transition-all duration-300 ease-in-out" />

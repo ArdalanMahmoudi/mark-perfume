@@ -1,7 +1,7 @@
 import Container from "@/src/components/common/Container";
 import Footer from "@/src/components/layout/Footer";
 import Header from "@/src/components/layout/Header";
-import { getCurrentUser } from "@/src/lib/dal";
+import { getCurrentUser } from "@/src/lib/queries/user.queries";
 import Sidebar from "@/src/templates/dashboard/_components/Sidebar";
 
 export default async function DashboardLayout({

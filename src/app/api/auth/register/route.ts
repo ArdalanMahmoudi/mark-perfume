@@ -3,10 +3,11 @@ import { registerSchema } from "@/src/lib/schemas/register.schema";
 import { createSession } from "@/src/lib/session";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
+import { roles } from "@/src/lib/constant";
 
 export async function POST(req: Request) {
   try {
-    console.log("post hit");
+
     const body = await req.json();
 
     const result = registerSchema.safeParse(body);
@@ -36,7 +37,7 @@ export async function POST(req: Request) {
       data: {
         username: fields.username,
         email: fields.email,
-        role: userCount === 0 ? "ADMIN" : "USER",
+        role: userCount === 0 ? roles.ADMIN as string : roles.USER as string,
         password: hashedPassword,
       },
     });

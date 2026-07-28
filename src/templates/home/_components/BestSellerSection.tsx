@@ -6,7 +6,7 @@ import { CheckCheck } from "lucide-react";
 import ProductCard from "@/src/components/common/ProductCard";
 import Slider from "@/src/components/common/Slider";
 
-const BestSellerSection = () => {
+const BestSellerSection = ({products}) => {
   return (
     <section className="mt-24">
       <Container>
@@ -16,8 +16,8 @@ const BestSellerSection = () => {
             autoplay
             loop
             slidesToShow={{ default: 1, sm: 1, md: 2, lg: 4 }}
-            slides={Array.from({ length: 5 }).map((p) => (
-              <ProductCard />
+            slides={products.map((product) => (
+              <ProductCard key={product.id}  product={product}/>
             ))}
           />
         </div>

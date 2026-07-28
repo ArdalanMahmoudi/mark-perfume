@@ -30,7 +30,7 @@ export function InputGroupInlineStart({
 }: InputGroupProps & React.ComponentProps<"textarea">) {
   return (
     (element === "input" && (
-      <Field className="w-full text-start ">
+      <Field className={`w-full text-start ${props.hidden && "hidden"}`}>
         <FieldLabel className={classNameLabel!} htmlFor={props.id}>
           {props.required && label.length ? (
             <>
@@ -42,7 +42,7 @@ export function InputGroupInlineStart({
         </FieldLabel>
         <InputGroup
           hidden={props.hidden}
-          className={`${classNameField ? classNameField : "bg-white h-12"} rounded-md px-2.5   w-full flex items-center transition-all duration-100 ease-in border border-grey220`}
+          className={`${classNameField ? classNameField : "bg-white h-12"} rounded-md px-1 text-xs! leading-6  lg:px-2.5   w-full flex items-center transition-all duration-100 ease-in border border-grey220`}
         >
           <InputGroupInput
             id={props.id}
@@ -73,7 +73,7 @@ export function InputGroupInlineStart({
           rows={10}
           {...props}
           name={props.name}
-          className={`${classNameInput ? classNameInput : "bg-white"} w-full`}
+          className={`${classNameInput ? classNameInput : "bg-white"} w-full h-52`}
         />
         <FieldDescription className="text-start text-red-500">
           {caption}
