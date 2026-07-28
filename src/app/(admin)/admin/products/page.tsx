@@ -1,8 +1,16 @@
 import { Plus, Search } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import { columns,  } from "./columns"
+import { DataTable } from "./data-table"
+import { ProductType } from "@/src/lib/types/product.type";
+import { getProductHomePage } from "@/src/lib/queries/product.queries";
+import { prisma } from "@/src/lib/prisma";
+ 
 
-const Page = () => {
+
+const Page = async() => {
+   const data = await prisma.product.findMany()
   return (
     <div>
       <h2 className="text-xl">محصولات</h2>
@@ -23,6 +31,9 @@ const Page = () => {
           <Plus className="size-4" />
         </Link>
       </div>
+      <div className="container mx-auto py-10">
+      <DataTable columns={columns} data={data} />
+    </div>
     </div>
   );
 };

@@ -1,7 +1,8 @@
 "use server"
 import { prisma } from "../prisma";
+import { ProductType } from "../types/product.type";
 
-export async function getProductHomePage() {
+export async function getProductHomePage():Promise<ProductType> {
 
     
     return prisma.product.findMany({
