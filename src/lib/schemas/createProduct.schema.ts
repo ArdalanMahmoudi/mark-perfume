@@ -15,7 +15,7 @@ export const createProductSchema = z.object({
     .string()
     .min(3, "نام محصول حداقل باید  3 حرف یا کاراکتر باشد")
     .max(100),
-  latinName: z.string().optional().or(z.literal("")),
+  latinName: z.string().min(3,"نام لاتین نباید کمتر از 3 کاراکتر باشد"),
 
   price: z.coerce.number().int().min(0, "قیمت را وارد کنید"),
   discount: z.coerce

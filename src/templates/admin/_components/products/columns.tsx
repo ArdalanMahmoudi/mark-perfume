@@ -1,6 +1,6 @@
 "use client";
 import { ProductType } from "@/src/lib/types/product.type";
-import ProductActions from "@/src/templates/admin/_components/ProductActions";
+import ProductActions from "@/src/templates/admin/_components/products/ProductActions";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
 
@@ -47,7 +47,7 @@ export const columns: ColumnDef<ProductType>[] = [
     accessorKey: "actions",
     header: "عملیات",
     cell: ({ row }) => (
-      <ProductActions productId={row.original.id}/>
+      <ProductActions productId={row.original.id} slug={row.original.slug}/>
     ),
   },
 ];

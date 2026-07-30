@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import Swal from "sweetalert2";
 
-const ProductActions = ({ productId }) => {
+const ProductActions = ({ productId, slug }) => {
   const toast = useToast();
   const router = useRouter();
   const onDelete = (productId) => {
@@ -45,7 +45,7 @@ const ProductActions = ({ productId }) => {
         {/* view */}
         <TooltipDemo
           btn={
-            <Link href={"/admin/"} className="cursor-pointer">
+            <Link href={`/admin/products/${slug}`} className="cursor-pointer">
               <EyeIcon className="size-4" />
             </Link>
           }
