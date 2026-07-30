@@ -42,13 +42,13 @@ const FormAddProduct = ({ categories }) => {
       name: "",
       latinName: "",
       categoryId: "",
-      price: 0,
-      discount: 0,
+      price:undefined,
+      discount: undefined,
       description: "",
       details: "",
       specification: [{ key: "", value: "" }],
-      stock: 0,
-      volume: 0,
+      stock: undefined,
+      volume: undefined,
       thumbnail: undefined,
       gallery: [],
     },
@@ -132,7 +132,6 @@ const FormAddProduct = ({ categories }) => {
           {...register("price")}
           classNameLabel="text-base"
           type="number"
-          min={0}
           caption={errors.price?.message}
         />
         <InputGroupInlineStart
@@ -141,8 +140,6 @@ const FormAddProduct = ({ categories }) => {
           {...register("discount")}
           classNameLabel="text-base"
           type="number"
-          min={0}
-          max={100}
           caption={errors.discount?.message}
         />
       </div>

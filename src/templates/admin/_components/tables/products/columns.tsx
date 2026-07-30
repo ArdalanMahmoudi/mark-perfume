@@ -1,9 +1,11 @@
 "use client";
 import { ProductType } from "@/src/lib/types/product.type";
+import ProductActions from "@/src/templates/admin/_components/ProductActions";
 import { ColumnDef } from "@tanstack/react-table";
-import { Eye, EyeIcon, PencilIcon, TrashIcon } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+
+
+
 
 export const columns: ColumnDef<ProductType>[] = [
   {
@@ -45,20 +47,7 @@ export const columns: ColumnDef<ProductType>[] = [
     accessorKey: "actions",
     header: "عملیات",
     cell: ({ row }) => (
-      <div className="flex justify-center items-center gap-2.5">
-        {/* edit */}
-        <Link href={"/"} className="cursor-pointer">
-          <PencilIcon className="size-4" />
-        </Link>
-        {/* view */}
-        <Link href={"/"} className="cursor-pointer">
-          <EyeIcon className="size-4" />
-        </Link>
-        {/* delted */}
-        <button className="cursor-pointer">
-          <TrashIcon className="size-4" />
-        </button>
-      </div>
+      <ProductActions productId={row.original.id}/>
     ),
   },
 ];

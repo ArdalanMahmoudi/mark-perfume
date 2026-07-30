@@ -214,18 +214,11 @@ export function SimpleEditor({value,onChange}:{value:string, onChange:() => void
       TaskList,
       TaskItem.configure({ nested: true }),
       Highlight.configure({ multicolor: true }),
-      Image,
       Typography,
       Superscript,
       Subscript,
       Selection,
-      ImageUploadNode.configure({
-        accept: "image/*",
-        maxSize: MAX_FILE_SIZE,
-        limit: 3,
-        upload: handleImageUpload,
-        onError: (error) => console.error("Upload failed:", error),
-      }),
+      
     ],
     content:value, // value form
     onUpdate:({editor}) => { // onChange form

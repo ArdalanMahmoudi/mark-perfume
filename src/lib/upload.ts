@@ -1,20 +1,31 @@
-import { randomUUID } from "crypto"
-import { mkdir, writeFile } from "fs/promises"
-import path from "path"
+import { randomUUID } from "crypto";
+import { mkdir, unlink, writeFile } from "fs/promises";
+import path from "path";
 
-export async function uploadFile(file:File, folder="products") {
-    const buffer = Buffer.from(await file.arrayBuffer())
-    const extension = file.name.split(".").pop() //id
-    const fileName = `${randomUUID()}.${extension}` //fileName unique
-    const uploadDir = path.join(process.cwd(),"public","uploads",folder) 
-    await mkdir(uploadDir,{
-        recursive:true,  
-    })
-    const filePath = path.join(uploadDir,fileName)
+export async function uploadFile(file: File, folder = "products") {
+  const buffer = Buffer.from(await file.arrayBuffer());
+  const extension = file.name.split(".").pop(); //id
+  const fileName = `${randomUUID()}.${extension}`; //fileName unique
+  const uploadDir = path.join(process.cwd(), "public", "uploads", folder);
+  await mkdir(uploadDir, {
+    recursive: true,
+  });
+  const filePath = path.join(uploadDir, fileName);
 
-    // save file
-    await writeFile(filePath, buffer)
+  // save file
+  await writeFile(filePath, buffer);
 
-    return `/uploads/${folder}/${fileName}`
+  return `/uploads/${folder}/${fileName}`;
+}
 
+export async function deleteFile(files: string[]) {
+  if (!files) return;
+  for (const url of files) {
+    try {
+      const filePath = path.join(process.cwd(), "public", url);
+      await unlink(filePath);
+    } catch (err) {
+      console.error(`failed to delete file: ${url}`);
+    }
+  }
 }

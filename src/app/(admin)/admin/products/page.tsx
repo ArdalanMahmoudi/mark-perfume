@@ -1,20 +1,15 @@
 import { Plus, Search } from "lucide-react";
 import Link from "next/link";
-import React from "react";
-import { columns,  } from "./columns"
-import { DataTable } from "./data-table"
-import { ProductType } from "@/src/lib/types/product.type";
-import { getProductHomePage } from "@/src/lib/queries/product.queries";
+import { columns } from "@/src/templates/admin/_components/tables/products/columns";
+import { DataTable } from "@/src/templates/admin/_components/tables/products/data-table";
 import { prisma } from "@/src/lib/prisma";
- 
 
-
-const Page = async() => {
-   const data = await prisma.product.findMany()
+const Page = async () => {
+  const data = await prisma.product.findMany();
   return (
-    <div>
+    <>
       <h2 className="text-xl">محصولات</h2>
-      <div className="flex my-12 gap-4">
+      <div className="flex my-2 gap-4">
         <div className="flex w-full items-center border border-grey220 rounded-sm px-4 h-9">
           <Search className="size-4 text-grey220" />
           <input
@@ -32,9 +27,10 @@ const Page = async() => {
         </Link>
       </div>
       <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={data} />
-    </div>
-    </div>
+        <DataTable columns={columns} data={data} />
+      </div>
+    
+    </>
   );
 };
 

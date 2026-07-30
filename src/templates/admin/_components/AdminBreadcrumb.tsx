@@ -23,7 +23,7 @@ const AdminBreadcrumb = () => {
       {segments.map((segment, index) => {
         const href = "/" + segments.slice(0, index + 1).join("/");
         return (
-          <div className="flex gap-1 items-center">
+          <div key={index} className="flex gap-1 items-center">
             {/* <span>{routes[segment] || segment}</span> */}
             {index < segments.length - 1  ? (
             <div className="flex items-center gap-2">
