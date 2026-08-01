@@ -34,6 +34,7 @@ const GalleryUploader = ({ name, setValue, watch }) => {
           {previews.map((preview, index) => (
             <div className="flex flex-col gap-2 items-start">
               <button
+              type="button"
                 className="p-1 rounded-full cursor-pointer bg-gray-50"
                 onClick={() => {
                   const newFile = files.filter((_, i) => i !== index);

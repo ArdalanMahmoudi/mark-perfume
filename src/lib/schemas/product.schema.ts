@@ -20,7 +20,7 @@ export const updateImageSchema = z.union([
     .refine((file) => file.size <= 5 * 1024 * 1024, {
       message: "حداکثر حجم 5 مگابایت است",
     }),
-  z.string().url({ message: "آدرس تصویر معتبر نیست" }),
+  z.string().min(1,{ message: "آدرس تصویر معتبر نیست" }),
 ]);
 
 export const createProductSchema = z.object({

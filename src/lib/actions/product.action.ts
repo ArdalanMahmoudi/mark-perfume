@@ -3,7 +3,7 @@
 import { roles } from "../constant";
 import { prisma } from "../prisma";
 import { getCurrentUser } from "../queries/user.queries";
-import { createProductSchema } from "../schemas/product.schema";
+import { createProductSchema, updateProductSchema } from "../schemas/product.schema";
 import { deleteFile, uploadFile } from "../upload";
 import slugify from "slugify";
 
@@ -122,7 +122,7 @@ export const deleteProductAction = async (productId) => {
 };
 
 export const updateProductAction = async (
-  id:string,
+  productId:string,
   formData: FormData,
 ) => {
   const user = await getCurrentUser();
@@ -139,54 +139,54 @@ export const updateProductAction = async (
   
 
   const data = {
-    id,
+    id:productId,
     ...rawDatas,
     specification,
     thumbnail,
     gallery,
   };
-  console.log("data",data);
   
 
-  // const result = createProductSchema.safeParse(data);
-  // if (!result.success) {
-  //   return {
-  //     success: false,
-  //     errors: result.error.flatten().fieldErrors,
-  //   };
-  // }
-  // const product = result.data;
+  const result = updateProductSchema.safeParse(data);
+  if (!result.success) {
+    return {
+      success: false,
+      errors: result.error.flatten().fieldErrors,
+    };
+  }
+  const product = result.data;
   
 
 
-  // let tempFiles: string[] = [];
+  let tempFiles: string[] = [];
 
-  // try {
-  //   const thumbnailUrl = await uploadFile(thumbnail, slug);
-  //   const galleryUrl = await Promise.all(
-  //     gallery.map(async (file) => {
-  //       const url = await uploadFile(file, slug);
-  //       tempFiles.push(url);
-  //       return url;
-  //     }),
-  //   );
+  try {
+    const thumbnailUrl = await uploadFile(thumbnail, slug);
+    const galleryUrl = await Promise.all(
+      gallery.map(async (file) => {
+        const url = await uploadFile(file, slug);
+        tempFiles.push(url);
+        return url;
+      }),
+    );
 
-  //   await prisma.product.up({
-  //     data: {
-  //       ...product,
-  //       slug,
-  //       thumbnail: thumbnailUrl,
-  //       gallery: {
-  //         create: galleryUrl.map((url) => ({
-  //           url,
-  //         })),
-  //       },
-  //     },
-  //   });
-  // } catch (err) {
-  //   await deleteFile(tempFiles);
-  //   return { success: false, message: "خطا در ثبت محصول مجدد امتحان کنید" };
-  // }
+    await prisma.product.update({
+      where:{id:productId},
+      data: {
+        ...product,
+        slug,
+        thumbnail: thumbnailUrl,
+        gallery: {
+          create: galleryUrl.map((url) => ({
+            url,
+          })),
+        },
+      },
+    });
+  } catch (err) {
+    await deleteFile(tempFiles);
+    return { success: false, message: "خطا در ثبت محصول مجدد امتحان کنید" };
+  }
 
-  // return { success: true, message: "محصول با موفقیت ایجاد شد" };
+  return { success: true, message: "محصول با موفقیت ایجاد شد" };
 };

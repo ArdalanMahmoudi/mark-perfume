@@ -58,6 +58,7 @@ const ThumbnailUploader = ({
           <div className="flex justify-center items-center">
             <div className="flex flex-col gap-2 items-start">
               <button
+              type="button"
                 className="p-1 rounded-full cursor-pointer bg-gray-50"
                 onClick={() => setValue(name, undefined)}
               >

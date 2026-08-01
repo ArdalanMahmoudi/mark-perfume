@@ -57,7 +57,8 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
 
   // Toast
   const toast = useToast();
-
+  console.log(errors);
+  
   // ----------------handleform
   const onSubmit = async (data) => {
     const formData = new FormData();
@@ -85,8 +86,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
         toast.success("محصول ایجاد شد");
         reset();
       }else { 
-        console.log("edited");
-             
+        console.log("edited"); 
         await updateProductAction(product?.id,formData);
         toast.success("تغییرات محصول اعمال شد");
         reset();
