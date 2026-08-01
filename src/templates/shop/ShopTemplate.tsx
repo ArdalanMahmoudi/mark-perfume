@@ -77,11 +77,11 @@ const ShopTemplate = ({categories, products}) => {
                       <ProductCard key={product.id} product={product} className="hover:scale-105 transition-all duration-300 ease-in-out" />
                     ))
                   }
+                  {/* <ProductCard className="hover:scale-105 transition-all duration-300 ease-in-out" />
                   <ProductCard className="hover:scale-105 transition-all duration-300 ease-in-out" />
                   <ProductCard className="hover:scale-105 transition-all duration-300 ease-in-out" />
                   <ProductCard className="hover:scale-105 transition-all duration-300 ease-in-out" />
-                  <ProductCard className="hover:scale-105 transition-all duration-300 ease-in-out" />
-                  <ProductCard className="hover:scale-105 transition-all duration-300 ease-in-out" />
+                  <ProductCard className="hover:scale-105 transition-all duration-300 ease-in-out" /> */}
                 </div>
                 <PaginationDemo />
               </div>

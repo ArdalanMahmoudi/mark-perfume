@@ -36,20 +36,11 @@ const ProductActions = ({ productId, slug }) => {
       <TooltipProvider >
         <TooltipDemo
           btn={
-            <Link href={"/"} className="cursor-pointer text-black w-6 h-6">
+            <Link href={`/admin/products/edit/${slug}`} className="cursor-pointer text-black w-6 h-6">
               <PencilIcon className="size-4 text-black" />
             </Link>
           }
           textTolltip={"ویرایش"}
-        />
-        {/* view */}
-        <TooltipDemo
-          btn={
-            <Link href={`/admin/products/${slug}`} className="cursor-pointer">
-              <EyeIcon className="size-4" />
-            </Link>
-          }
-          textTolltip={"جزئیات"}
         />
 
         {/* delted */}

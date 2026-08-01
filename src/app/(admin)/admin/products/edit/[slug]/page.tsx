@@ -1,8 +1,11 @@
 import { prisma } from "@/src/lib/prisma";
-import ProductDetailTemplate from "@/src/templates/admin/_components/products/ProductDetailTemplate";
+import { getCategories } from "@/src/lib/queries/product.queries";
+import ProductForm from "@/src/templates/admin/_components/ProductForm";
+
 
 const ProductPage = async ({ params }: { params: { slug: string } }) => {
   const { slug } = await params;
+  const categories = await getCategories()
   const product = await prisma.product.findUnique({
     where: {
       slug,
@@ -23,7 +26,7 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
 
   return (
     <>
-      <ProductDetailTemplate product={product} />
+      <ProductForm product={product} categories={categories} mode="edit"/>
     </>
   );
 };

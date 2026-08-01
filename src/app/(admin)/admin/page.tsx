@@ -37,7 +37,7 @@ const AdminPage = () => {
     },
     {
       id: 3,
-      title: " فعال",
+      title: "کاربران فعال",
       tabularNums: "4,567",
       percent: 15,
       trend: { status: "Upward", caption: "حفظ بالای کاربران" },

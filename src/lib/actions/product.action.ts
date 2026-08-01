@@ -3,11 +3,12 @@
 import { roles } from "../constant";
 import { prisma } from "../prisma";
 import { getCurrentUser } from "../queries/user.queries";
-import { createProductSchema } from "../schemas/createProduct.schema";
+import { createProductSchema } from "../schemas/product.schema";
 import { deleteFile, uploadFile } from "../upload";
 import slugify from "slugify";
+
+
 export const createProductAction = async (
-  initialState: any,
   formData: FormData,
 ) => {
   const user = await getCurrentUser();
@@ -114,8 +115,78 @@ export const deleteProductAction = async (productId) => {
       },
     });
 
-    return {success:"true", message:"محصول مورد نظر حذف شد"}
+    return { success: "true", message: "محصول مورد نظر حذف شد" };
   } catch {
     return { success: false, message: "err" };
   }
+};
+
+export const updateProductAction = async (
+  id:string,
+  formData: FormData,
+) => {
+  const user = await getCurrentUser();
+  if (!user || user.role !== roles.ADMIN) {
+    throw new Error("Unauthorized");
+  }
+
+  
+  const rawDatas = Object.fromEntries(formData.entries());
+  const specification = JSON.parse(formData.get("specification") as string);
+  const thumbnail = formData.get("thumbnail") as File;
+  const gallery = formData.getAll("gallery") as File[];
+
+  
+
+  const data = {
+    id,
+    ...rawDatas,
+    specification,
+    thumbnail,
+    gallery,
+  };
+  console.log("data",data);
+  
+
+  // const result = createProductSchema.safeParse(data);
+  // if (!result.success) {
+  //   return {
+  //     success: false,
+  //     errors: result.error.flatten().fieldErrors,
+  //   };
+  // }
+  // const product = result.data;
+  
+
+
+  // let tempFiles: string[] = [];
+
+  // try {
+  //   const thumbnailUrl = await uploadFile(thumbnail, slug);
+  //   const galleryUrl = await Promise.all(
+  //     gallery.map(async (file) => {
+  //       const url = await uploadFile(file, slug);
+  //       tempFiles.push(url);
+  //       return url;
+  //     }),
+  //   );
+
+  //   await prisma.product.up({
+  //     data: {
+  //       ...product,
+  //       slug,
+  //       thumbnail: thumbnailUrl,
+  //       gallery: {
+  //         create: galleryUrl.map((url) => ({
+  //           url,
+  //         })),
+  //       },
+  //     },
+  //   });
+  // } catch (err) {
+  //   await deleteFile(tempFiles);
+  //   return { success: false, message: "خطا در ثبت محصول مجدد امتحان کنید" };
+  // }
+
+  // return { success: true, message: "محصول با موفقیت ایجاد شد" };
 };

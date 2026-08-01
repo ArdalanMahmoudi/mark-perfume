@@ -29,7 +29,7 @@ const ThumbnailUploader = ({
       setPreview("");
       return;
     }
-    const objectUrl = URL.createObjectURL(file);
+    const objectUrl = file instanceof File ? URL.createObjectURL(file) : file ?? null;
     setPreview(objectUrl);
     return () => {
       URL.revokeObjectURL(objectUrl);

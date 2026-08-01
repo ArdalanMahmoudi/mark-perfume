@@ -12,9 +12,11 @@ const GalleryUploader = ({ name, setValue, watch }) => {
     multiple: true,
   });
 
-  const files = watch(name, []);
+  const files = watch(name,[]);
   const previews = useMemo(() => {
-    return files.map((file) => URL.createObjectURL(file));
+    return files.map((file) => file instanceof File ? URL.createObjectURL(file) 
+    : file
+    );
   }, [files]);
 
   useEffect(() => {
