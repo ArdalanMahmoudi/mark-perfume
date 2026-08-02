@@ -4,14 +4,18 @@ import { CloudUploadIcon, Plus, TrashIcon } from "lucide-react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import ThumbnailUploader from "./ThumbnailUploader";
 import GalleryUploader from "./GalleryUploader";
-import { createProductAction,  updateProductAction } from "@/src/lib/actions/product.action";
+import {
+  createProductAction,
+  updateProductAction,
+} from "@/src/lib/actions/product.action";
 import { useToast } from "@/src/app/ToastProvider";
-import { createProductSchema, updateProductSchema } from "@/src/lib/schemas/product.schema";
+import {
+  createProductSchema,
+  updateProductSchema,
+} from "@/src/lib/schemas/product.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SimpleEditor } from "@/src/components/tiptap-editor/tiptap-templates/simple/simple-editor";
 import { ProductType } from "@/src/lib/types/product.type";
-
-
 
 type ProductFormProps = {
   categories: string[];
@@ -29,7 +33,9 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
     reset,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(mode === 'create' ? createProductSchema : updateProductSchema),
+    resolver: zodResolver(
+      mode === "create" ? createProductSchema : updateProductSchema,
+    ),
     defaultValues: {
       name: product?.name ?? "",
       latinName: product?.latinName ?? "",
@@ -44,11 +50,10 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
       stock: product?.stock,
       volume: product?.volume,
       thumbnail: product?.thumbnail ?? undefined,
-      gallery: product?.gallery.map(item => item.url) ?? [],
+      gallery: product?.gallery.map((item) => item.url) ?? [],
     },
   });
 
-  
   // RHF
   const { fields, remove, append } = useFieldArray({
     name: "specification",
@@ -58,7 +63,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
   // Toast
   const toast = useToast();
   console.log(errors);
-  
+
   // ----------------handleform
   const onSubmit = async (data) => {
     const formData = new FormData();
@@ -73,21 +78,26 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
       }
     });
 
-    formData.append("thumbnail", data.thumbnail);
+    data.thumbnail instanceof File
+      ? formData.append("thumbnail", data.thumbnail)
+      : formData.append("thumbnail", data.thumbnail);
+
     data.gallery.forEach((file) => {
-      formData.append("gallery", file);
+      file instanceof File
+        ? formData.append("gallery", file)
+        : formData.append("gallery", file);
     });
 
     formData.append("specification", JSON.stringify(data.specification));
 
     try {
-      if (mode === 'create') {
-        await createProductAction( formData);
+      if (mode === "create") {
+        await createProductAction(formData);
         toast.success("محصول ایجاد شد");
         reset();
-      }else { 
-        console.log("edited"); 
-        await updateProductAction(product?.id,formData);
+      } else {
+        console.log("edited");
+        await updateProductAction(product?.id, formData);
         toast.success("تغییرات محصول اعمال شد");
         reset();
       }
@@ -126,7 +136,9 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
           >
             <option value="-1">انتخاب دسته بندی...</option>
             {categories.map((cat) => (
-              <option key={cat.id} value={cat.id}>{cat.name}</option>
+              <option key={cat.id} value={cat.id}>
+                {cat.name}
+              </option>
             ))}
           </select>
           <p className="text-error500">{errors.category?.message}</p>
@@ -253,7 +265,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
         type="submit"
         className="bg-black text-white px-6 py-2 rounded-sm  cursor-pointer"
       >
-       {mode === 'create' ? ' ثبت محصول' : 'ثبت تغییرات'}
+        {mode === "create" ? " ثبت محصول" : "ثبت تغییرات"}
       </button>
     </form>
   );

@@ -3,14 +3,14 @@
 import { roles } from "../constant";
 import { prisma } from "../prisma";
 import { getCurrentUser } from "../queries/user.queries";
-import { createProductSchema, updateProductSchema } from "../schemas/product.schema";
+import {
+  createProductSchema,
+  updateProductSchema,
+} from "../schemas/product.schema";
 import { deleteFile, uploadFile } from "../upload";
 import slugify from "slugify";
 
-
-export const createProductAction = async (
-  formData: FormData,
-) => {
+export const createProductAction = async (formData: FormData) => {
   const user = await getCurrentUser();
   if (!user || user.role !== roles.ADMIN) {
     throw new Error("Unauthorized");
@@ -122,7 +122,7 @@ export const deleteProductAction = async (productId) => {
 };
 
 export const updateProductAction = async (
-  productId:string,
+  productId: string,
   formData: FormData,
 ) => {
   const user = await getCurrentUser();
@@ -130,22 +130,18 @@ export const updateProductAction = async (
     throw new Error("Unauthorized");
   }
 
-  
   const rawDatas = Object.fromEntries(formData.entries());
   const specification = JSON.parse(formData.get("specification") as string);
-  const thumbnail = formData.get("thumbnail") as File;
-  const gallery = formData.getAll("gallery") as File[];
-
-  
+  const thumbnail = formData.get("thumbnail");
+  const gallery = formData.getAll("gallery") ;
 
   const data = {
-    id:productId,
+    id: productId,
     ...rawDatas,
     specification,
-    thumbnail,
-    gallery,
+    thumbnail: thumbnail instanceof File && thumbnail.size > 0 ? thumbnail : (rawDatas.thumbnailUrl as string),
+    gallery : gallery.filter(item => (item instanceof File) || item.size > 0),
   };
-  
 
   const result = updateProductSchema.safeParse(data);
   if (!result.success) {
@@ -155,31 +151,66 @@ export const updateProductAction = async (
     };
   }
   const product = result.data;
+  const existingProduct = await prisma.product.findUnique({
+    where: { id: productId },
+    include: {
+      gallery: true,
+    },
+  });
   
+  if (!existingProduct) {
+    return {success:false, message:" محصول پیدا نشد"}
+  }
 
+  const slug = existingProduct?.slug;
 
   let tempFiles: string[] = [];
 
   try {
-    const thumbnailUrl = await uploadFile(thumbnail, slug);
-    const galleryUrl = await Promise.all(
-      gallery.map(async (file) => {
-        const url = await uploadFile(file, slug);
-        tempFiles.push(url);
-        return url;
-      }),
+    // upload new thumbnail File && delete old File
+    let thumbnailUrl = product.thumbnail as string; 
+    if (product.thumbnail instanceof File) {
+      thumbnailUrl = await uploadFile(product.thumbnail, slug);
+      tempFiles.push(thumbnailUrl);
+      await deleteFile([existingProduct?.thumbnail]);
+    }
+
+    //upload new gallery File
+    const finalGallery: string[] = [];
+    for (const item of product.gallery) {
+      if (item instanceof File) {
+        const url = await uploadFile(item, slug);
+        finalGallery.push(url);
+      } else {
+        finalGallery.push(item);
+      }
+    }
+
+    // delete old file in gallery -> Diffing algorhytm
+    const removedGalleryUrls = existingProduct?.gallery // select old file 
+      .map((f) => f.url)
+      .filter((url) => !finalGallery.includes(url));
+
+    if (removedGalleryUrls?.length > 0) {
+      await deleteFile([removedGalleryUrls]);
+    }
+
+    const newUrlToCreate = finalGallery.filter( // select new file
+      (url) => !existingProduct?.gallery.some((f) => f.url === url),
     );
 
     await prisma.product.update({
-      where:{id:productId},
+      where: { id: productId },
       data: {
         ...product,
-        slug,
         thumbnail: thumbnailUrl,
         gallery: {
-          create: galleryUrl.map((url) => ({
-            url,
-          })),
+          deleteMany: { // delete old file in db
+            url: { in: removedGalleryUrls },
+          },
+          create: newUrlToCreate.map((url) => { //create new file in db
+            url;
+          }),
         },
       },
     });
