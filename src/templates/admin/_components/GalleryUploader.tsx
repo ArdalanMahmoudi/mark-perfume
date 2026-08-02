@@ -4,10 +4,11 @@ import Image from "next/image";
 import React, { useEffect, useMemo, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
-const GalleryUploader = ({ name, setValue, watch }) => {
+const GalleryUploader = ({ name, setValue, watch, getValues }) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop(acceptedFiles) {
-      setValue(name, acceptedFiles);
+      const currentFiles = getValues(name) ?? []
+      setValue(name, [...currentFiles, ...acceptedFiles]);
     },
     multiple: true,
   });

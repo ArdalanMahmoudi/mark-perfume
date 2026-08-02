@@ -16,6 +16,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SimpleEditor } from "@/src/components/tiptap-editor/tiptap-templates/simple/simple-editor";
 import { ProductType } from "@/src/lib/types/product.type";
+import { useRouter } from "next/navigation";
 
 type ProductFormProps = {
   categories: string[];
@@ -31,6 +32,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
     setValue,
     watch,
     reset,
+    getValues,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(
@@ -62,7 +64,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
 
   // Toast
   const toast = useToast();
-  console.log(errors);
+  const router = useRouter()
 
   // ----------------handleform
   const onSubmit = async (data) => {
@@ -99,7 +101,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
         console.log("edited");
         await updateProductAction(product?.id, formData);
         toast.success("تغییرات محصول اعمال شد");
-        reset();
+        router.refresh()
       }
     } catch {
       toast.error("مشکلی پیش آمد دوباره امتحان کنید");
@@ -257,7 +259,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
         </div>
         <div className="">
           <span> گالری تصاویر محصول</span>
-          <GalleryUploader name="gallery" setValue={setValue} watch={watch} />
+          <GalleryUploader name="gallery" setValue={setValue} watch={watch} getValues={getValues}/>
         </div>
       </div>
 

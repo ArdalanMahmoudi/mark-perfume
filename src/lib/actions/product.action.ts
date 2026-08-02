@@ -133,14 +133,22 @@ export const updateProductAction = async (
   const rawDatas = Object.fromEntries(formData.entries());
   const specification = JSON.parse(formData.get("specification") as string);
   const thumbnail = formData.get("thumbnail");
-  const gallery = formData.getAll("gallery") ;
+  const gallery = formData.getAll("gallery");
 
   const data = {
     id: productId,
     ...rawDatas,
     specification,
-    thumbnail: thumbnail instanceof File && thumbnail.size > 0 ? thumbnail : (rawDatas.thumbnailUrl as string),
-    gallery : gallery.filter(item => (item instanceof File) || item.size > 0),
+    thumbnail:
+      thumbnail instanceof File && thumbnail.size > 0
+        ? thumbnail
+        : (rawDatas.thumbnailUrl as string),
+    gallery: gallery.filter((item) =>{
+      if (item instanceof File) {
+        return item.size > 0
+      }
+      return true
+    }),
   };
 
   const result = updateProductSchema.safeParse(data);
@@ -157,9 +165,9 @@ export const updateProductAction = async (
       gallery: true,
     },
   });
-  
+
   if (!existingProduct) {
-    return {success:false, message:" محصول پیدا نشد"}
+    return { success: false, message: " محصول پیدا نشد" };
   }
 
   const slug = existingProduct?.slug;
@@ -168,7 +176,7 @@ export const updateProductAction = async (
 
   try {
     // upload new thumbnail File && delete old File
-    let thumbnailUrl = product.thumbnail as string; 
+    let thumbnailUrl = product.thumbnail as string;
     if (product.thumbnail instanceof File) {
       thumbnailUrl = await uploadFile(product.thumbnail, slug);
       tempFiles.push(thumbnailUrl);
@@ -187,17 +195,26 @@ export const updateProductAction = async (
     }
 
     // delete old file in gallery -> Diffing algorhytm
-    const removedGalleryUrls = existingProduct?.gallery // select old file 
+    const removedGalleryUrls = existingProduct?.gallery // select old file
       .map((f) => f.url)
       .filter((url) => !finalGallery.includes(url));
 
     if (removedGalleryUrls?.length > 0) {
-      await deleteFile([removedGalleryUrls]);
+      await deleteFile(removedGalleryUrls);
     }
 
-    const newUrlToCreate = finalGallery.filter( // select new file
+    const newUrlToCreate = finalGallery.filter(
+      // select new file
       (url) => !existingProduct?.gallery.some((f) => f.url === url),
     );
+
+    console.log("p-id", productId);
+    console.log("product", product);
+    console.log("t-url", thumbnailUrl);
+    console.log("fg-url", finalGallery);
+    console.log("rmg-url", removedGalleryUrls);
+    console.log("new-url", newUrlToCreate);
+    
 
     await prisma.product.update({
       where: { id: productId },
@@ -205,12 +222,13 @@ export const updateProductAction = async (
         ...product,
         thumbnail: thumbnailUrl,
         gallery: {
-          deleteMany: { // delete old file in db
+          deleteMany: {
+            // delete old file in db
             url: { in: removedGalleryUrls },
           },
-          create: newUrlToCreate.map((url) => { //create new file in db
-            url;
-          }),
+          create: newUrlToCreate.map((url) => {
+            return {url};
+          }), //create new file in db
         },
       },
     });
