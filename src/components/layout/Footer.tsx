@@ -20,7 +20,7 @@ import ActiveLink from "../common/ActiveLink";
 
 const Footer = () => {
   return (
-    <footer className="w-full">
+    <footer className="w-full mt-24">
       <div className="py-12 bg-[url-('/images/footer-background.png')] bg-no-repeat bg-center border-t-2 border-primary bg-secondary">
         <Container>
           <div className="grid grid-cols-3 gap-6">

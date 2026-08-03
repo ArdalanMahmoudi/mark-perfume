@@ -7,7 +7,7 @@ import ProductCard from "@/src/components/common/ProductCard";
 
 const NewestProductSection = ({products}) => {
   return (
-    <section>
+    <section className="mt-24">
       <Container>
         <SectionTitle
           title="جدیدترین محصولات"

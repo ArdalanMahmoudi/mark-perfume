@@ -31,13 +31,13 @@ const BreadCrumbs = ({
               <li key={idx} className="flex items-center">
                 {idx < links?.length - 1 ? (
                   <Link
-                    className={`${textClass} cursor-pointer`}
+                    className={`${textClass} text-base cursor-pointer`}
                     href={link?.href}
                   >
                     <span>{link?.label}</span>
                   </Link>
                 ) : (
-                  <span className={`${secondTextClass}`}>{link.label}</span>
+                  <span className={`${secondTextClass} text-muted-foreground`}>{link.label}</span>
                 )}
                 {idx < links.length - 1 && (
                   <span className="mx-2 ">{separator}</span>

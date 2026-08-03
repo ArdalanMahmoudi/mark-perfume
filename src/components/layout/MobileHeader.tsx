@@ -15,6 +15,7 @@ import Link from "next/link";
 import MobileHeaderTabs from "./MobileHeaderTabs";
 import { CiInstagram, CiLinkedin } from "react-icons/ci";
 import { PiWhatsappLogoThin } from "react-icons/pi";
+import { SearchBox } from "./SearchBox";
 
 export function MobileHeader() {
   return (
@@ -29,20 +30,8 @@ export function MobileHeader() {
           </Button>
         </DrawerTrigger>
         <DrawerContent className="rounded-none! gap-5 data-[vaul-drawer-direction=bottom]:max-h-[50vh] w-[90%]! data-[vaul-drawer-direction=top]:max-h-[50vh] p-5 bg-secondary">
-          <DrawerHeader className="p-0">
-            <form
-              action="#"
-              className="h-10 rounded-3xl bg-white border border-grey220 border-l-0  flex items-center"
-            >
-              <input
-                type="text"
-                className="focus:outline-0 px-2.5 w-full text-sm"
-                placeholder="اینجا پیداش کن ...."
-              />
-              <button className="bg-secondary rounded-l-3xl size-10 border border-grey220 flex items-center justify-center">
-                <Search className="text-primary size-5" />
-              </button>
-            </form>
+          <DrawerHeader className="p-0 w-full">
+           <SearchBox/>
           </DrawerHeader>
           <MobileHeaderTabs/>
           <DrawerFooter className="pt-2.5 flex flex-col gap-2.5  ">

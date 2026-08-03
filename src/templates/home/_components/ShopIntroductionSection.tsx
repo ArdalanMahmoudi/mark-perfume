@@ -4,7 +4,7 @@ import React from "react";
 
 const ShopIntroductionSection = () => {
   return (
-    <section className="my-32  ">
+    <section className="mt-24 lg:mt-48">
       <Container>
         <div className="flex flex-col lg:flex-row relative p-5 justify-between items-center gap-7.5 rounded-lg bg-secondary border border-grey220 lg:py-10 lg:px-5">
           <div className="flex-1">

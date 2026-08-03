@@ -79,12 +79,11 @@ export const createProductAction = async (formData: FormData) => {
         },
       },
     });
+    return { success: true, message: "محصول با موفقیت ایجاد شد" };
   } catch (err) {
     await deleteFile(tempFiles);
     return { success: false, message: "خطا در ثبت محصول مجدد امتحان کنید" };
   }
-
-  return { success: true, message: "محصول با موفقیت ایجاد شد" };
 };
 
 export const deleteProductAction = async (productId) => {
@@ -134,6 +133,7 @@ export const updateProductAction = async (
   const specification = JSON.parse(formData.get("specification") as string);
   const thumbnail = formData.get("thumbnail");
   const gallery = formData.getAll("gallery");
+  console.log("rawDatas", rawDatas);
 
   const data = {
     id: productId,
@@ -141,13 +141,13 @@ export const updateProductAction = async (
     specification,
     thumbnail:
       thumbnail instanceof File && thumbnail.size > 0
-        ? thumbnail
-        : (rawDatas.thumbnailUrl as string),
-    gallery: gallery.filter((item) =>{
+        ? thumbnail // file -> for new file
+        : (thumbnail as string), // string url ->  for old file
+    gallery: gallery.filter((item) => {
       if (item instanceof File) {
-        return item.size > 0
+        return item.size > 0; // file -> for new file
       }
-      return true
+      return true; // string url ->  for old file
     }),
   };
 
@@ -170,7 +170,25 @@ export const updateProductAction = async (
     return { success: false, message: " محصول پیدا نشد" };
   }
 
-  const slug = existingProduct?.slug;
+  let slug = existingProduct.slug; // old slug
+  if (product.name !== existingProduct.name) {
+    // if change name should change slug
+    const baseSlug = slugify(product.name, {
+      lower: true,
+      strict: true,
+      trim: true,
+    });
+    slug = baseSlug;
+    let counter = 1;
+    while (
+      await prisma.product.findFirst({
+        where: { slug },
+      })
+    ) {
+      slug = `${baseSlug}-${counter}`;
+      counter++;
+    }
+  }
 
   let tempFiles: string[] = [];
 
@@ -208,18 +226,11 @@ export const updateProductAction = async (
       (url) => !existingProduct?.gallery.some((f) => f.url === url),
     );
 
-    console.log("p-id", productId);
-    console.log("product", product);
-    console.log("t-url", thumbnailUrl);
-    console.log("fg-url", finalGallery);
-    console.log("rmg-url", removedGalleryUrls);
-    console.log("new-url", newUrlToCreate);
-    
-
     await prisma.product.update({
       where: { id: productId },
       data: {
         ...product,
+        slug,
         thumbnail: thumbnailUrl,
         gallery: {
           deleteMany: {
@@ -227,15 +238,14 @@ export const updateProductAction = async (
             url: { in: removedGalleryUrls },
           },
           create: newUrlToCreate.map((url) => {
-            return {url};
+            return { url };
           }), //create new file in db
         },
       },
     });
+    return { success: true, message: "محصول با موفقیت ایجاد شد" };
   } catch (err) {
     await deleteFile(tempFiles);
-    return { success: false, message: "خطا در ثبت محصول مجدد امتحان کنید" };
+    return { success: false, message: "خطا در ویرایش محصول مجدد امتحان کنید" };
   }
-
-  return { success: true, message: "محصول با موفقیت ایجاد شد" };
 };

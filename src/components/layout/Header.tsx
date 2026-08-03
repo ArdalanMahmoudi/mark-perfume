@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React from "react";
 import Container from "../common/Container";
 import Image from "next/image";
@@ -26,13 +26,10 @@ import { MobileHeader } from "./MobileHeader";
 import { useToast } from "@/src/app/ToastProvider";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
-import { roles } from "@/src/lib/constant";
 import { UserType } from "@/src/lib/types/user.type";
+import { SearchBox } from "./SearchBox";
 
-
-
-
-const Header = ({ isLoggedIn }: { isLoggedIn: UserType  }) => {
+const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
   const toast = useToast();
   const router = useRouter();
   const handleLogout = async () => {
@@ -41,11 +38,11 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType  }) => {
       icon: "question",
       confirmButtonText: "بله",
       cancelButtonText: "خیر",
-      showCancelButton:true,
+      showCancelButton: true,
       customClass: {
         confirmButton: "bg-primary! text-white!",
       },
-    }).then(async(res) => {
+    }).then(async (res) => {
       if (res.isConfirmed) {
         const result = await fetch("/api/auth/logout", {
           method: "POST",
@@ -59,6 +56,7 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType  }) => {
       }
     });
   };
+
   return (
     <header className="bg-secondary border-b border-grey220">
       {/* header desktop */}
@@ -67,38 +65,46 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType  }) => {
           {/* top */}
           <div className="flex items-center justify-between">
             {/* Mobile-Header */}
+
             <MobileHeader />
-            {/* Mobile-Header */}
-            <div className="flex items-center lg:gap-24  justify-between">
-              <form
-                action="#"
-                className="h-10 rounded-3xl bg-white border border-grey220 border-l-0 lg:w-md  hidden lg:flex items-center"
-              >
-                <input
-                  type="text"
-                  className="focus:outline-0 px-2.5 w-full text-sm"
-                  placeholder="اینجا پیداش کن ...."
-                />
-                <button className="bg-secondary rounded-l-3xl size-10 border border-grey220 flex items-center justify-center">
-                  <Search className="text-primary size-5" />
-                </button>
-              </form>
-              <Link href={"/"} className="max-w-30 lg:max-w-37.5 max-h-20">
-                <Image
-                  src={"/images/logo.png"}
-                  width={600}
-                  height={300}
-                  alt="logo"
-                />
-              </Link>
+            {/* Mobile-Header End*/}
+            <div className="lg:flex hidden">
+              <SearchBox />
             </div>
+
+            <Link
+              href={"/"}
+              className="max-w-30 lg:max-w-37.5 max-h-20 lg:block hidden"
+            >
+              <Image
+                src={"/images/logo.png"}
+                width={600}
+                height={300}
+                alt="logo"
+              />
+            </Link>
+            <Link href={"/"} className=" max-h-15 max-w-30 lg:hidden block">
+              <Image
+                src={"/images/logo.png"}
+                width={600}
+                height={300}
+                alt="logo"
+              />
+            </Link>
             {/* Buttons */}
             <div className="flex gap-2">
+              {/* <SearchBox/> */}
               {isLoggedIn ? (
                 <div className="relative group ">
-                  <Link href={"/dashboard"} className="flex text-sm cursor-pointer items-center gap-1 p-2 justify-center rounded-full bg-white text-primary hover:text-white border border-grey220 hover:bg-primary transition-colors">
+                  <Link
+                    href={"/dashboard"}
+                    className="flex text-sm cursor-pointer items-center gap-1 p-2 justify-center rounded-full bg-white text-primary hover:text-white border border-grey220 hover:bg-primary transition-colors"
+                  >
                     <UserIcon className="size-4" />
-                   <span className="lg:block hidden text-nowrap"> ورود به حساب کاربری</span>
+                    <span className="lg:block hidden text-nowrap">
+                      {" "}
+                      ورود به حساب کاربری
+                    </span>
                   </Link>
                   <div className="absolute right-0  w-48 bg-secondary rounded-md shadow-lg border border-grey220 z-50 mt-20 invisible opacity-0 group-hover:opacity-100 group-hover:mt-2 group-hover:visible transition-all duration-500  ">
                     <div className="py-1 font-Vazir-L backdrop-blur-3xl">
@@ -144,7 +150,10 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType  }) => {
                       </Link>
 
                       {/* <Link className="block px-4 py-2 text-sm text-charcoal hover:bg-primary/10" href="/dashboard#/admin" data-discover="true">پنل مدیریت</Link> */}
-                      <button onClick={handleLogout} className="flex items-center gap-1 w-full text-left px-4 py-2 text-sm  hover:bg-primary/10 hover:text-error500 cursor-pointer">
+                      <button
+                        onClick={handleLogout}
+                        className="flex items-center gap-1 w-full text-left px-4 py-2 text-sm  hover:bg-primary/10 hover:text-error500 cursor-pointer"
+                      >
                         <LogOut className="size-4" />
                         خروج از حساب کاربری
                       </button>

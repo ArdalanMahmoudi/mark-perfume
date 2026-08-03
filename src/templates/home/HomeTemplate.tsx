@@ -10,9 +10,6 @@ import FavorSection from "./_components/FavorSection";
 import NewestProductSection from "./_components/NewestProductSection";
 import ShopIntroductionSection from "./_components/ShopIntroductionSection";
 import LatestBlog from "./_components/LatestBlog";
-import Footer from "@/src/components/layout/Footer";
-
-import ProductCard from "@/src/components/common/ProductCard";
 
 
 

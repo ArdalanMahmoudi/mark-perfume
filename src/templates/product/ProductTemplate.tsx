@@ -30,14 +30,13 @@ import { notFound } from "next/navigation";
 
 const ProductTemplate = ({ product }: { product: ProductType }) => {
   if (!product) {
-    notFound()
+    notFound();
   }
   const links = [
     { href: "/", label: "خانه" },
     { href: "/shop", label: "فروشگاه" },
     { href: "/", label: product?.name },
   ];
-
 
   const totalPrice = discountCalculator(product.price, product.discount);
   return (
@@ -49,14 +48,18 @@ const ProductTemplate = ({ product }: { product: ProductType }) => {
           </button>
           <div className="flex flex-col gap-1">
             <div className="flex items-end gap-1">
-              <span className="text-xs font-bold text-gray-500 line-through">
-                {Number(product.price).toLocaleString("fa-IR")} تومان
-              </span>
-              <div className="size-5 rounded-full text-white bg-primary flex items-center justify-center">
-                <span className="text-xs">
-                  {Number(product.discount).toLocaleString("fa-IR")}%
-                </span>
-              </div>
+              {product.discount && (
+                <>
+                  <span className="text-sm font-bold text-gray-500 line-through">
+                    {Number(product.price).toLocaleString("fa-IR")} تومان
+                  </span>
+                  <div className="size-5 rounded-full text-white bg-primary flex items-center justify-center">
+                    <span className="text-xs">
+                      {Number(product.discount).toLocaleString("fa-IR")}%
+                    </span>
+                  </div>
+                </>
+              )}
             </div>
             <span className="lg:text-lg text-sm font-bold">
               {Number(totalPrice).toLocaleString("fa-IR")} تومان
@@ -93,8 +96,11 @@ const ProductTemplate = ({ product }: { product: ProductType }) => {
                 {/* meta */}
                 <div className="flex gap-4">
                   <div className="flex gap-0.5">
-                    {Array.from({ length: 5 }).map((_,idx) => (
-                      <Star key={idx} className="fill-warning300 stroke-1 stroke-warning300 size-3.5" />
+                    {Array.from({ length: 5 }).map((_, idx) => (
+                      <Star
+                        key={idx}
+                        className="fill-warning300 stroke-1 stroke-warning300 size-3.5"
+                      />
                     ))}
                   </div>
                   <MessageCircle className="text-primary fill-primary size-3.5" />
@@ -102,7 +108,6 @@ const ProductTemplate = ({ product }: { product: ProductType }) => {
                   <ChartLine className="text-primary  size-3.5" />
                 </div>
                 {/* detail */}
-                <p className="text-primary mt-5 font-bold">توضیحات محصول</p>
                 <div
                   className="product-content"
                   dangerouslySetInnerHTML={{
@@ -143,9 +148,11 @@ const ProductTemplate = ({ product }: { product: ProductType }) => {
                 <div className="hidden lg:flex flex-col">
                   <div className="flex justify-between items-center my-4">
                     <div className="flex flex-col gap-1">
-                      <span className="text-sm font-bold text-gray-500 line-through">
-                        {Number(product.price).toLocaleString("fa-IR")} تومان
-                      </span>
+                      {product.discount && (
+                        <span className="text-sm font-bold text-gray-500 line-through">
+                          {Number(product.price).toLocaleString("fa-IR")} تومان
+                        </span>
+                      )}
                       <span className="lg:text-lg text-base font-bold">
                         {Number(totalPrice).toLocaleString("fa-IR")} تومان
                       </span>

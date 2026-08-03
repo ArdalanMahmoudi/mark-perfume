@@ -4,6 +4,8 @@ import HomeTemplate from "@/src/templates/home/HomeTemplate";
 
 async function IndexPage ()  {
   const products = await getProductHomePage()
+
+  
   return (
     <>
     <HomeTemplate products={products}/>

@@ -75,7 +75,7 @@ export default function Slider({
             <div
               key={i}
               className="
-              block h-full relative
+              block relative
                 flex-[0_0_calc(100%/var(--slides-default))]
                 sm:flex-[0_0_calc(100%/var(--slides-sm,var(--slides-default)))]
                 md:flex-[0_0_calc(100%/var(--slides-md,var(--slides-sm,var(--slides-default))))]

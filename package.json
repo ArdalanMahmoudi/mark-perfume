@@ -39,6 +39,7 @@
     "embla-carousel-react": "^8.6.0",
     "isomorphic-dompurify": "^3.19.0",
     "jose": "^6.2.3",
+    "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1",
     "lucide-react": "^1.21.0",
     "next": "latest",

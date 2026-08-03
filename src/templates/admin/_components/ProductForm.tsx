@@ -101,7 +101,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
         console.log("edited");
         await updateProductAction(product?.id, formData);
         toast.success("تغییرات محصول اعمال شد");
-        router.refresh()
+        router.push('/admin/products')
       }
     } catch {
       toast.error("مشکلی پیش آمد دوباره امتحان کنید");
@@ -205,7 +205,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
                 classNameLabel="text-base"
                 classNameField=" h-9"
               />
-              <button className="w-1/6" onClick={() => remove(index)}>
+              <button type="button" className="w-1/6" onClick={() => remove(index)}>
                 <TrashIcon className="size-5 hover:text-error500 duration-300 transition-all cursor-pointer" />
               </button>
             </div>
