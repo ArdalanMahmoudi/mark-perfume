@@ -60,6 +60,7 @@ const ProductTemplate = ({ product }: { product: ProductType }) => {
                   </div>
                 </>
               )}
+              
             </div>
             <span className="lg:text-lg text-sm font-bold">
               {Number(totalPrice).toLocaleString("fa-IR")} تومان

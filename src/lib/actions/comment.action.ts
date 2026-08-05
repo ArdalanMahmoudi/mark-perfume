@@ -2,7 +2,10 @@
 import { commentSchema } from "@/src/lib/schemas/comment.schema";
 import { getCurrentUser } from "../queries/user.queries";
 import { prisma } from "../prisma";
-export default async function submitCommentAction(formData) {
+import { roles } from "../constant";
+import { getCommentId } from "../queries/comment.queries";
+
+export const submitCommentAction = async (formData) => {
   const user = await getCurrentUser();
   if (!user) {
     return {
@@ -30,4 +33,57 @@ export default async function submitCommentAction(formData) {
     success: true,
     message: "کامنت شما ثبت شد",
   };
-}
+};
+
+export const acceptCommentAction = async (commentId) => {
+  const user = await getCurrentUser();
+  if (!user || user.role !== roles.ADMIN) {
+    throw new Error("Unauthorized");
+  }
+  try {
+    const findComment = await getCommentId(commentId);
+    if (!findComment) {
+      return { success: false };
+    }
+
+    await prisma.comment.update({
+      where: { id: commentId },
+      data:{status:"ACCEPT"}
+    });
+  } catch {}
+};
+
+export const rejectCommentAction = async (commentId) => {
+  const user = await getCurrentUser();
+  if (!user || user.role !== roles.ADMIN) {
+    throw new Error("Unauthorized");
+  }
+  try {
+    const findComment = await getCommentId(commentId);
+    if (!findComment) {
+      return { success: false };
+    }
+
+    await prisma.comment.update({
+      where: { id: commentId },
+      data:{status:"REJECTED"}
+    });
+  } catch {}
+};
+
+export const deleteCommentAction = async (commentId) => {
+  const user = await getCurrentUser();
+  if (!user || user.role !== roles.ADMIN) {
+    throw new Error("Unauthorized");
+  }
+  try {
+    const findComment = await getCommentId(commentId);
+    if (!findComment) {
+      return { success: false };
+    }
+
+    await prisma.comment.delete({
+      where: { id: commentId },
+    });
+  } catch {}
+};

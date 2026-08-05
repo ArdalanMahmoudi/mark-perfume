@@ -14,7 +14,7 @@ const ProductPage = async({params}:{params:{slug:string}}) => {
                 category:true,
                 comments:{
                     where:{
-                        isAccept:true
+                        status:'ACCEPT'
                     },
                     orderBy:{
                         createdAt:"desc"

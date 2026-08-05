@@ -18,7 +18,7 @@ const ProductCard = ({
       : product.price;
 
   return (
-    <Link href={`/product/${product.slug}`} className={`group ${className}`}>
+    <Link href={`/product/${product.slug}`} className={`group h-full ${className}`}>
       {/* p-top */}
       <Image
         width={500}
@@ -28,7 +28,7 @@ const ProductCard = ({
         alt={product.name}
       />
       {/* p-bottom */}
-      <div className="flex flex-col gap-2.5 bg-secondary p-2.5 rounded-b-lg border border-grey220">
+      <div className="flex flex-col h-32.5 justify-between gap-2.5 bg-secondary p-2.5 rounded-b-lg border border-grey220">
         {/* p-name */}
         <p className="text-primary line-clamp-1">{product.name}</p>
         {/* p-desc */}

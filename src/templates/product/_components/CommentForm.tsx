@@ -1,6 +1,6 @@
 import { useToast } from "@/src/app/ToastProvider";
 import { InputGroupInlineStart } from "@/src/components/common/InputGroup";
-import submitCommentAction from "@/src/lib/actions/comment.action";
+import { submitCommentAction } from "@/src/lib/actions/comment.action";
 import { commentSchema } from "@/src/lib/schemas/comment.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader, Star } from "lucide-react";

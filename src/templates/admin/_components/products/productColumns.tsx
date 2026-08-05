@@ -7,7 +7,7 @@ import Image from "next/image";
 
 
 
-export const columns: ColumnDef<ProductType>[] = [
+export const productColumns: ColumnDef<ProductType>[] = [
   {
     accessorKey: "thumbnail",
     header: "تصویر",

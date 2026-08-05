@@ -9,6 +9,8 @@ import {
 } from "@/src/components/ui/tabs";
 import CommentForm from "./CommentForm";
 import Comment from "@/src/components/common/Comment";
+import { CommentType } from "@/src/lib/types/comment.type";
+import { ProductType } from "@/src/lib/types/product.type";
 
 const ProductTabs = ({
   description,
@@ -16,7 +18,7 @@ const ProductTabs = ({
   comments,
   volume,
   productId,
-}) => {
+}: ProductType & CommentType) => {
   const activeTabStyle =
     "data-[state=active]:bg-primary data-[state=active]:text-white ";
   return (
@@ -90,7 +92,14 @@ const ProductTabs = ({
                     {/* comments */}
                     {comments.length > 0 ? (
                       comments.map((comment) =>
-                        !comment.isAccept ? (
+                        comment.status === "ACCEPT" ? (
+                          <Comment
+                            key={comment.id}
+                            score={comment.score}
+                            body={comment.body}
+                            date={comment.createdAt}
+                          />
+                        ) : (
                           <div className="flex flex-col gap-2 items-center py-4 text-center">
                             <MessageCircle className="size-12 text-muted-foreground" />
                             <h3 className="font-bold">
@@ -101,13 +110,6 @@ const ProductTabs = ({
                               ثبت میکند.
                             </p>
                           </div>
-                        ) : (
-                          <Comment
-                            key={comment.id}
-                            score={comment.score}
-                            body={comment.body}
-                            date={comment.createdAt}
-                          />
                         ),
                       )
                     ) : (

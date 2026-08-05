@@ -1,8 +1,8 @@
 import { Plus, Search } from "lucide-react";
 import Link from "next/link";
-import { columns } from "@/src/templates/admin/_components/products/columns";
-import { DataTable } from "@/src/templates/admin/_components/products/data-table";
+import { DataTable } from "@/src/templates/admin/_components/data-table";
 import { prisma } from "@/src/lib/prisma";
+import { productColumns } from "@/src/templates/admin/_components/products/productColumns";
 
 const Page = async () => {
   const data = await prisma.product.findMany();
@@ -28,7 +28,7 @@ const Page = async () => {
           </Link>
         </div>
         <div className="container mx-auto py-10">
-          <DataTable columns={columns} data={data} />
+          <DataTable columns={productColumns} data={data} />
         </div>
       </div>
     </>
