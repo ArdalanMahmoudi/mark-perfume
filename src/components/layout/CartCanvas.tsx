@@ -20,7 +20,7 @@ export function CartCanvas() {
         <DrawerTrigger asChild>
           <Button
             variant="outline"
-            className="relative capitalize group transition-all duration-200 cursor-pointer text-primary hover:bg-primary hover:text-white size-9 lg:size-10 rounded-full"
+            className="relative capitalize group transition-all duration-200 cursor-pointer text-primary hover:bg-primary hover:text-white size-8 lg:size-10 rounded-full"
           >
             <ShoppingCart className="size-4" />
           </Button>

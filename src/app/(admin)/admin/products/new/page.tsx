@@ -1,6 +1,6 @@
 import { prisma } from "@/src/lib/prisma";
 import { getCategories } from "@/src/lib/queries/product.queries";
-import ProductForm from "@/src/templates/admin/_components/ProductForm";
+import ProductForm from "@/src/templates/admin/_components/products/ProductForm";
 
 import React from "react";
 

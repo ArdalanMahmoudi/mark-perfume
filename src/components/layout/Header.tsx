@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Container from "../common/Container";
 import Image from "next/image";
 import Link from "next/link";
@@ -28,6 +28,8 @@ import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { UserType } from "@/src/lib/types/user.type";
 import { SearchBox } from "./SearchBox";
+import NavBottomHeader from "./NavBottomHeader";
+import { CategoryType } from "@/src/lib/types/categories.type";
 
 const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
   const toast = useToast();
@@ -57,18 +59,32 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
     });
   };
 
+  const [isSticky, setIsSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsSticky(window.scrollY >= 100);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <header className="bg-secondary border-b border-grey220">
+    <header
+      className={`${isSticky ? "fixed top-0 left-0 w-full z-50" : "fixed top-0 left-0 right-0"} z-50 shadow-sm bg-secondary border-b border-grey220`}
+    >
       {/* header desktop */}
       <Container>
-        <div className="py-2.5 flex flex-col gap-2.5">
+        <div className=" py-2.5 flex flex-col gap-2.5">
           {/* top */}
           <div className="flex items-center justify-between">
-            {/* Mobile-Header */}
-
-            <MobileHeader />
-            {/* Mobile-Header End*/}
-            <div className="lg:flex hidden">
+            <MobileHeader  user={isLoggedIn} />
+            <div className="lg:block hidden">
               <SearchBox />
             </div>
 
@@ -83,19 +99,20 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
                 alt="logo"
               />
             </Link>
-            <Link href={"/"} className=" max-h-15 max-w-30 lg:hidden block">
+            {/* logo-mobile */}
+            <Link href={"/"} className=" lg:hidden block">
               <Image
                 src={"/images/logo.png"}
                 width={600}
                 height={300}
+                className="w-20 h-12"
                 alt="logo"
               />
             </Link>
             {/* Buttons */}
             <div className="flex gap-2">
-              {/* <SearchBox/> */}
               {isLoggedIn ? (
-                <div className="relative group ">
+                <div className="relative group hidden lg:block">
                   <Link
                     href={"/dashboard"}
                     className="flex text-sm cursor-pointer items-center gap-1 p-2 justify-center rounded-full bg-white text-primary hover:text-white border border-grey220 hover:bg-primary transition-colors"
@@ -149,7 +166,6 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
                         تیکت ها
                       </Link>
 
-                      {/* <Link className="block px-4 py-2 text-sm text-charcoal hover:bg-primary/10" href="/dashboard#/admin" data-discover="true">پنل مدیریت</Link> */}
                       <button
                         onClick={handleLogout}
                         className="flex items-center gap-1 w-full text-left px-4 py-2 text-sm  hover:bg-primary/10 hover:text-error500 cursor-pointer"
@@ -177,7 +193,9 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
                 </>
               )}
               {/* not login */}
-
+              <div className="block lg:hidden">
+                <SearchBox />
+              </div>
               {/*start Shoping-Crat */}
               <CartCanvas />
               {/*end Shoping-Crat */}
@@ -185,81 +203,7 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
           </div>
 
           {/* bottom */}
-          <div className="hidden lg:flex items-center justify-between">
-            <nav className="flex gap-4 text-sm">
-              {/* Mega-menu */}
-              <Megamenu />
-              <ActiveLink
-                activeClassName="border-b-2 border-primary"
-                className="  p-1.5  flex items-center gap-1 "
-                href={"/"}
-              >
-                <Home className="size-4.5 text-primary" />
-                <span>خانه</span>
-              </ActiveLink>
-              <ActiveLink
-                activeClassName="border-b-2 border-primary"
-                className="  p-1.5  flex items-center gap-1 "
-                href={"/shop"}
-              >
-                <ShoppingCart className="size-4.5 text-primary" />
-                <span>فروشگاه</span>
-              </ActiveLink>
-              <ActiveLink
-                activeClassName="border-b-2 border-primary"
-                className="  p-1.5  flex items-center gap-1 "
-                href={"/blogs"}
-              >
-                <FileText className="size-4.5 text-primary" />
-                <span>مقالات</span>
-              </ActiveLink>
-              <ActiveLink
-                activeClassName="border-b-2 border-primary"
-                className="  p-1.5  flex items-center gap-1 "
-                href={"/rules"}
-              >
-                <BookText className="size-4.5 text-primary" />
-                <span>قوانین و شرایط خرید</span>
-              </ActiveLink>
-              <ActiveLink
-                activeClassName="border-b-2 border-primary"
-                className="  p-1.5  flex items-center gap-1 "
-                href={"/contactus"}
-              >
-                <Phone className="size-4.5 text-primary" />
-                <span>تماس با ما</span>
-              </ActiveLink>
-              <ActiveLink
-                activeClassName="border-b-2 border-primary"
-                className="  p-1.5  flex items-center gap-1 "
-                href={"/aboutus"}
-              >
-                <CircleQuestionMark className="size-4.5 text-primary" />
-                <span>درباره ما</span>
-              </ActiveLink>
-            </nav>
-            {/* Social link */}
-            <div className="flex items-center gap-4">
-              <Link
-                href={"/"}
-                className="size-10 bg-white flex items-center justify-center border border-grey220 rounded-full"
-              >
-                <CiInstagram className="size-5 text-primary" />
-              </Link>
-              <Link
-                href={"/"}
-                className="size-10 bg-white flex items-center justify-center border border-grey220 rounded-full"
-              >
-                <PiWhatsappLogoThin className="size-5 text-primary" />
-              </Link>
-              <Link
-                href={"/"}
-                className="size-10 bg-white flex items-center justify-center border border-grey220 rounded-full"
-              >
-                <CiLinkedin className="size-5 text-primary" />
-              </Link>
-            </div>
-          </div>
+          <NavBottomHeader isSticky={isSticky} />
         </div>
       </Container>
     </header>

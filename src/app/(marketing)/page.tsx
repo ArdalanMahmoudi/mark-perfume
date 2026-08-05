@@ -1,5 +1,6 @@
-import { getProductHomePage } from "@/src/lib/queries/product.queries";
+import { getCategories, getProductHomePage } from "@/src/lib/queries/product.queries";
 import HomeTemplate from "@/src/templates/home/HomeTemplate";
+
 
 
 async function IndexPage ()  {
@@ -8,7 +9,9 @@ async function IndexPage ()  {
   
   return (
     <>
+
     <HomeTemplate products={products}/>
+
     </>
   )
 };

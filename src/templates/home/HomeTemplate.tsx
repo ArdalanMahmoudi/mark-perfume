@@ -18,7 +18,7 @@ const HomeTemplate = ({products}) => {
   
   return (
     <>
-      <main>
+      <main className="pt-16 lg:pt-24">
         <HeroSection />
         <CategorySection />
         <OfferSection products={products}/>

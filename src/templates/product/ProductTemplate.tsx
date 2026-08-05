@@ -24,7 +24,6 @@ import SectionTitle from "../home/_components/SectionTitle";
 import Slider from "@/src/components/common/Slider";
 import ProductCard from "@/src/components/common/ProductCard";
 import { ProductType } from "@/src/lib/types/product.type";
-import "@/styles/editor-content.scss";
 import { discountCalculator } from "@/src/lib/helper";
 import { notFound } from "next/navigation";
 

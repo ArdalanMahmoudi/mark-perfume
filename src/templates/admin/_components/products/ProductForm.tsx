@@ -2,8 +2,8 @@
 import { InputGroupInlineStart } from "@/src/components/common/InputGroup";
 import { CloudUploadIcon, Plus, TrashIcon } from "lucide-react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
-import ThumbnailUploader from "./ThumbnailUploader";
-import GalleryUploader from "./GalleryUploader";
+import ThumbnailUploader from "../ThumbnailUploader";
+import GalleryUploader from "../GalleryUploader";
 import {
   createProductAction,
   updateProductAction,
@@ -14,9 +14,9 @@ import {
   updateProductSchema,
 } from "@/src/lib/schemas/product.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SimpleEditor } from "@/src/components/tiptap-editor/tiptap-templates/simple/simple-editor";
 import { ProductType } from "@/src/lib/types/product.type";
 import { useRouter } from "next/navigation";
+import TextEditor from "@/src/components/common/TextEditor";
 
 type ProductFormProps = {
   categories: string[];
@@ -64,7 +64,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
 
   // Toast
   const toast = useToast();
-  const router = useRouter()
+  const router = useRouter();
 
   // ----------------handleform
   const onSubmit = async (data) => {
@@ -101,7 +101,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
         console.log("edited");
         await updateProductAction(product?.id, formData);
         toast.success("تغییرات محصول اعمال شد");
-        router.push('/admin/products')
+        router.push("/admin/products");
       }
     } catch {
       toast.error("مشکلی پیش آمد دوباره امتحان کنید");
@@ -111,7 +111,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="text-center">
-      {/* name */}
+      {/* ------------------------name------------------------ */}
       <div className="grid grid-cols-2 my-8 gap-4">
         <InputGroupInlineStart
           element="input"
@@ -128,7 +128,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
           caption={errors.latinName?.message}
         />
       </div>
-      {/* prices */}
+      {/* ------------------------category------------------------ */}
       <div className="grid my-8 gap-4 grid-cols-4">
         <div className="flex gap-2 flex-col col-span-2">
           <label htmlFor="category">دسته‌بندی</label>
@@ -143,15 +143,16 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
               </option>
             ))}
           </select>
-          <p className="text-error500">{errors.category?.message}</p>
+          <p className="text-error500">{errors.categoryId?.message}</p>
         </div>
+        {/* ------------------------prices------------------------ */}
         <InputGroupInlineStart
           element="input"
           label="قیمت"
           {...register("price")}
           classNameLabel="text-base"
           type="number"
-          caption={errors.price?.message}
+          caption={errors.price?.message || errors.price?.type}
         />
         <InputGroupInlineStart
           element="input"
@@ -162,7 +163,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
           caption={errors.discount?.message}
         />
       </div>
-      {/* desc */}
+      {/* ------------------------desc------------------------ */}
       <div className="my-12">
         <InputGroupInlineStart
           element="textarea"
@@ -179,33 +180,39 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
             name="details"
             control={control}
             render={({ field }) => (
-              <SimpleEditor value={field.value} onChange={field.onChange} />
+              <TextEditor value={field.value} onChange={field.onChange}/>
             )}
           />
         </div>
       </div>
-      {/* specification */}
+      {/* ------------------------specification------------------------ */}
       <div className="flex flex-col items-start my-8">
         <div className="flex flex-col gap-x-4 w-full ">
           <div className="flex items-center ">
             <div className="w-1/2 mr-2">ویژگی</div>
             <div className="w-1/2 mr-2">مقدار ویژگی</div>
           </div>
-          {fields.map((field, index) => (
+          {fields.map((_, index) => (
             <div className="flex gap-4 items-center">
               <InputGroupInlineStart
                 element="input"
                 {...register(`specification.${index}.key`)}
                 classNameLabel="text-base"
                 classNameField=" h-9"
+                caption={errors.specification?.[index]?.key?.message}
               />
               <InputGroupInlineStart
                 element="input"
                 {...register(`specification.${index}.value`)}
                 classNameLabel="text-base"
                 classNameField=" h-9"
+                caption={errors.specification?.[index]?.value?.message}
               />
-              <button type="button" className="w-1/6" onClick={() => remove(index)}>
+              <button
+                type="button"
+                className="w-1/6"
+                onClick={() => remove(index)}
+              >
                 <TrashIcon className="size-5 hover:text-error500 duration-300 transition-all cursor-pointer" />
               </button>
             </div>
@@ -223,8 +230,8 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
           <Plus className="size-4" />
         </button>
       </div>
-      {/*  */}
 
+      {/* ------------------------stock------------------------ */}
       <div className="grid grid-cols-2 gap-4 my-8">
         <InputGroupInlineStart
           element="input"
@@ -234,6 +241,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
           type="number"
           caption={errors.stock?.message}
         />
+        {/* ------------------------volume------------------------ */}
         <InputGroupInlineStart
           element="input"
           label="حجم"
@@ -246,7 +254,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
           caption={errors.volume?.message}
         />
       </div>
-      {/* images */}
+      {/* ------------------------images------------------------ */}
 
       <div className="grid grid-cols-2 gap-4 my-12">
         <div className="">
@@ -256,13 +264,20 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
             setValue={setValue}
             watch={watch}
           />
+           <p className="text-error500 text-sm mt-2">{errors.thumbnail?.message}</p>
         </div>
         <div className="">
           <span> گالری تصاویر محصول</span>
-          <GalleryUploader name="gallery" setValue={setValue} watch={watch} getValues={getValues}/>
+          <GalleryUploader
+            name="gallery"
+            setValue={setValue}
+            watch={watch}
+            getValues={getValues}
+          />
+           <p className="text-error500 text-sm mt-2">{errors.gallery?.message}</p>
         </div>
       </div>
-
+      {/* ------------------------Button Submit------------------------ */}
       <button
         type="submit"
         className="bg-black text-white px-6 py-2 rounded-sm  cursor-pointer"

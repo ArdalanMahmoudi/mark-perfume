@@ -58,17 +58,21 @@ export function SearchBox() {
       {/* Search-Desktop */}
       <div
         onClick={() => setOpen(true)}
-        className="h-10 relative px-2 rounded-3xl bg-white border border-grey220 border-l-0 lg:w-sm  flex items-center"
+        className="hidden h-10 cursor-pointer relative px-2 rounded-3xl bg-white border border-grey220 border-l-0 lg:w-sm  lg:flex items-center"
       >
         <Search className="text-primary size-5" />
         <input
           type="text"
-          className="focus:outline-0 px-2.5 w-full text-sm "
+          className="focus:outline-0 px-2.5 w-full text-sm cursor-pointer"
           placeholder="اینجا پیداش کن ...."
         />
       </div>
-
-     
+      <div
+        onClick={() => setOpen(true)}
+        className="flex lg:hidden items-center justify-center bg-white border border-e-grey220 relative capitalize group transition-all duration-200 cursor-pointer text-primary hover:bg-primary hover:text-white size-8 rounded-full"
+      >
+        <Search className="size-4" />
+      </div>
 
       <CommandDialog
         className="sm:max-w-2xl! sm:top-[15%]! sm:translate-y-0! max-sm:h-full! max-sm:w-full! max-sm:max-w-full! max-sm:rounded-none! max-sm:top-0! max-sm:translate-y-0! transition-all duration-300!"
@@ -77,8 +81,12 @@ export function SearchBox() {
       >
         <Command shouldFilter={false}>
           <div className="flex w-full! items-center justify-center">
-            <button className="size-12 flex justify-center items-center " >
-              <ArrowRight className="cursor-pointer" size={24} onClick={() => setOpen(false)}/>
+            <button className="size-12 flex justify-center items-center ">
+              <ArrowRight
+                className="cursor-pointer"
+                size={24}
+                onClick={() => setOpen(false)}
+              />
             </button>
             <CommandInput
               onValueChange={(value) => handleChange(value)}

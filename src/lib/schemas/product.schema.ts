@@ -30,7 +30,7 @@ export const createProductSchema = z.object({
     .max(100),
   latinName: z.string().optional().or(z.literal("")),
 
-  price: z.coerce.number().int().min(0, "قیمت را وارد کنید"),
+  price: z.coerce.number().int().min(1, "قیمت را وارد کنید"),
   discount: z.coerce
     .number()
     .min(0, "تخفیف باید بین 0-100 باشد")
@@ -47,7 +47,7 @@ export const createProductSchema = z.object({
     .array(z.object({ key: z.string().min(0), value: z.string().min(0) }))
     .min(1, "حداقل یک ویژگی وارد کنید"),
   thumbnail: createImageSchema,
-  gallery: z.array(createImageSchema).max(10, "حداکثر 10 تصویر مجاز است"),
+  gallery: z.array(createImageSchema).max(10, "حداکثر 10 تصویر مجاز است").min(1,"حداقل یک تصویر برای گالری الزامی است"),
 });
 
 export const updateProductSchema = z.object({

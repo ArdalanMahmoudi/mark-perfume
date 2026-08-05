@@ -5,51 +5,114 @@ import {
   TabsTrigger,
 } from "@/src/components/ui/tabs";
 import ActiveLink from "../common/ActiveLink";
-import { BookText, CircleQuestionMark, FileText, Home, Phone, ShoppingCart } from "lucide-react";
-import { AccordionHeaderMobile } from "./AccordionHeaderMobile";
+import {
+  BookText,
+  ChevronLeft,
+  CircleQuestionMark,
+  FileText,
+  Home,
+  Phone,
+  ShoppingCart,
+  User,
+} from "lucide-react";
+import Link from "next/link";
 
 
 const MobileHeaderTabs = () => {
-  const activeTabStyle = 'data-[state=active]:bg-primary data-[state=active]:text-white'
+
+  const activeTabStyle =
+    "data-[state=active]:bg-primary data-[state=active]:text-white";
   return (
-    <Tabs dir="rtl" defaultValue="pages" className="w-full overflow-y-auto">
+    <Tabs
+      dir="rtl"
+      defaultValue="pages"
+      className="w-full overflow-y-auto px-5 mobile-header-scrollbar"
+    >
       <TabsList className="text-lg w-full" dir="rtl">
-        <TabsTrigger className={activeTabStyle} value="pages">صفحات</TabsTrigger>
-        <TabsTrigger className={activeTabStyle} value="category">دسته‌بندی ها</TabsTrigger>
+        <TabsTrigger className={activeTabStyle} value="pages">
+          صفحات
+        </TabsTrigger>
+        <TabsTrigger className={activeTabStyle} value="category">
+          دسته‌بندی ها
+        </TabsTrigger>
       </TabsList>
       <TabsContent value="pages">
-        <div>
-            <div className="flex flex-col gap-8 text-sm py-4">
-                <ActiveLink href={'/'} className="flex items-center gap-1 w-fit cursor-pointer hover:text-primary transition-colors duration-300" activeClassName="text-primary">
-                    <Home className="size-4"/>
-                    <span>خانه</span>
-                </ActiveLink>
-                <ActiveLink href={'/shop'} className="flex items-center gap-1 w-fit cursor-pointer hover:text-primary transition-colors duration-300" activeClassName="text-primary">
-                    <ShoppingCart className="size-4"/>
-                    <span>فروشگاه</span>
-                </ActiveLink>
-                <ActiveLink href={'/blogs'} className="flex items-center gap-1 w-fit cursor-pointer hover:text-primary transition-colors duration-300" activeClassName="text-primary">
-                    <FileText className="size-4"/>
-                    <span>مقالات</span>
-                </ActiveLink>
-                <ActiveLink href={'/rules'} className="flex items-center gap-1 w-fit cursor-pointer hover:text-primary transition-colors duration-300" activeClassName="text-primary">
-                    <BookText className="size-4"/>
-                    <span>قوانین و شرایط خرید</span>
-                </ActiveLink>
-                <ActiveLink href={'/contactus'} className="flex items-center gap-1 w-fit cursor-pointer hover:text-primary transition-colors duration-300" activeClassName="text-primary">
-                    <Phone className="size-4"/>
-                    <span>تماس با ما</span>
-                </ActiveLink>
-                <ActiveLink href={'/aboutus'} className="flex items-center gap-1 w-fit cursor-pointer hover:text-primary transition-colors duration-300" activeClassName="text-primary">
-                    <CircleQuestionMark className="size-4"/>
-                    <span>درباره ما</span>
-                </ActiveLink>
-            </div>
-           
+        <div className="flex flex-col gap-8 text-sm py-4">
+          <ActiveLink
+            href={"/"}
+            className="flex items-center gap-1 w-fit cursor-pointer hover:text-primary transition-colors duration-300"
+            activeClassName="text-primary"
+          >
+            <Home className="size-4" />
+            <span>خانه</span>
+          </ActiveLink>
+
+          <ActiveLink
+            href={"/shop"}
+            className="flex items-center gap-1 w-fit cursor-pointer hover:text-primary transition-colors duration-300"
+            activeClassName="text-primary"
+          >
+            <ShoppingCart className="size-4" />
+            <span>فروشگاه</span>
+          </ActiveLink>
+          <ActiveLink
+            href={"/blogs"}
+            className="flex items-center gap-1 w-fit cursor-pointer hover:text-primary transition-colors duration-300"
+            activeClassName="text-primary"
+          >
+            <FileText className="size-4" />
+            <span>مقالات</span>
+          </ActiveLink>
+          <ActiveLink
+            href={"/rules"}
+            className="flex items-center gap-1 w-fit cursor-pointer hover:text-primary transition-colors duration-300"
+            activeClassName="text-primary"
+          >
+            <BookText className="size-4" />
+            <span>قوانین و شرایط خرید</span>
+          </ActiveLink>
+          <ActiveLink
+            href={"/contactus"}
+            className="flex items-center gap-1 w-fit cursor-pointer hover:text-primary transition-colors duration-300"
+            activeClassName="text-primary"
+          >
+            <Phone className="size-4" />
+            <span>تماس با ما</span>
+          </ActiveLink>
+          <ActiveLink
+            href={"/aboutus"}
+            className="flex items-center gap-1 w-fit cursor-pointer hover:text-primary transition-colors duration-300"
+            activeClassName="text-primary"
+          >
+            <CircleQuestionMark className="size-4" />
+            <span>درباره ما</span>
+          </ActiveLink>
         </div>
       </TabsContent>
       <TabsContent value="category">
-        <AccordionHeaderMobile/>
+        <div className="flex flex-col gap-8 text-sm py-4">
+          {/* {categories.map((item) => (
+            <Link
+              href={`/shop`}
+              className="flex items-center w-full justify-between"
+            >
+              <span>{item.name}</span>
+              <ChevronLeft size={18} />
+            </Link>
+          ))} */}
+          {/* <Link href={"/shop"} className="flex items-center w-full justify-between">
+            <span> گلی(Floral)</span>
+            <ChevronLeft size={18} />
+          </Link>
+          <Link href={"/shop"} className="flex items-center w-full justify-between">
+            <span> گلی(Floral)</span>
+            <ChevronLeft size={18} />
+          </Link>
+          <Link href={"/shop"} className="flex items-center w-full justify-between">
+            <span> گلی(Floral)</span>
+            <ChevronLeft size={18} />
+          </Link> */}
+        </div>
       </TabsContent>
     </Tabs>
   );
