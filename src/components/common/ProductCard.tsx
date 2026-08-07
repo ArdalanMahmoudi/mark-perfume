@@ -1,9 +1,9 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
-import Button from "./Button";
-import { discountCalculator } from "@/src/lib/helper";
+import { calculatedDiscountedPrice } from "@/src/lib/helper";
 import { ProductType } from "@/src/lib/types/product.type";
+
 
 const ProductCard = ({
   className,
@@ -12,13 +12,13 @@ const ProductCard = ({
   product: ProductType;
   className?: string;
 }) => {
-  const totalPrice =
-    product.price && product.discount > 0
-      ? discountCalculator(product.price, product.discount)
-      : product.price;
+
 
   return (
-    <Link href={`/product/${product.slug}`} className={`group h-full ${className}`}>
+    <Link
+      href={`/product/${product.slug}`}
+      className={`group h-full ${className}`}
+    >
       {/* p-top */}
       <Image
         width={500}
@@ -36,18 +36,19 @@ const ProductCard = ({
           {product.latinName && product.latinName}
         </p>
         {/* p-price */}
-        <div className="flex items-center justify-between mb-3">
-          <Button>افزودن به سبد</Button>
+        <div className="flex items-center justify-end mb-3">
+          
           <div className="flex flex-col items-end">
             {/* discount */}
             {product.discount > 0 && (
-              <p className="text-gray-500 line-through text-xs">
-                {Number(product.price).toLocaleString("fa-IR")} تومان
+              <p className="space-x-1 flex">
+                <span className="text-sm line-through text-muted-foreground">{Number(product.price).toLocaleString("fa-IR")} تومان</span>
+                <span className="bg-primary text-[10px] text-white px-2 py-0.5 rounded-3xl flex items-center justify-center w-fit">{(product.discount).toLocaleString("fa-IR")}%</span>
               </p>
             )}
             {/* price */}
-            <p className="text-black text-sm">
-              {Number(totalPrice.toFixed(2)).toLocaleString("fa-IR")} تومان
+            <p className="text-black ">
+              {calculatedDiscountedPrice({price:product.price, discount:product.discount}).toLocaleString("fa-IR")} تومان
             </p>
           </div>
         </div>

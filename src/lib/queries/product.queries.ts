@@ -26,16 +26,28 @@ export async function getCategories() {
 
 export async function searchProducts(query) {
   return await prisma.product.findMany({
-    where:{
-      name:{
-        contains:query
+    where: {
+      name: {
+        contains: query,
       },
-      
-    },take:10,
-    select:{
-      id:true,
-      name:true,
-      slug:true
-    }
-  })
+    },
+    take: 10,
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+    },
+  });
+}
+
+export async function getProductUniq(slug) {
+  return await prisma.product.findUnique({
+    where: {
+      slug,
+    },
+    include: {
+      gallery: true,
+      category: true,
+    },
+  });
 }

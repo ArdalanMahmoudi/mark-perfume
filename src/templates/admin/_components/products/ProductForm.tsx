@@ -8,7 +8,7 @@ import {
   createProductAction,
   updateProductAction,
 } from "@/src/lib/actions/product.action";
-import { useToast } from "@/src/app/ToastProvider";
+import { useToast } from "@/src/context/toast-context";
 import {
   createProductSchema,
   updateProductSchema,

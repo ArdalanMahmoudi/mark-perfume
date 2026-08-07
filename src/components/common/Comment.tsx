@@ -28,6 +28,9 @@ const Comment = ({ score, body, date }) => {
             {Array.from({ length: score }).map((item) => (
               <Star className="fill-warning300 stroke-1 stroke-warning300 size-3.5" />
             ))}
+            {Array.from({ length: 5 - score }).map((item) => (
+              <Star className=" stroke-1 stroke-warning300 size-3.5" />
+            ))}
           </div>
         </div>
         {/* body-comment */}

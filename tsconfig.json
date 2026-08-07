@@ -3,7 +3,7 @@
     "paths": {
       "@/*":["./*"]
     },
-    "target": "es5",
+    "target": "es2025",
     "lib": [
       "dom",
       "dom.iterable",
@@ -33,7 +33,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
-, "src/templates/product/_components/GalleryThumb.tss", "next-seo.config.js"  ],
+, "src/templates/product/_components/GalleryThumb.tss", "next-seo.config.js", "src/middleware.ts.bak"  ],
   "exclude": [
     "node_modules"
   ]

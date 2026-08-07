@@ -2,8 +2,9 @@
 import { commentSchema } from "@/src/lib/schemas/comment.schema";
 import { getCurrentUser } from "../queries/user.queries";
 import { prisma } from "../prisma";
-import { roles } from "../constant";
 import { getCommentId } from "../queries/comment.queries";
+import { requireAdmin } from "../session";
+
 
 export const submitCommentAction = async (formData) => {
   const user = await getCurrentUser();
@@ -36,10 +37,7 @@ export const submitCommentAction = async (formData) => {
 };
 
 export const acceptCommentAction = async (commentId) => {
-  const user = await getCurrentUser();
-  if (!user || user.role !== roles.ADMIN) {
-    throw new Error("Unauthorized");
-  }
+  await requireAdmin()
   try {
     const findComment = await getCommentId(commentId);
     if (!findComment) {
@@ -54,10 +52,7 @@ export const acceptCommentAction = async (commentId) => {
 };
 
 export const rejectCommentAction = async (commentId) => {
-  const user = await getCurrentUser();
-  if (!user || user.role !== roles.ADMIN) {
-    throw new Error("Unauthorized");
-  }
+  await requireAdmin()
   try {
     const findComment = await getCommentId(commentId);
     if (!findComment) {
@@ -72,10 +67,7 @@ export const rejectCommentAction = async (commentId) => {
 };
 
 export const deleteCommentAction = async (commentId) => {
-  const user = await getCurrentUser();
-  if (!user || user.role !== roles.ADMIN) {
-    throw new Error("Unauthorized");
-  }
+  await requireAdmin()
   try {
     const findComment = await getCommentId(commentId);
     if (!findComment) {

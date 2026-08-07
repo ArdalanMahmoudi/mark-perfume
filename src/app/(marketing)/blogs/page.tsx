@@ -1,4 +1,5 @@
-import BlogPageTemplate from '@/src/templates/blog/BlogPageTemplate';
+
+import BlogPageTemplate from '@/src/templates/blogs/BlogPageTemplate';
 import React from 'react';
 
 function BlogPage () {

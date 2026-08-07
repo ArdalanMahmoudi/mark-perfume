@@ -13,14 +13,6 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
     include: {
       gallery: true,
       category: true,
-      comments: {
-        where: {
-          isAccept: true,
-        },
-        orderBy: {
-          createdAt: "desc",
-        },
-      },
     },
   });
 

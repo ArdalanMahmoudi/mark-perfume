@@ -1,19 +1,24 @@
+"use client";
 import { Button } from "@/src/components/ui/button";
 import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from "@/src/components/ui/drawer";
+import { useCart } from "@/src/context/cart-context";
+import { calculatedDiscountedPrice } from "@/src/lib/helper";
+
 import { Minus, Plus, ShoppingCart, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 export function CartCanvas() {
+  const { cart, totalPrice } = useCart();
+
   return (
     <div className="flex flex-wrap gap-2">
       <Drawer direction={"left"}>
@@ -22,6 +27,7 @@ export function CartCanvas() {
             variant="outline"
             className="relative capitalize group transition-all duration-200 cursor-pointer text-primary hover:bg-primary hover:text-white size-8 lg:size-10 rounded-full"
           >
+            <span className="absolute -top-1.5 -right-1.5 bg-primary text-white text-xs group-hover:bg-white group-hover:text-primary transition-all duration-300 rounded-full size-4.5 border border-grey220">{(cart.length).toLocaleString('fa-IR')}</span>
             <ShoppingCart className="size-4" />
           </Button>
         </DrawerTrigger>
@@ -29,46 +35,60 @@ export function CartCanvas() {
           <DrawerHeader>
             <DrawerTitle className="flex justify-between items-center mb-3">
               <span className="text-sm">
-                سبد خرید ({Number(2).toLocaleString("fa-IR")} مورد)
+                سبد خرید ({(cart.length).toLocaleString("fa-IR")} مورد)
               </span>
-              <DrawerClose className="size-5 text-black" ><X className="size-5"/></DrawerClose>
+              <DrawerClose className="size-5 text-black">
+                <X className="size-5" />
+              </DrawerClose>
             </DrawerTitle>
           </DrawerHeader>
           <div className="flex flex-col gap-3.5 h-full overflow-y-auto">
             {/* item */}
-            {Array.from({ length: 2 }).map((_, index) => (
+            {cart.map((product, index) => (
               <>
                 <hr className="h-px border border-primary w-full" />
                 <div className="grid grid-cols-[80px_1fr]  gap-2.5 p-2">
                   <Image
-                    src={"/images/product/product 1.jpg"}
+                    src={product.thumbnail}
                     className="w-full rounded-full"
                     width={500}
                     height={500}
                     alt="product cart"
                   />
                   <div className="flex flex-col justify-between gap-3.5 w-full">
-                    {/* title */}
                     <p className="text-xs line-clamp-3 leading-5">
-                      عطر مردانه Midnight Rush با پراکندگی قوی ۱۰۰ میلی‌لیتر
+                      {product.name}
                     </p>
                     <div className="grid grid-cols-2 items-center justify-between ">
-                      {/* count */}
                       <div className="bg-white w-fit border border-grey220 p-1 rounded-4xl flex justify-between items-center text-sm gap-1">
                         {" "}
                         <Plus className="size-3 cursor-pointer" />
-                        <span>{(2).toLocaleString("fa-IR")}</span>
+                        <span>{product.qty.toLocaleString("fa-IR")}</span>
                         <Minus className="size-3 cursor-pointer" />
                       </div>
-                      {/* price */}
-                      <div className="flex flex-col items-end text-xs gap-0.5">
-                        <span className="text-grey100 line-through">
-                          {(4_600_000).toLocaleString("fa-IR")} تومان
-                        </span>
-                        <span className="font-bold">
-                          {(4_300_000).toLocaleString("fa-IR")} تومان
-                        </span>
-                      </div>
+
+                      {product.discount > 0 ? (
+                        <div className="flex flex-col items-end text-xs gap-0.5">
+                          <span className="text-grey100 line-through">
+                            {product.price.toLocaleString("fa-IR")} تومان
+                          </span>
+                          <span className="font-bold">
+                            {calculatedDiscountedPrice({
+                              price: product.price,
+                              discount: product.discount,
+                            }).toLocaleString("fa-IR")}{" "}
+                            تومان
+                          </span>
+                        </div>
+                      ) : (
+                        <div className="flex flex-col items-end text-xs gap-0.5">
+                          
+                          <span className="font-bold">
+                            {(product.price).toLocaleString("fa-IR")}{" "}
+                            تومان
+                          </span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -77,7 +97,7 @@ export function CartCanvas() {
           </div>
           <DrawerFooter className="pt-2.5 flex flex-col gap-2.5 border-t-2 border-primary ">
             <p className="bg-white rounded-4xl border border-grey220 text-center text-sm py-1 px-2 text-primary">
-              مبلغ قابل پرداخت = {(20_000_000).toLocaleString("fa-IR")}
+              مبلغ قابل پرداخت = {totalPrice.toLocaleString("fa-IR")}
             </p>
             <div className="grid grid-cols-2 gap-2.5">
               <Link

@@ -2,8 +2,8 @@ import "@/styles/global.css";
 import localFont from "next/font/local";
 import { Inter } from "next/font/google";
 import { cn } from "@/src/lib/utils";
-import { ToastProvider } from "./ToastProvider";
-
+import { ToastProvider } from "../context/toast-context";
+import { CartProvider } from "../context/cart-context";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -17,12 +17,11 @@ const vazir_m = localFont({
   variable: "--font-vazir",
 });
 
-export  default  function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-
   return (
     <html
       className={cn(
@@ -35,9 +34,9 @@ export  default  function RootLayout({
       dir="rtl"
     >
       <body>
-        <ToastProvider>
-          {children}
-        </ToastProvider>
+        <CartProvider>
+          <ToastProvider>{children}</ToastProvider>
+        </CartProvider>
         <div id="toast-root"></div>
       </body>
     </html>

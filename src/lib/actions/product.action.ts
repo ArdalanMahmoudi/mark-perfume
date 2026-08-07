@@ -1,20 +1,16 @@
 "use server";
 
-import { roles } from "../constant";
 import { prisma } from "../prisma";
-import { getCurrentUser } from "../queries/user.queries";
 import {
   createProductSchema,
   updateProductSchema,
 } from "../schemas/product.schema";
+import { requireAdmin } from "../session";
 import { deleteFile, uploadFile } from "../upload";
 import slugify from "slugify";
 
 export const createProductAction = async (formData: FormData) => {
-  const user = await getCurrentUser();
-  if (!user || user.role !== roles.ADMIN) {
-    throw new Error("Unauthorized");
-  }
+  await requireAdmin();
   const rawDatas = Object.fromEntries(formData.entries());
   const specification = JSON.parse(formData.get("specification") as string);
   const thumbnail = formData.get("thumbnail") as File;
@@ -86,13 +82,9 @@ export const createProductAction = async (formData: FormData) => {
   }
 };
 
-export const deleteProductAction = async (productId) => {
-  const user = await getCurrentUser();
-  if (!user || user.role !== roles.ADMIN) {
-    throw new Error("Unauthorized");
-  }
-
+export const deleteProductAction = async (productId) => {  
   try {
+    await requireAdmin();
     const product = await prisma.product.findUnique({
       where: { id: productId },
       include: {
@@ -124,10 +116,7 @@ export const updateProductAction = async (
   productId: string,
   formData: FormData,
 ) => {
-  const user = await getCurrentUser();
-  if (!user || user.role !== roles.ADMIN) {
-    throw new Error("Unauthorized");
-  }
+  await requireAdmin();
 
   const rawDatas = Object.fromEntries(formData.entries());
   const specification = JSON.parse(formData.get("specification") as string);

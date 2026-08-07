@@ -1,4 +1,4 @@
-import { useToast } from "@/src/app/ToastProvider";
+import { useToast } from "@/src/context/toast-context";
 import { ToastType } from "@/src/lib/types/toast.type";
 import { Check, CircleX, Info, TriangleAlert } from "lucide-react";
 import React from "react";

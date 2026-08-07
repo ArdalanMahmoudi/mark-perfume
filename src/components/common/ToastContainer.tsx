@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Toast from "./Toast";
-import { useToast } from "@/src/app/ToastProvider";
+import { useToast } from "@/src/context/toast-context";
 
 const ToastContainer = () => {
   const { toasts , removeToast} = useToast();

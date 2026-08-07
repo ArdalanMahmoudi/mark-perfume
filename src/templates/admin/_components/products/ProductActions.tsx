@@ -1,4 +1,4 @@
-import { useToast } from "@/src/app/ToastProvider";
+import { useToast } from "@/src/context/toast-context";
 import { TooltipDemo } from "@/src/components/common/Tooltip";
 import { TooltipProvider } from "@/src/components/ui/tooltip";
 import { deleteProductAction } from "@/src/lib/actions/product.action";
@@ -36,7 +36,7 @@ const ProductActions = ({ productId, slug }) => {
       <TooltipProvider >
         <TooltipDemo
           btn={
-            <Link href={`/admin/products/edit/${slug}`} className="cursor-pointer text-black w-6 h-6">
+            <Link href={`/admin/products/${slug}`} className="cursor-pointer text-black w-6 h-6">
               <PencilIcon className="size-4 text-black" />
             </Link>
           }

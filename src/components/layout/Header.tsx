@@ -16,20 +16,15 @@ import {
   User,
   UserIcon,
 } from "lucide-react";
-import { CiInstagram } from "react-icons/ci";
-import { PiWhatsappLogoThin } from "react-icons/pi";
-import { CiLinkedin } from "react-icons/ci";
 import { CartCanvas } from "./CartCanvas";
-import ActiveLink from "../common/ActiveLink";
-import Megamenu from "./Megamenu";
 import { MobileHeader } from "./MobileHeader";
-import { useToast } from "@/src/app/ToastProvider";
+import { useToast } from "@/src/context/toast-context";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { UserType } from "@/src/lib/types/user.type";
 import { SearchBox } from "./SearchBox";
 import NavBottomHeader from "./NavBottomHeader";
-import { CategoryType } from "@/src/lib/types/categories.type";
+
 
 const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
   const toast = useToast();

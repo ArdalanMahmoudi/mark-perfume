@@ -6,7 +6,7 @@ import Button from "./Button";
 
 const ArticleCard = () => {
   return (
-    <Link href={"/blog"} className="border border-grey220 group cursor-pointer">
+    <Link href={"/blog"} className=" group cursor-pointer">
       {/* article-top */}
       <Image
         width={1200}

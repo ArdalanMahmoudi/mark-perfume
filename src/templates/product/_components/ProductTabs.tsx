@@ -19,6 +19,10 @@ const ProductTabs = ({
   volume,
   productId,
 }: ProductType & CommentType) => {
+  const averageScore= () => {
+    let avg = 0
+    
+  }
   const activeTabStyle =
     "data-[state=active]:bg-primary data-[state=active]:text-white ";
   return (
@@ -47,7 +51,7 @@ const ProductTabs = ({
                 className={`${activeTabStyle} rounded-t-xs!  border-b-0! rounded-b-none! w-fit! lg:text-black bg-white border! border-grey220! py-1! leading-8 px-3.5! transition-all duration-200 cursor-pointer min-h-10!`}
               >
                 نظرات(
-                {(comments ? comments.length : "").toLocaleString("fa-IR")})
+                {(comments.length > 0 ? comments.length : 0).toLocaleString("fa-IR")})
               </TabsTrigger>
             </TabsList>
             <div className="mt-5">
@@ -89,6 +93,9 @@ const ProductTabs = ({
                     <p className="lg:text-lg text-base font-bold">
                       نقد و بررسی ها
                     </p>
+                    <div className="flex items-center">
+                      
+                    </div>
                     {/* comments */}
                     {comments.length > 0 ? (
                       comments.map((comment) =>

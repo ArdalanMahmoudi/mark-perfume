@@ -1,14 +1,6 @@
 "use client";
 import Container from "@/src/components/common/Container";
 import HeroItem from "./HeroItem";
-import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-
-// import required modules
-import { Navigation, Autoplay } from "swiper/modules";
 import Image from "next/image";
 import Slider from "@/src/components/common/Slider";
 

@@ -73,7 +73,6 @@ const ShopTemplate = ({categories, products}) => {
                 <div className="mt-5 grid grid-cols-1 lg:grid-cols-3 gap-8">
                   {
                     products.map(product => (
-
                       <ProductCard key={product.id} product={product} className="hover:scale-105 transition-all duration-300 ease-in-out" />
                     ))
                   }

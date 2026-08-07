@@ -1,5 +1,5 @@
 "use client";
-import { useToast } from "@/src/app/ToastProvider";
+import { useToast } from "@/src/context/toast-context";
 import { InputGroupInlineStart } from "@/src/components/common/InputGroup";
 import { registerSchema } from "@/src/lib/schemas/register.schema";
 import { Eye, EyeClosed, Mail, User } from "lucide-react";

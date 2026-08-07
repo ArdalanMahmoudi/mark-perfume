@@ -24,10 +24,18 @@ import SectionTitle from "../home/_components/SectionTitle";
 import Slider from "@/src/components/common/Slider";
 import ProductCard from "@/src/components/common/ProductCard";
 import { ProductType } from "@/src/lib/types/product.type";
-import { discountCalculator } from "@/src/lib/helper";
 import { notFound } from "next/navigation";
+import { useCart } from "@/src/context/cart-context";
+import { calculatedDiscountedPrice } from "@/src/lib/helper";
+import { useToast } from "@/src/context/toast-context";
 
-const ProductTemplate = ({ product }: { product: ProductType }) => {
+const ProductTemplate = ({
+  product,
+  comments,
+}: {
+  comments: any;
+  product: ProductType;
+}) => {
   if (!product) {
     notFound();
   }
@@ -37,7 +45,12 @@ const ProductTemplate = ({ product }: { product: ProductType }) => {
     { href: "/", label: product?.name },
   ];
 
-  const totalPrice = discountCalculator(product.price, product.discount);
+  const { addToCart, totalPrice } = useCart();
+  const toast = useToast()
+  const addToCartHandler = (product) => {
+    addToCart(product)
+toast.success("محصول به سبد خرید اضافه شد")
+  };
   return (
     <main>
       <div className="lg:hidden fixed inset-x-0 bottom-0 w-full bg-white z-30 p-4  border-t border-grey220 py-2">
@@ -59,7 +72,6 @@ const ProductTemplate = ({ product }: { product: ProductType }) => {
                   </div>
                 </>
               )}
-              
             </div>
             <span className="lg:text-lg text-sm font-bold">
               {Number(totalPrice).toLocaleString("fa-IR")} تومان
@@ -148,20 +160,28 @@ const ProductTemplate = ({ product }: { product: ProductType }) => {
                 <div className="hidden lg:flex flex-col">
                   <div className="flex justify-between items-center my-4">
                     <div className="flex flex-col gap-1">
-                      {product.discount && (
+                      {product.discount > 0 && (
                         <span className="text-sm font-bold text-gray-500 line-through">
                           {Number(product.price).toLocaleString("fa-IR")} تومان
                         </span>
                       )}
                       <span className="lg:text-lg text-base font-bold">
-                        {Number(totalPrice).toLocaleString("fa-IR")} تومان
+                        {Number(
+                          calculatedDiscountedPrice({
+                            price: product.price,
+                            discount: product.discount,
+                          }),
+                        ).toLocaleString("fa-IR")}{" "}
+                        تومان
                       </span>
                     </div>
-                    <div className="size-9 rounded-full text-white bg-primary flex items-center justify-center">
-                      <span>
-                        {Number(product.discount).toLocaleString("fa-IR")}%
-                      </span>
-                    </div>
+                    {product.discount > 0 && (
+                      <div className="size-9 rounded-full text-white bg-primary flex items-center justify-center">
+                        <span>
+                          {Number(product.discount).toLocaleString("fa-IR")}%
+                        </span>
+                      </div>
+                    )}
                   </div>
                   {/* qty */}
                   <div className="flex gap-1 items-center justify-between w-full">
@@ -171,7 +191,11 @@ const ProductTemplate = ({ product }: { product: ProductType }) => {
                       placeholder="1"
                       min={1}
                     />
-                    <button className="bg-primary text-sm text-white w-full py-1 text-center rounded-xs cursor-pointer border border-grey220 transition-all duration-200 hover:bg-white hover:text-primary">
+                    {/* Add-To-Cart */}
+                    <button
+                      onClick={() => addToCartHandler(product)}
+                      className="bg-primary text-sm text-white w-full py-1 text-center rounded-xs cursor-pointer border border-grey220 transition-all duration-200 hover:bg-white hover:text-primary"
+                    >
                       افزودن به سبد خرید
                     </button>
                   </div>
@@ -186,7 +210,7 @@ const ProductTemplate = ({ product }: { product: ProductType }) => {
         description={product.description}
         volume={product.volume}
         specification={product.specification}
-        comments={product.comments}
+        comments={comments}
         productId={product.id}
       />
       {/* Related-Product */}
