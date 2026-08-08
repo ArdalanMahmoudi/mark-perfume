@@ -33,7 +33,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
     watch,
     reset,
     getValues,
-    formState: { errors },
+    formState: { errors,isLoading },
   } = useForm({
     resolver: zodResolver(
       mode === "create" ? createProductSchema : updateProductSchema,
@@ -280,6 +280,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
       {/* ------------------------Button Submit------------------------ */}
       <button
         type="submit"
+        disabled={isLoading ? true : false}
         className="bg-black text-white px-6 py-2 rounded-sm  cursor-pointer"
       >
         {mode === "create" ? " ثبت محصول" : "ثبت تغییرات"}

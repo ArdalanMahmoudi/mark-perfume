@@ -3,7 +3,8 @@ import { registerSchema } from "@/src/lib/schemas/register.schema";
 import { createSession } from "@/src/lib/session";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
-import { roles } from "@/src/lib/constant";
+import { Role } from "@/src/generated/prisma/enums";
+
 
 export async function POST(req: Request) {
   try {
@@ -37,7 +38,7 @@ export async function POST(req: Request) {
       data: {
         username: fields.username,
         email: fields.email,
-        role: userCount === 0 ? roles.ADMIN as string : roles.USER as string,
+        role: userCount === 0 ? Role.ADMIN  : Role.USER,
         password: hashedPassword,
       },
     });

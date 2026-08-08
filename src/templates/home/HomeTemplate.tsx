@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Header from "@/src/components/layout/Header";
 import React from "react";
 import HeroSection from "./_components/HeroSection";
@@ -11,24 +11,18 @@ import NewestProductSection from "./_components/NewestProductSection";
 import ShopIntroductionSection from "./_components/ShopIntroductionSection";
 import LatestBlog from "./_components/LatestBlog";
 
-
-
-const HomeTemplate = ({products}) => {
-
-  
+const HomeTemplate = ({ products }) => {
   return (
     <>
-      <main className="pt-16 lg:pt-24">
-        <HeroSection />
-        <CategorySection />
-        <OfferSection products={products}/>
-        <AboutusSection />
-        <BestSellerSection products={products}/>
-        <FavorSection />
-        <NewestProductSection products={products}/>
-        <ShopIntroductionSection />
-        <LatestBlog />
-      </main>
+      <HeroSection />
+      <CategorySection />
+      <OfferSection products={products} />
+      <AboutusSection />
+      <BestSellerSection products={products} />
+      <FavorSection />
+      <NewestProductSection products={products} />
+      <ShopIntroductionSection />
+      <LatestBlog />
     </>
   );
 };

@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify } from "jose";
-import { roles } from "./lib/constant";
+import { Role } from "./generated/prisma/enums";
+
 
 type SessionPayload = {
   id: string;
-  role: string;
+  role: Role;
 };
 const secretKey = process.env.SESSION_SECRET;
 const encodedKey = new TextEncoder().encode(secretKey);
@@ -38,7 +39,7 @@ export async function middleware(req: NextRequest) {
       return res;
     }
   }
-  if (isAdminRoute && session && session.role !== roles.ADMIN) {
+  if (isAdminRoute && session && session.role !== "ADMIN") {
     return NextResponse.redirect(new URL("/", req.url));
   }
   if (isAuthRoute && session) {

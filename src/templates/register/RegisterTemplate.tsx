@@ -2,7 +2,7 @@
 import { useToast } from "@/src/context/toast-context";
 import { InputGroupInlineStart } from "@/src/components/common/InputGroup";
 import { registerSchema } from "@/src/lib/schemas/register.schema";
-import { Eye, EyeClosed, Mail, User } from "lucide-react";
+import { Eye, EyeClosed, Loader, Mail, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -62,7 +62,7 @@ const RegisterTemplate = () => {
           setClientError(data.errors);
           break;
         case 500:
-          toast.error(data.message);
+          toast.error("مشکلی پیش آمد مجدد امتحان کنید");
           break;
         default:
           break;
@@ -97,7 +97,7 @@ const RegisterTemplate = () => {
                   onChange={handleChange("username")}
                   value={values.username}
                   error={clientError.username}
-                  description={clientError.username}
+                  caption={clientError.username}
                   label="نام کاربری(اختیاری)"
                   id="username"
                   name="username"
@@ -110,7 +110,7 @@ const RegisterTemplate = () => {
                   onChange={handleChange("email")}
                   value={values.email}
                   error={clientError.email}
-                  description={clientError.email}
+                  caption={clientError.email}
                   label="ایمیل"
                   id="email"
                   name="email"
@@ -122,7 +122,7 @@ const RegisterTemplate = () => {
                   element="input"
                   onChange={handleChange("password")}
                   error={clientError.password}
-                  description={clientError.password}
+                  caption={clientError.password}
                   value={values.password}
                   label="رمز عبور"
                   id="password"
@@ -146,7 +146,7 @@ const RegisterTemplate = () => {
                   element="input"
                   onChange={handleChange("confirmPassword")}
                   error={clientError.confirmPassword}
-                  description={clientError.confirmPassword}
+                  caption={clientError.confirmPassword}
                   value={values.confirmPassword}
                   label="تکرار رمز عبور"
                   id="confirmPassword"
@@ -168,9 +168,10 @@ const RegisterTemplate = () => {
                 />
                 <button
                   type="submit"
+                  disabled={loading ? true : false}
                   className="py-1 px-6 transition-all duration-200 bg-primary rounded-xs cursor-pointer  border border-grey220 text-white hover:bg-white hover:text-primary"
                 >
-                  ثبت نام
+                 {loading ? <Loader size={16}/> : 'ثبت نام'} 
                 </button>
               </form>
               <p className="flex items-center mt-4">

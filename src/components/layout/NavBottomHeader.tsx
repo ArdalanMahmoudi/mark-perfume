@@ -9,7 +9,7 @@ import Link from 'next/link';
 const NavBottomHeader = ({isSticky}) => {
     return (
         <div
-            className={`${isSticky ? "max-h-0 opacity-0" : "opacity-100 max-h-10"} transition-all duration-200 hidden lg:flex items-center justify-between`}
+            className={`${isSticky ? "max-h-0 opacity-0 hidden" : "opacity-100 max-h-10 lg:flex"} transition-all duration-200 hidden items-center justify-between`}
           >
             <nav className="flex gap-4 text-sm">
               {/* Mega-menu */}

@@ -52,7 +52,7 @@ const ProductTemplate = ({
 toast.success("محصول به سبد خرید اضافه شد")
   };
   return (
-    <main>
+<>
       <div className="lg:hidden fixed inset-x-0 bottom-0 w-full bg-white z-30 p-4  border-t border-grey220 py-2">
         <div className="flex justify-between items-center my-4">
           <button className="bg-primary text-sm text-white w-fit px-3 py-2 text-center rounded-sm cursor-pointer border border-grey220 transition-all duration-200 hover:bg-white hover:text-primary">
@@ -81,12 +81,12 @@ toast.success("محصول به سبد خرید اضافه شد")
       </div>
       <BreadCrumbs
         links={links}
-        secondTextClass="w-40 lg:w-full line-clamp-1"
+        secondTextClass=" lg:w-full line-clamp-1"
         classNameWrapper={true}
       />
       <section>
         <Container>
-          <div className="grid grid-cols-10 bg-secondary  rounded-lg p-2 lg:p-5 my-8  gap-5 border border-grey220">
+          <div className="grid grid-cols-10 bg-secondary  rounded-lg p-2 lg:p-5  gap-5 border border-grey220">
             {/* right */}
             <div className="col-span-10 lg:col-span-3">
               <Gallery
@@ -216,7 +216,7 @@ toast.success("محصول به سبد خرید اضافه شد")
       {/* Related-Product */}
       <section>
         <Container>
-          <div className="my-12 flex flex-col gap-5">
+          <div className="mt-8 flex flex-col gap-5">
             <SectionTitle
               title="محصولات مرتبط"
               icon={<Link className="size-5 text-primary" />}
@@ -232,7 +232,7 @@ toast.success("محصول به سبد خرید اضافه شد")
           </div>
         </Container>
       </section>
-    </main>
+</>
   );
 };
 

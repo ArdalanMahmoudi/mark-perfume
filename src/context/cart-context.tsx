@@ -55,10 +55,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const totalPrice = useMemo(() => {
     return cart.reduce((total, item) => {
       if (item.discount > 0) {
-        const discountedPrice = item.price * (item.discount / 100);
-        return total + Math.round((item.price - discountedPrice) / 1000) * 1000;
+        const discountedPrice = (item.price * (item.discount / 100)) ;
+        return (total + Math.round(((item.price - discountedPrice)* item.qty) / 1000) * 1000) ;
       } else {
-        return total + item.price;
+        return (total + (item.price * item.qty)) ;
       }
     }, 0);
   }, [cart]);

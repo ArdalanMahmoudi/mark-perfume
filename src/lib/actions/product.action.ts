@@ -10,79 +10,83 @@ import { deleteFile, uploadFile } from "../upload";
 import slugify from "slugify";
 
 export const createProductAction = async (formData: FormData) => {
-  await requireAdmin();
-  const rawDatas = Object.fromEntries(formData.entries());
-  const specification = JSON.parse(formData.get("specification") as string);
-  const thumbnail = formData.get("thumbnail") as File;
-  const gallery = formData.getAll("gallery") as File[];
-
-  const data = {
-    ...rawDatas,
-    specification,
-    thumbnail,
-    gallery,
-  };
-
-  const result = createProductSchema.safeParse(data);
-  if (!result.success) {
-    return {
-      success: false,
-      errors: result.error.flatten().fieldErrors,
-    };
-  }
-  const product = result.data;
-  // create slug unique
-  const baseSlug = slugify(product.name, {
-    lower: true,
-    strict: true,
-    trim: true,
-  });
-  let slug = baseSlug;
-  let counter = 1;
-
-  while (
-    await prisma.product.findUnique({
-      where: {
-        slug,
-      },
-    })
-  ) {
-    slug = `${baseSlug}-${counter}`;
-    counter++;
-  }
-  //
-  let tempFiles: string[] = [];
-
   try {
-    const thumbnailUrl = await uploadFile(thumbnail, slug);
-    const galleryUrl = await Promise.all(
-      gallery.map(async (file) => {
-        const url = await uploadFile(file, slug);
-        tempFiles.push(url);
-        return url;
-      }),
-    );
+    await requireAdmin();
+    const rawDatas = Object.fromEntries(formData.entries());
+    const specification = JSON.parse(formData.get("specification") as string);
+    const thumbnail = formData.get("thumbnail") as File;
+    const gallery = formData.getAll("gallery") as File[];
 
-    await prisma.product.create({
-      data: {
-        ...product,
-        slug,
-        thumbnail: thumbnailUrl,
-        gallery: {
-          create: galleryUrl.map((url) => ({
-            url,
-          })),
-        },
-      },
+    const data = {
+      ...rawDatas,
+      specification,
+      thumbnail,
+      gallery,
+    };
+
+    const result = createProductSchema.safeParse(data);
+    if (!result.success) {
+      return {
+        success: false,
+        errors: result.error.flatten().fieldErrors,
+      };
+    }
+    const product = result.data;
+    // create slug unique
+    const baseSlug = slugify(product.name, {
+      lower: true,
+      strict: true,
+      trim: true,
     });
-    return { success: true, message: "محصول با موفقیت ایجاد شد" };
-  } catch (err) {
-    await deleteFile(tempFiles);
-    return { success: false, message: "خطا در ثبت محصول مجدد امتحان کنید" };
+    let slug = baseSlug;
+    let counter = 1;
+
+    while (
+      await prisma.product.findUnique({
+        where: {
+          slug,
+        },
+      })
+    ) {
+      slug = `${baseSlug}-${counter}`;
+      counter++;
+    }
+    //
+    let tempFiles: string[] = [];
+
+    try {
+      const thumbnailUrl = await uploadFile(thumbnail, slug);
+      const galleryUrl = await Promise.all(
+        gallery.map(async (file) => {
+          const url = await uploadFile(file, slug);
+          tempFiles.push(url);
+          return url;
+        }),
+      );
+
+      await prisma.product.create({
+        data: {
+          ...product,
+          slug,
+          thumbnail: thumbnailUrl,
+          gallery: {
+            create: galleryUrl.map((url) => ({
+              url,
+            })),
+          },
+        },
+      });
+      return { success: true, message: "محصول با موفقیت ایجاد شد" };
+    } catch (err) {
+      await deleteFile(tempFiles);
+      return { success: false, message: "خطا در ثبت محصول مجدد امتحان کنید" };
+    }
+  } catch {
+    return { succes: false, message: "مشکلی پیش آمد مجدد امتحان کنید" };
   }
 };
 
-export const deleteProductAction = async (productId) => {  
+export const deleteProductAction = async (productId) => {
   try {
     await requireAdmin();
     const product = await prisma.product.findUnique({

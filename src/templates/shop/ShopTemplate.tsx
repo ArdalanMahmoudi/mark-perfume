@@ -18,7 +18,6 @@ const ShopTemplate = ({categories, products}) => {
   return (
     <>
 
-      <main className="pt-16 lg:pt-24">
       <MobileFilter />
         <BreadCrumbs classNameWrapper={true} links={links} textClass="text-primary" />
         <section>
@@ -87,8 +86,6 @@ const ShopTemplate = ({categories, products}) => {
             </div>
           </Container>
         </section>
-      </main>
-
     </>
   );
 };

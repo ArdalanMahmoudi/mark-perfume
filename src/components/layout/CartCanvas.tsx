@@ -27,7 +27,11 @@ export function CartCanvas() {
             variant="outline"
             className="relative capitalize group transition-all duration-200 cursor-pointer text-primary hover:bg-primary hover:text-white size-8 lg:size-10 rounded-full"
           >
-            <span className="absolute -top-1.5 -right-1.5 bg-primary text-white text-xs group-hover:bg-white group-hover:text-primary transition-all duration-300 rounded-full size-4.5 border border-grey220">{(cart.length).toLocaleString('fa-IR')}</span>
+            {cart.length > 0 && (
+              <span className="absolute -top-1.5 -right-1.5 bg-primary text-white text-xs group-hover:bg-white group-hover:text-primary transition-all duration-300 rounded-full size-4.5 border border-grey220">
+                {cart.length.toLocaleString("fa-IR")}
+              </span>
+            )}
             <ShoppingCart className="size-4" />
           </Button>
         </DrawerTrigger>
@@ -35,7 +39,7 @@ export function CartCanvas() {
           <DrawerHeader>
             <DrawerTitle className="flex justify-between items-center mb-3">
               <span className="text-sm">
-                سبد خرید ({(cart.length).toLocaleString("fa-IR")} مورد)
+                سبد خرید ({cart.length.toLocaleString("fa-IR")} مورد)
               </span>
               <DrawerClose className="size-5 text-black">
                 <X className="size-5" />
@@ -82,10 +86,8 @@ export function CartCanvas() {
                         </div>
                       ) : (
                         <div className="flex flex-col items-end text-xs gap-0.5">
-                          
                           <span className="font-bold">
-                            {(product.price).toLocaleString("fa-IR")}{" "}
-                            تومان
+                            {product.price.toLocaleString("fa-IR")} تومان
                           </span>
                         </div>
                       )}

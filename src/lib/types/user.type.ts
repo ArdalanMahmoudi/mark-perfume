@@ -6,3 +6,5 @@ export type UserType = Prisma.UserGetPayload<{
         orders:true
     }
 }>
+
+export type roles =  "ADMIN" | "USER"

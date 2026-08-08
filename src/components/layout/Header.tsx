@@ -179,12 +179,7 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
                   >
                     ورود/ثبت‌نام
                   </Link>
-                  <Link
-                    href={"/login"}
-                    className="flex lg:hidden items-center justify-center bg-white border border-e-grey220 relative capitalize group transition-all duration-200 cursor-pointer text-primary hover:bg-primary hover:text-white size-9 lg:size-10 rounded-full"
-                  >
-                    <User className="size-4" />
-                  </Link>
+                 
                 </>
               )}
               {/* not login */}
