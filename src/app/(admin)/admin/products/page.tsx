@@ -27,7 +27,7 @@ const Page = async () => {
             <Plus className="size-4" />
           </Link>
         </div>
-        <div className="container mx-auto py-10">
+        <div className="container mx-auto py-4">
           <DataTable columns={productColumns} data={data} />
         </div>
       </div>

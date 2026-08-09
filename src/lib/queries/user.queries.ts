@@ -13,8 +13,11 @@ export async function getCurrentUser() {
       email: true,
       role: true,
       image: true,
+      isBanned: true,
     },
   });
+
+  if (!user || user.isBanned) return null;
 
   return user;
 }

@@ -27,12 +27,12 @@ import { SliderRange } from "./SliderRange";
 
 export function MobileFilter() {
   return (
-    <div className="flex flex-wrap lg:hidden gap-2">
-      <Drawer direction={"bottom"}>
+
+      <Drawer  direction={"bottom"}>
         <DrawerTrigger asChild>
           <Button
             variant="outline"
-            className="bg-white border border-primary text-black flex gap-1 items-center justify-center fixed bottom-5 right-5 w-15 h-15 z-10 cursor-pointer rounded-full shadow-lg"
+            className="bg-white border lg:hidden border-primary text-black flex gap-1 items-center justify-center fixed bottom-5 right-5 w-15 h-15 z-10 cursor-pointer rounded-full shadow-lg"
           >
             <span>فیلتر</span>
             <FilterIcon className="size-4" />
@@ -79,6 +79,6 @@ export function MobileFilter() {
           </div>
         </DrawerContent>
       </Drawer>
-    </div>
+
   );
 }

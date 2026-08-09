@@ -14,10 +14,10 @@ const AdminBreadcrumb = () => {
     comments: "کامنت ها",
     tickets: "تیکت ها",
     users: "کاربران",
-    profile: "جزئیات حساب کاربری",
+
   };
   const segments = pathName.split("/").filter(Boolean);
-
+// ["admin", "products", "vdffdbdf"] => 0 < 1 . 1 < 1 !==
   return (
     <div className="flex gap-1">
       {segments.map((segment, index) => {
@@ -27,11 +27,11 @@ const AdminBreadcrumb = () => {
             {/* <span>{routes[segment] || segment}</span> */}
             {index < segments.length - 1  ? (
             <div className="flex items-center gap-2">
-              <Link className="" href={href}>{routes[segment] || segment}</Link>
+              <Link className="" href={href}>{routes[segment] ? routes[segment] : segment}</Link>
               <span><ChevronLeft className="size-4"/></span>
             </div>
             ) : (
-              <span className="text-muted-foreground text-sm">{routes[segment]}</span>
+              <span className="text-muted-foreground text-sm truncate">{routes[segment] ? routes[segment] : segment}</span>
             )}
           </div>
         );

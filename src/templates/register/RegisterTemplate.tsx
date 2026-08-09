@@ -15,20 +15,20 @@ const RegisterTemplate = () => {
   const router = useRouter()
   const [clientError, setClientError] = useState({});
   const [loading, setLoading] = useState(false);
-  const [values, setValues] = useState({
+  const [userInfo, setUserInfo] = useState({
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
 
-  const handleChange = (field) => (e) => {
-    setValues((prev) => ({ ...prev, [field]: e.target.value })); // exampl -> ...prev, email:e.target.value
-  }; // Curry fn
+  const handleChange = (e) => {
+    setUserInfo((prevInfo) => ({...prevInfo, [e.target.name]:e.target.value}))
+  }; 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = registerSchema.safeParse(values);
+    const result = registerSchema.safeParse(userInfo);
     if (!result.success) {
       const fieldError = result.error.flatten().fieldErrors;
       setClientError({
@@ -47,7 +47,7 @@ const RegisterTemplate = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify(userInfo),
       });
       const data = await res.json();
       switch (res.status) {
@@ -94,8 +94,8 @@ const RegisterTemplate = () => {
               >
                 <InputGroupInlineStart
                   element="input"
-                  onChange={handleChange("username")}
-                  value={values.username}
+                  onChange={(e) => handleChange(e)}
+                  value={userInfo.username}
                   error={clientError.username}
                   caption={clientError.username}
                   label="نام کاربری(اختیاری)"
@@ -107,8 +107,8 @@ const RegisterTemplate = () => {
                 />
                 <InputGroupInlineStart
                   element="input"
-                  onChange={handleChange("email")}
-                  value={values.email}
+                  onChange={(e) => handleChange(e)}
+                  value={userInfo.email}
                   error={clientError.email}
                   caption={clientError.email}
                   label="ایمیل"
@@ -120,10 +120,10 @@ const RegisterTemplate = () => {
                 />
                 <InputGroupInlineStart
                   element="input"
-                  onChange={handleChange("password")}
+                  onChange={(e) => handleChange(e)}
                   error={clientError.password}
                   caption={clientError.password}
-                  value={values.password}
+                  value={userInfo.password}
                   label="رمز عبور"
                   id="password"
                   name="password"
@@ -144,10 +144,10 @@ const RegisterTemplate = () => {
                 />
                 <InputGroupInlineStart
                   element="input"
-                  onChange={handleChange("confirmPassword")}
+                  onChange={(e) => handleChange(e)}
                   error={clientError.confirmPassword}
                   caption={clientError.confirmPassword}
-                  value={values.confirmPassword}
+                  value={userInfo.confirmPassword}
                   label="تکرار رمز عبور"
                   id="confirmPassword"
                   name="confirmPassword"

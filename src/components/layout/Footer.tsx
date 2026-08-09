@@ -31,7 +31,7 @@ const Footer = () => {
                   width={600}
                   height={300}
                   alt="logo"
-                  className="lg:w-1/2"
+                  className="lg:w-1/2 w-32 h-32"
                 />
               </Link>
               <p className="lg:leading-8 leading-7 text-center text-sm lg:text-balance lg:text-right">

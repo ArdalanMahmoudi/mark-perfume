@@ -15,6 +15,7 @@ import {
   ShoppingCart,
   User,
   UserIcon,
+  UserStar,
 } from "lucide-react";
 import { CartCanvas } from "./CartCanvas";
 import { MobileHeader } from "./MobileHeader";
@@ -24,7 +25,6 @@ import Swal from "sweetalert2";
 import { UserType } from "@/src/lib/types/user.type";
 import { SearchBox } from "./SearchBox";
 import NavBottomHeader from "./NavBottomHeader";
-
 
 const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
   const toast = useToast();
@@ -78,7 +78,7 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
         <div className=" py-2.5 flex flex-col gap-2.5">
           {/* top */}
           <div className="flex items-center justify-between">
-            <MobileHeader  user={isLoggedIn} />
+            <MobileHeader user={isLoggedIn} />
             <div className="lg:block hidden">
               <SearchBox />
             </div>
@@ -107,70 +107,145 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
             {/* Buttons */}
             <div className="flex gap-2">
               {isLoggedIn ? (
-                <div className="relative group hidden lg:block">
-                  <Link
-                    href={"/dashboard"}
-                    className="flex text-sm cursor-pointer items-center gap-1 p-2 justify-center rounded-full bg-white text-primary hover:text-white border border-grey220 hover:bg-primary transition-colors"
-                  >
-                    <UserIcon className="size-4" />
-                    <span className="lg:block hidden text-nowrap">
-                      {" "}
-                      ورود به حساب کاربری
-                    </span>
-                  </Link>
-                  <div className="absolute right-0  w-48 bg-secondary rounded-md shadow-lg border border-grey220 z-50 mt-20 invisible opacity-0 group-hover:opacity-100 group-hover:mt-2 group-hover:visible transition-all duration-500  ">
-                    <div className="py-1 font-Vazir-L backdrop-blur-3xl">
-                      <Link
-                        className="flex items-center gap-1 px-4 py-2 text-sm text-black hover:bg-primary/10"
-                        href="/dashboard"
-                        data-discover="true"
-                      >
-                        <Image
-                          src={
-                            isLoggedIn.image
-                              ? isLoggedIn.image
-                              : "/images/user.png"
-                          }
-                          className="size-8 bg-transparent rounded-full"
-                          width={100}
-                          height={100}
-                          alt="user image"
-                        />
-                        {isLoggedIn.username}
-                      </Link>
-                      <hr />
-                      <Link
-                        className="block px-4 py-2 text-sm text-charcoal hover:bg-primary/10"
-                        href="/dashboard/order"
-                        data-discover="true"
-                      >
-                        سفارش‌ ها
-                      </Link>
-                      <Link
-                        className="block px-4 py-2 text-sm text-charcoal hover:bg-primary/10"
-                        href="/dashboard/profile"
-                        data-discover="true"
-                      >
-                        پیگیری سفارش
-                      </Link>
-                      <Link
-                        className="block px-4 py-2 text-sm text-charcoal hover:bg-primary/10"
-                        href="/dashboard/profile"
-                        data-discover="true"
-                      >
-                        تیکت ها
-                      </Link>
+                isLoggedIn.role === "ADMIN" ? (
+                  <div className="relative group hidden lg:block">
+                    <Link
+                      href={"/admin"}
+                      className="flex text-sm cursor-pointer items-center gap-1 p-2 justify-center rounded-full bg-white text-primary hover:text-white border border-grey220 hover:bg-primary transition-colors"
+                    >
+                      <UserStar className="size-4" />
+                      <span className="lg:block hidden text-nowrap">
+                        {" "}
+                        پنل مدیریت
+                      </span>
+                    </Link>
+                    <div className="absolute left-1/2 -translate-x-1/2  w-48 bg-secondary rounded-md shadow-lg border border-grey220 z-50 mt-20 invisible opacity-0 group-hover:opacity-100 group-hover:mt-2 group-hover:visible transition-all duration-500  ">
+                      <div className="py-1  backdrop-blur-3xl">
+                        <Link
+                          className="flex items-center gap-1 px-4 py-2 text-sm text-black hover:bg-primary/10"
+                          href="/admin"
+                          data-discover="true"
+                        >
+                          <Image
+                            src={
+                              isLoggedIn.image
+                                ? isLoggedIn.image
+                                : "/images/user.png"
+                            }
+                            className="size-8 bg-transparent rounded-full"
+                            width={100}
+                            height={100}
+                            alt="user image"
+                          />
+                          {isLoggedIn.username}
+                        </Link>
+                        <hr />
+                        <Link
+                          className="block px-4 py-2 text-sm text-charcoal hover:bg-primary/10"
+                          href="/admin/products"
+                          data-discover="true"
+                        >
+                          مدیریت محصولات
+                        </Link>
+                        <Link
+                          className="block px-4 py-2 text-sm text-charcoal hover:bg-primary/10"
+                          href="/admin/users"
+                          data-discover="true"
+                        >
+                          مدیریت کاربران
+                        </Link>
+                        <Link
+                          className="block px-4 py-2 text-sm text-charcoal hover:bg-primary/10"
+                          href="/admin/comments"
+                          data-discover="true"
+                        >
+                          مدیریت کامنت ها
+                        </Link>
 
-                      <button
-                        onClick={handleLogout}
-                        className="flex items-center gap-1 w-full text-left px-4 py-2 text-sm  hover:bg-primary/10 hover:text-error500 cursor-pointer"
-                      >
-                        <LogOut className="size-4" />
-                        خروج از حساب کاربری
-                      </button>
+                        {/* <Link
+                          className="block px-4 py-2 text-sm text-charcoal hover:bg-primary/10"
+                          href="/admin/profile"
+                          data-discover="true"
+                        >
+                          مدیریت تیکت ها
+                        </Link> */}
+
+                        <button
+                          onClick={handleLogout}
+                          className="flex items-center gap-1 w-full text-left px-4 py-2 text-sm  hover:bg-primary/10 hover:text-error500 cursor-pointer"
+                        >
+                          <LogOut className="size-4" />
+                          خروج از حساب کاربری
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="relative group hidden lg:block">
+                    <Link
+                      href={"/dashboard"}
+                      className="flex text-sm cursor-pointer items-center gap-1 p-2 justify-center rounded-full bg-white text-primary hover:text-white border border-grey220 hover:bg-primary transition-colors"
+                    >
+                      <UserIcon className="size-4" />
+                      <span className="lg:block hidden text-nowrap">
+                        {" "}
+                        ورود به حساب کاربری
+                      </span>
+                    </Link>
+                    <div className="absolute right-0  w-48 bg-secondary rounded-md shadow-lg border border-grey220 z-50 mt-20 invisible opacity-0 group-hover:opacity-100 group-hover:mt-2 group-hover:visible transition-all duration-500  ">
+                      <div className="py-1 font-Vazir-L backdrop-blur-3xl">
+                        <Link
+                          className="flex items-center gap-1 px-4 py-2 text-sm text-black hover:bg-primary/10"
+                          href="/dashboard"
+                          data-discover="true"
+                        >
+                          <Image
+                            src={
+                              isLoggedIn.image
+                                ? isLoggedIn.image
+                                : "/images/user.png"
+                            }
+                            className="size-8 bg-transparent rounded-full"
+                            width={100}
+                            height={100}
+                            alt="user image"
+                          />
+                          {isLoggedIn.username}
+                        </Link>
+                        <hr />
+                        <Link
+                          className="block px-4 py-2 text-sm text-charcoal hover:bg-primary/10"
+                          href="/dashboard/order"
+                          data-discover="true"
+                        >
+                          سفارش‌ ها
+                        </Link>
+                        <Link
+                          className="block px-4 py-2 text-sm text-charcoal hover:bg-primary/10"
+                          href="/dashboard/profile"
+                          data-discover="true"
+                        >
+                          پیگیری سفارش
+                        </Link>
+                        <Link
+                          className="block px-4 py-2 text-sm text-charcoal hover:bg-primary/10"
+                          href="/dashboard/profile"
+                          data-discover="true"
+                        >
+                          تیکت ها
+                        </Link>
+
+                        <button
+                          onClick={handleLogout}
+                          className="flex items-center gap-1 w-full text-left px-4 py-2 text-sm  hover:bg-primary/10 hover:text-error500 cursor-pointer"
+                        >
+                          <LogOut className="size-4" />
+                          خروج از حساب کاربری
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )
               ) : (
                 <>
                   <Link
@@ -179,7 +254,6 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
                   >
                     ورود/ثبت‌نام
                   </Link>
-                 
                 </>
               )}
               {/* not login */}

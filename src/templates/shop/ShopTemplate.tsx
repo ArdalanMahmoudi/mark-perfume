@@ -22,7 +22,7 @@ const ShopTemplate = ({categories, products}) => {
         <BreadCrumbs classNameWrapper={true} links={links} textClass="text-primary" />
         <section>
           <Container>
-            <div className="grid grid-cols-7 gap-9 mt-8 mb-12 flex-wrap relative">
+            <div className="grid grid-cols-7 gap-9 mt-4 mb-12 flex-wrap relative">
               {/* Sidebar */}
               <div className="hidden lg:block lg:col-span-2">
                 <div className="flex flex-col gap-5 sticky top-8">

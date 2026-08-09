@@ -5,8 +5,10 @@ import { redirect } from 'next/navigation';
 import React from 'react';
 
 const LoginPage = async() => {
-    const isLoggedIn = await getCurrentUser()
-    if (isLoggedIn) {
+    
+    const user = await getCurrentUser()
+
+    if (user) {
         redirect('/dashboard')
     } 
     return (

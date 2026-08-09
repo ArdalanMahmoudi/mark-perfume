@@ -6,9 +6,9 @@ import Slider from "@/src/components/common/Slider";
 
 const HeroSection = () => {
   return (
-    <section>
+    <section className="pt-8">
       <Container>
-        <div className="mt-12 grid grid-cols-3 justify-between items-center lg:gap-12">
+        <div className=" grid grid-cols-3 justify-between items-center lg:gap-12">
           {/* right */}
           <div className="col-span-3 lg:col-span-2 lg:order-1 order-2 flex flex-col gap-7.5">
             <h1 className="text-primary text-xl md:text-3xl lg:text-[40px] font-bold text-center lg:text-start">

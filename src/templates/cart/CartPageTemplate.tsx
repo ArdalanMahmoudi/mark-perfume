@@ -1,9 +1,13 @@
+import Container from '@/src/components/common/Container';
 import React from 'react';
 
 const CartPageTemplate = () => {
     return (
 <>
-1</>
+<section className='pt-12'>
+    <Container>1</Container>
+</section>
+</>
     );
 }
 

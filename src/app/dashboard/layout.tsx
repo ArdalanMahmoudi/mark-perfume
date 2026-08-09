@@ -3,6 +3,7 @@ import Footer from "@/src/components/layout/Footer";
 import Header from "@/src/components/layout/Header";
 import { getCurrentUser } from "@/src/lib/queries/user.queries";
 import Sidebar from "@/src/templates/dashboard/_components/Sidebar";
+import { redirect } from "next/navigation";
 
 export default async function DashboardLayout({
   children,
@@ -10,6 +11,9 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
     const session = await getCurrentUser()
+    if (!session) {
+      redirect('/')
+    }
   return (
     <>
       <Header isLoggedIn={session}/>

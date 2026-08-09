@@ -17,7 +17,7 @@ const ProductCard = ({
   return (
     <Link
       href={`/product/${product.slug}`}
-      className={`group h-full ${className}`}
+      className={`group h-full overflow-hidden ${className}`}
     >
       {/* p-top */}
       <Image

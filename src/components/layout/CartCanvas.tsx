@@ -20,7 +20,7 @@ export function CartCanvas() {
   const { cart, totalPrice } = useCart();
 
   return (
-    <div className="flex flex-wrap gap-2">
+
       <Drawer direction={"left"}>
         <DrawerTrigger asChild>
           <Button
@@ -60,7 +60,7 @@ export function CartCanvas() {
                     alt="product cart"
                   />
                   <div className="flex flex-col justify-between gap-3.5 w-full">
-                    <p className="text-xs line-clamp-3 leading-5">
+                    <p className="text-xs line-clamp-2 leading-5">
                       {product.name}
                     </p>
                     <div className="grid grid-cols-2 items-center justify-between ">
@@ -118,6 +118,6 @@ export function CartCanvas() {
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
-    </div>
+
   );
 }

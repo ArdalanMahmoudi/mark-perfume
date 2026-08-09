@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 
 const LoginTemplate = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -59,6 +60,15 @@ const LoginTemplate = () => {
           break;
         case 401:
           toast.error(data.message);
+          setClientError(data.message);
+          break;
+        case 403:
+          Swal.fire({
+            title:data.message,
+            timer:3000,
+            icon:"error"
+          })
+          router.push("/")
           setClientError(data.message);
           break;
         case 500:
