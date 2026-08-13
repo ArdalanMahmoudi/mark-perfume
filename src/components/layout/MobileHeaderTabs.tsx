@@ -16,10 +16,9 @@ import {
   User,
 } from "lucide-react";
 import Link from "next/link";
-
+import { DrawerClose } from "../ui/drawer";
 
 const MobileHeaderTabs = () => {
-
   const activeTabStyle =
     "data-[state=active]:bg-primary data-[state=active]:text-white";
   return (
@@ -40,7 +39,7 @@ const MobileHeaderTabs = () => {
         <div className="flex flex-col gap-8 text-sm py-4">
           <ActiveLink
             href={"/"}
-            className="flex items-center gap-1 w-fit cursor-pointer hover:text-primary transition-colors duration-300"
+            className="flex items-center w-full gap-1 cursor-pointer hover:text-primary transition-colors duration-300"
             activeClassName="text-primary"
           >
             <Home className="size-4" />
@@ -49,39 +48,43 @@ const MobileHeaderTabs = () => {
 
           <ActiveLink
             href={"/shop"}
-            className="flex items-center gap-1 w-fit cursor-pointer hover:text-primary transition-colors duration-300"
+            className="flex items-center w-full gap-1 cursor-pointer hover:text-primary transition-colors duration-300"
             activeClassName="text-primary"
           >
             <ShoppingCart className="size-4" />
             <span>فروشگاه</span>
           </ActiveLink>
+
           <ActiveLink
             href={"/blogs"}
-            className="flex items-center gap-1 w-fit cursor-pointer hover:text-primary transition-colors duration-300"
+            className="flex items-center w-full gap-1 cursor-pointer hover:text-primary transition-colors duration-300"
             activeClassName="text-primary"
           >
             <FileText className="size-4" />
             <span>مقالات</span>
           </ActiveLink>
+
           <ActiveLink
             href={"/rules"}
-            className="flex items-center gap-1 w-fit cursor-pointer hover:text-primary transition-colors duration-300"
+            className="flex items-center w-full gap-1 cursor-pointer hover:text-primary transition-colors duration-300"
             activeClassName="text-primary"
           >
             <BookText className="size-4" />
             <span>قوانین و شرایط خرید</span>
           </ActiveLink>
+
           <ActiveLink
             href={"/contactus"}
-            className="flex items-center gap-1 w-fit cursor-pointer hover:text-primary transition-colors duration-300"
+            className="flex items-center w-full gap-1 cursor-pointer hover:text-primary transition-colors duration-300"
             activeClassName="text-primary"
           >
             <Phone className="size-4" />
             <span>تماس با ما</span>
           </ActiveLink>
+
           <ActiveLink
             href={"/aboutus"}
-            className="flex items-center gap-1 w-fit cursor-pointer hover:text-primary transition-colors duration-300"
+            className="flex items-center w-full gap-1 cursor-pointer hover:text-primary transition-colors duration-300"
             activeClassName="text-primary"
           >
             <CircleQuestionMark className="size-4" />
@@ -91,27 +94,45 @@ const MobileHeaderTabs = () => {
       </TabsContent>
       <TabsContent value="category">
         <div className="flex flex-col gap-8 text-sm py-4">
-          {/* {categories.map((item) => (
-            <Link
-              href={`/shop`}
-              className="flex items-center w-full justify-between"
-            >
-              <span>{item.name}</span>
-              <ChevronLeft size={18} />
-            </Link>
-          ))} */}
-          {/* <Link href={"/shop"} className="flex items-center w-full justify-between">
+          <Link
+            href={"/shop"}
+            className="flex items-center w-full justify-between"
+          >
             <span> گلی(Floral)</span>
             <ChevronLeft size={18} />
           </Link>
-          <Link href={"/shop"} className="flex items-center w-full justify-between">
-            <span> گلی(Floral)</span>
+
+          <Link
+            href={"/shop"}
+            className="flex items-center w-full justify-between"
+          >
+            <span> چوبی (Woody)</span>
             <ChevronLeft size={18} />
           </Link>
-          <Link href={"/shop"} className="flex items-center w-full justify-between">
-            <span> گلی(Floral)</span>
+
+          <Link
+            href={"/shop"}
+            className="flex items-center w-full justify-between"
+          >
+            <span> شرقی (Oriental/Ambery)</span>
             <ChevronLeft size={18} />
-          </Link> */}
+          </Link>
+
+          <Link
+            href={"/shop"}
+            className="flex items-center w-full justify-between"
+          >
+            <span> تازه (Fresh)</span>
+            <ChevronLeft size={18} />
+          </Link>
+
+          <Link
+            href={"/shop"}
+            className="flex items-center w-full justify-between"
+          >
+            <span> سرخسی (Fougere)</span>
+            <ChevronLeft size={18} />
+          </Link>
         </div>
       </TabsContent>
     </Tabs>

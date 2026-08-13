@@ -28,7 +28,7 @@ const ShopTemplate = ({categories, products}) => {
                 <div className="flex flex-col gap-5 sticky top-8">
                   <SidebarFilter title="دسته بندی ها">
                     {categories.map(cat => (
-                    <div className="flex items-center gap-1 w-fit ">
+                    <div key={cat.id} className="flex items-center gap-1 w-fit ">
                       <input type="checkbox" value={cat.slug} />
                       <label htmlFor="#">{cat.name}</label>
                     </div>

@@ -44,19 +44,25 @@ export function MobileFilter() {
             <SidebarFilter title="دسته بندی ها">
               <div className="flex items-center gap-1 w-fit ">
                 <input type="checkbox" name="" id="" />
-                <label htmlFor="#">Chanel</label>
+                <label htmlFor="#">گلی(Floral)
+</label>
               </div>
               <div className="flex items-center gap-1 w-fit ">
                 <input type="checkbox" name="" id="" />
-                <label htmlFor="#">Dior</label>
+                <label htmlFor="#">چوبی (Woody)
+</label>
               </div>
               <div className="flex items-center gap-1 w-fit ">
                 <input type="checkbox" name="" id="" />
-                <label htmlFor="#">Calvin klein</label>
+                <label htmlFor="#">شرقی (Oriental/Ambery)</label>
               </div>
               <div className="flex items-center gap-1 w-fit ">
                 <input type="checkbox" name="" id="" />
-                <label htmlFor="#">Versace</label>
+                <label htmlFor="#">تازه (Fresh)</label>
+              </div>
+              <div className="flex items-center gap-1 w-fit ">
+                <input type="checkbox" name="" id="" />
+                <label htmlFor="#">سرخسی (Fougere)</label>
               </div>
             </SidebarFilter>
             <SidebarFilter title="قیمت">

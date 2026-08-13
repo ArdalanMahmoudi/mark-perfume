@@ -11,6 +11,7 @@ import CommentForm from "./CommentForm";
 import Comment from "@/src/components/common/Comment";
 import { CommentType } from "@/src/lib/types/comment.type";
 import { ProductType } from "@/src/lib/types/product.type";
+import { Badge } from "@/src/components/ui/badge";
 
 const ProductTabs = ({
   description,
@@ -19,10 +20,9 @@ const ProductTabs = ({
   volume,
   productId,
 }: ProductType & CommentType) => {
-  const averageScore= () => {
-    let avg = 0
-    
-  }
+  const averageScore = () => {
+    let avg = 0;
+  };
   const activeTabStyle =
     "data-[state=active]:bg-primary data-[state=active]:text-white ";
   return (
@@ -31,7 +31,7 @@ const ProductTabs = ({
         <div className="z-0 border border-grey220 my-8 bg-secondary  p-2 lg:p-5 ">
           <Tabs dir="rtl" defaultValue="description">
             <TabsList
-              className="lg:text-lg text-xs! px-2 bg-transparent! lg:px-0 gap-1 border-b! border-b-grey220! min-h-10! w-full"
+              className="lg:text-lg text-xs! px-2 bg-transparent! lg:px-0 gap-1  min-h-10! w-full"
               dir="rtl"
             >
               <TabsTrigger
@@ -51,7 +51,10 @@ const ProductTabs = ({
                 className={`${activeTabStyle} rounded-t-xs!  border-b-0! rounded-b-none! w-fit! lg:text-black bg-white border! border-grey220! py-1! leading-8 px-3.5! transition-all duration-200 cursor-pointer min-h-10!`}
               >
                 نظرات(
-                {(comments.length > 0 ? comments.length : 0).toLocaleString("fa-IR")})
+                {(comments.length > 0 ? comments.length : 0).toLocaleString(
+                  "fa-IR",
+                )}
+                )
               </TabsTrigger>
             </TabsList>
             <div className="mt-5">
@@ -93,19 +96,43 @@ const ProductTabs = ({
                     <p className="lg:text-lg text-base font-bold">
                       نقد و بررسی ها
                     </p>
-                    <div className="flex items-center">
-                      
-                    </div>
+                    <div className="flex items-center"></div>
                     {/* comments */}
                     {comments.length > 0 ? (
                       comments.map((comment) =>
                         comment.status === "ACCEPT" ? (
-                          <Comment
-                            key={comment.id}
-                            score={comment.score}
-                            body={comment.body}
-                            date={comment.createdAt}
-                          />
+                          <>
+                            <Comment
+                              key={comment.id}
+                              score={comment.score}
+                              body={comment.body}
+                              date={comment.createdAt}
+                            />
+                            {comment.adminReply?.length > 0 && (
+                              <div className="mt-4 mr-6 pr-4 border-r-2 border-primary bg-muted rounded-md p-3">
+                                <div className="flex items-center gap-2 mb-1">
+                                  <Badge
+                                    variant={"outline"}
+                                    className="text-xs"
+                                  >
+                                    پاسخ فروشگاه
+                                  </Badge>
+                                  <span className="text-xs text-muted-foreground">
+                                    {new Date(
+                                      comment.replyedAt,
+                                    ).toLocaleDateString("fa-IR", {
+                                      year: "numeric",
+                                      month: "long",
+                                      day: "numeric",
+                                    })}
+                                  </span>
+                                </div>
+                                <p className="text-sm text-muted-foreground">
+                                  {comment.adminReply}
+                                </p>
+                              </div>
+                            )}
+                          </>
                         ) : (
                           <div className="flex flex-col gap-2 items-center py-4 text-center">
                             <MessageCircle className="size-12 text-muted-foreground" />

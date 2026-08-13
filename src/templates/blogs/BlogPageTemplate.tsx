@@ -6,6 +6,8 @@ import ArticleCard from "@/src/components/common/ArticleCard";
 const BlogPageTemplate = () => {
   return (
     <>
+    <section className="pt-8">
+
       <Container>
         <SectionTitle title="آخرین مقالات" icon={<FileText />} />
         <div className="grid lg:grid-cols-4 gap-4 my-4 lg:my-8">
@@ -15,6 +17,7 @@ const BlogPageTemplate = () => {
           <ArticleCard />
         </div>
       </Container>
+    </section>
     </>
   );
 };

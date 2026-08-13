@@ -1,23 +1,20 @@
 import { Button } from "@/src/components/ui/button";
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
-  DrawerTitle,
   DrawerTrigger,
 } from "@/src/components/ui/drawer";
-import { ChevronLeft, Menu, Minus, Plus, Search, X } from "lucide-react";
+import { ChevronLeft, Menu} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import MobileHeaderTabs from "./MobileHeaderTabs";
 import { CiInstagram, CiLinkedin } from "react-icons/ci";
 import { PiWhatsappLogoThin } from "react-icons/pi";
-import { SearchBox } from "./SearchBox";
+import { UserType } from "@/src/lib/types/user.type";
 
-export function MobileHeader({ user }) {
+export function MobileHeader({ user }:{user:UserType}) {
   return (
     <div className="flex flex-wrap lg:hidden gap-2">
       <Drawer direction={"right"}>
@@ -50,7 +47,7 @@ export function MobileHeader({ user }) {
                       </span>
                     </div>
                   </div>
-                  <Link href={"/dashboard"} target="_blank">
+                  <Link href={`${user.role === "ADMIN" ? '/admin' : '/dashboard'}`} target="_blank">
                     <ChevronLeft size={20} />
                   </Link>
                 </>

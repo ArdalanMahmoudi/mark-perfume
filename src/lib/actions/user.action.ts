@@ -11,7 +11,7 @@ export async function toggleBanUser(userId) {
     return {error:"Unauthorized"}
   }
   if (sesion.id === userId) {
-    return { error: "نمیتوانید خودتان را بن کنید" };
+    return { error: "نمیتوانید خودتان را مسدود کنید" };
   }
   try {
     const user = await prisma.user.findUnique({
@@ -30,7 +30,7 @@ export async function toggleBanUser(userId) {
 
     return {
       success: true,
-      message: user.isBanned ? "کاربر رفع بن شد" : "کاربر بن شد",
+      message: user.isBanned ? "کاربر رفع مسدودیت شد" : "کاربر مسدود شد",
     };
   } catch (error) {
     return { error: "خطا در انجام عملیات" };

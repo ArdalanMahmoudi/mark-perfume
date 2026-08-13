@@ -1,11 +1,32 @@
+"use client"
 import { Badge } from "@/src/components/ui/badge";
 import { Button } from "@/src/components/ui/button";
+import { useToast } from "@/src/context/toast-context";
+import { toggleBanUser } from "@/src/lib/actions/user.action";
 import { UserType } from "@/src/lib/types/user.type";
 import { Ban, ShieldCheck, User } from "lucide-react";
+import Swal from "sweetalert2";
 
-
-
-export function UserSummaryHeader({ user }: {user:UserType}) {
+export function UserSummaryHeader({ user }: { user: UserType }) {
+  const toast = useToast();
+  const banUserHandler = async (userId) => {
+    Swal.fire({
+      title: `آیا از ${user.isBanned ? "رفع مسدودیت" : "مسدود"} کاربر مطمئنید؟`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "بله",
+      cancelButtonText: "خیر",
+    }).then(async (res) => {
+      if (res.isConfirmed) {
+        const result = await toggleBanUser(userId);
+        if (result.error) {
+          toast.error(result.error);
+        } else {
+          toast.success(result.message);
+        }
+      }
+    });
+  };
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-lg border bg-white p-6">
       <div className="flex items-center gap-4">
@@ -43,7 +64,11 @@ export function UserSummaryHeader({ user }: {user:UserType}) {
           <ShieldCheck className="size-4 ml-1" />
           {user.role === "ADMIN" ? "تنزل به کاربر" : "ارتقا به ادمین"}
         </Button>
-        <Button variant={user.isBanned ? "outline" : "destructive"} size="sm">
+        <Button
+          onClick={() => banUserHandler(user.id)}
+          variant={user.isBanned ? "outline" : "destructive"}
+          size="sm"
+        >
           <Ban className="size-4 ml-1" />
           {user.isBanned ? "رفع مسدودیت" : "مسدود کردن"}
         </Button>

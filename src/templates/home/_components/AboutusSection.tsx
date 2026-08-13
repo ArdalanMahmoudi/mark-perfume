@@ -17,7 +17,7 @@ const AboutusSection = () => {
               height={475}
               alt="aboutus image"
             />
-            <div className="flex items-center lg:items-start flex-col gap-4 lg:w-[85%]">
+            <div className="flex items-center lg:items-start flex-col gap-4 lg:w-[85%] mt-4 lg:mt-0">
               <h3 className="flex items-start gap-2 text-lg lg:text-xl font-bold">
                 <CircleQuestionMark className="text-primary" />
                 درباره فروشگاه ما{" "}

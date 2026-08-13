@@ -6,7 +6,7 @@ import Button from "./Button";
 
 const ArticleCard = () => {
   return (
-    <Link href={"/blog"} className=" group cursor-pointer">
+    <Link href={"/blogs/Johnwin"} className=" group cursor-pointer">
       {/* article-top */}
       <Image
         width={1200}
@@ -26,7 +26,7 @@ const ArticleCard = () => {
         <p className="flex items-center gap-1 text-justify">
           رایحه ادکلن‌های ارض الزعفران
         </p>
-        <Link href={"/blog"} className="flex justify-end">
+        <Link href={"/blogs/Johnwin"} className="flex justify-end">
          <Button>
           مشاهده بیشتر
          </Button>

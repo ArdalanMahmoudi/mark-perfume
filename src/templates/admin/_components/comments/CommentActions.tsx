@@ -6,21 +6,18 @@ import {
   deleteCommentAction,
   rejectCommentAction,
 } from "@/src/lib/actions/comment.action";
-import { deleteProductAction } from "@/src/lib/actions/product.action";
 import { CommentType } from "@/src/lib/types/comment.type";
 import { Check, EyeIcon, PencilIcon, TrashIcon, X } from "lucide-react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React from "react";
 import Swal from "sweetalert2";
+import CommentReplyForm from "./CommentReplyForm";
+import { Button } from "@/src/components/ui/button";
 
-const CommentActions = ({ commentId, status }: CommentType) => {
+const CommentActions = ({ comment }: { comment: CommentType }) => {
   const toast = useToast();
   const router = useRouter();
 
-
   const deleteComment = () => {
-    
     Swal.fire({
       title: "از حذف کامنت مطمئنید؟",
       icon: "question",
@@ -33,7 +30,7 @@ const CommentActions = ({ commentId, status }: CommentType) => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await deleteCommentAction(commentId);
+          await deleteCommentAction(comment.id);
           toast.success("کامنت حذف شد");
           router.refresh();
         } catch {
@@ -44,11 +41,11 @@ const CommentActions = ({ commentId, status }: CommentType) => {
   };
 
   const acceptComment = async () => {
-    if (status === "ACCEPT") {
+    if (comment.status === "ACCEPT") {
       return toast.info("کامنت مدنظر قبلا تایید شده است");
     }
     Swal.fire({
-      title: "از تایید کامنت مطمئنید؟",
+      title: "آیا از تایید کامنت مطمئنید؟",
       icon: "question",
       showCancelButton: true,
       confirmButtonText: "بله",
@@ -59,7 +56,7 @@ const CommentActions = ({ commentId, status }: CommentType) => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await acceptCommentAction(commentId);
+          await acceptCommentAction(comment.id);
           toast.success("کامنت تایید شد");
           router.refresh();
         } catch {
@@ -69,7 +66,7 @@ const CommentActions = ({ commentId, status }: CommentType) => {
     });
   };
   const rejectComment = async () => {
-    if (status === "REJECTED") {
+    if (comment.status === "REJECTED") {
       return toast.info("کامنت مدنظر قبلا رد شده است");
     }
     Swal.fire({
@@ -84,7 +81,7 @@ const CommentActions = ({ commentId, status }: CommentType) => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await rejectCommentAction(commentId);
+          await rejectCommentAction(comment.id);
           toast.error("کامنت رد شد");
           router.refresh();
         } catch {
@@ -93,6 +90,8 @@ const CommentActions = ({ commentId, status }: CommentType) => {
       }
     });
   };
+
+
 
   return (
     <div className="flex justify-center items-center gap-2.5">
@@ -125,6 +124,9 @@ const CommentActions = ({ commentId, status }: CommentType) => {
           }
           textTolltip={"حذف"}
         />
+        
+          <CommentReplyForm comment={comment} />
+        
       </TooltipProvider>
     </div>
   );

@@ -20,7 +20,7 @@ export function UsersActions({ user }: UserType) {
   const toast = useToast();
   const banUserHandler = async (userId) => {
     Swal.fire({
-      title: `آیا از ${user.isBanned ? 'رفع بن' :'بن'} کاربر مطمئنید؟`,
+      title: `آیا از ${user.isBanned ? 'رفع مسدودیت' :'مسدود کردن'} کاربر مطمئنید؟`,
       icon: "question",
       showCancelButton: true,
       confirmButtonText: "بله",
@@ -59,7 +59,7 @@ export function UsersActions({ user }: UserType) {
           onClick={() => banUserHandler(user.id)}
         >
           <BanIcon size={16} />
-          {user.isBanned ? "رفع بن" : "بن"}
+          {user.isBanned ? "رفع مسدودیت" : "مسدود"}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

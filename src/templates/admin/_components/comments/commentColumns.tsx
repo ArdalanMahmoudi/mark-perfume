@@ -53,7 +53,7 @@ export const commentColumns: ColumnDef<CommentType>[] = [
   {
     accessorKey: "actions",
     header: "عملیات",
-    cell: ({ row }) => <CommentActions status={row.original.status} commentId={row.original.id} />,
+    cell: ({ row }) => <CommentActions comment={row.original}/>,
   },
   {
     accessorKey: "status",

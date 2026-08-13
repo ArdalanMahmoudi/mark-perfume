@@ -53,9 +53,9 @@ toast.success("محصول به سبد خرید اضافه شد")
   };
   return (
 <>
-      <div className="lg:hidden fixed inset-x-0 bottom-0 w-full bg-white z-30 p-4  border-t border-grey220 py-2">
+      <div className="lg:hidden fixed inset-x-0 bottom-0 w-full bg-white z-30   border-t border-grey220 px-1">
         <div className="flex justify-between items-center my-4">
-          <button className="bg-primary text-sm text-white w-fit px-3 py-2 text-center rounded-sm cursor-pointer border border-grey220 transition-all duration-200 hover:bg-white hover:text-primary">
+          <button onClick={() => addToCartHandler(product)} className="bg-primary text-sm text-white w-fit px-3 py-2 text-center rounded-sm cursor-pointer border border-grey220 transition-all duration-200 hover:bg-white hover:text-primary">
             افزودن به سبد خرید
           </button>
           <div className="flex flex-col gap-1">

@@ -21,7 +21,7 @@ import ActiveLink from "../common/ActiveLink";
 const Footer = () => {
   return (
     <footer className="w-full mt-24">
-      <div className="py-12 bg-[url-('/images/footer-background.png')] bg-no-repeat bg-center border-t-2 border-primary bg-secondary">
+      <div className="lg:py-12 py-8 bg-[url-('/images/footer-background.png')] bg-no-repeat bg-center border-t-2 border-primary bg-secondary">
         <Container>
           <div className="grid grid-cols-3 gap-6">
             <div className="col-span-3 lg:col-span-1 flex flex-col gap-4">
@@ -31,7 +31,7 @@ const Footer = () => {
                   width={600}
                   height={300}
                   alt="logo"
-                  className="lg:w-1/2 w-32 h-32"
+                  className="lg:w-1/2 w-40 h-30"
                 />
               </Link>
               <p className="lg:leading-8 leading-7 text-center text-sm lg:text-balance lg:text-right">
@@ -78,7 +78,7 @@ const Footer = () => {
                   </Link>
                   <Link
                     className=" p-1 lg:p-1.5 transition-all duration-500 ease-linear flex items-center gap-1 "
-                    href={"/rule"}
+                    href={"/rules"}
                   >
                     <BookText className="size-4.5  text-primary" />
                     <span className="text-sm lg:text-balance">قوانین و شرایط خرید</span>

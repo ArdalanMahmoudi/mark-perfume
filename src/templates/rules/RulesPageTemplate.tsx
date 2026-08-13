@@ -45,28 +45,30 @@ const RulesPageTemplate = () => {
   ];
   return (
     <>
-      <Container>
-        <div className="flex flex-col lg:gap-10">
-          <SectionTitle title="قوانین و شرایط خرید" icon={<BookText />} />
-          <p className="text-center">
-            به فروشگاه ما خوش آمدید. استفاده از خدمات و خرید از این وب‌سایت به
-            معنای پذیرش کامل شرایط و قوانین زیر است. لطفاً پیش از ثبت سفارش،
-            موارد زیر را با دقت مطالعه کنید.{" "}
-          </p>
-        </div>
-        {/* wrapper-layout */}
-        <div className="grid grid-cols-2 mt-8 mb-12 gap-8 rounded-lg border border-grey220 bg-secondary p-8">
-          {/* item */}
-          {rules.map((item, idx) => (
-            <RuleItem
-              key={item.id}
-              id={idx + 1}
-              title={item.title}
-              descs={item.descs}
-            />
-          ))}
-        </div>
-      </Container>
+      <section className="pt-8">
+        <Container>
+          <div className="flex flex-col lg:gap-10 gap-4">
+            <SectionTitle title="قوانین و شرایط خرید" icon={<BookText />} />
+            <p className="text-center lg:text-base text-sm">
+              به فروشگاه ما خوش آمدید. استفاده از خدمات و خرید از این وب‌سایت به
+              معنای پذیرش کامل شرایط و قوانین زیر است. لطفاً پیش از ثبت سفارش،
+              موارد زیر را با دقت مطالعه کنید.{" "}
+            </p>
+          </div>
+          {/* wrapper-layout */}
+          <div className="grid grid-cols-2 mt-8 mb-12 gap-8 rounded-lg border border-grey220 bg-secondary p-2 lg:p-8">
+            {/* item */}
+            {rules.map((item, idx) => (
+              <RuleItem
+                key={item.id}
+                id={idx + 1}
+                title={item.title}
+                descs={item.descs}
+              />
+            ))}
+          </div>
+        </Container>
+      </section>
     </>
   );
 };

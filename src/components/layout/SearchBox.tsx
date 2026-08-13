@@ -106,8 +106,9 @@ export function SearchBox() {
 
             <CommandGroup heading={`نتیجه جستجو:${query}`}>
               {result.map((item) => (
-                <CommandItem key={item.id}>
-                  <Link href={`/product/${item.slug}`} className="flex gap-1">
+                
+                <CommandItem  key={item.id}>
+                  <Link onClick={() => setOpen(false)} href={`/product/${item.slug}`} className="flex gap-1">
                     <Search size={14} />
                     <span className="max-w-2xs truncate">{item.name}</span>
                   </Link>

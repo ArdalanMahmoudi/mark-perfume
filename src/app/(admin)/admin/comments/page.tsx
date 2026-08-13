@@ -10,6 +10,8 @@ const Page = async () => {
       score: true,
       status: true,
       createdAt: true,
+      adminReply:true,
+      replyedAt:true,
       user:{
         select:{
           email:true
@@ -23,7 +25,7 @@ const Page = async () => {
   return (
     <div className="flex flex-col gap-4 py-2 md:gap-6">
       <h2 className="text-xl">کامنت‌ها</h2>
-      <div className="container mx-auto py-10">
+      <div className="container mx-auto py-4">
         <DataTable columns={commentColumns} data={data} />
       </div>
     </div>

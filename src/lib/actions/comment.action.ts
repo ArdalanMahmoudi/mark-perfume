@@ -4,7 +4,7 @@ import { getCurrentUser } from "../queries/user.queries";
 import { prisma } from "../prisma";
 import { getCommentId } from "../queries/comment.queries";
 import { requireAdmin } from "../session";
-
+import { revalidatePath } from "next/cache";
 
 export const submitCommentAction = async (formData) => {
   const user = await getCurrentUser();
@@ -37,7 +37,7 @@ export const submitCommentAction = async (formData) => {
 };
 
 export const acceptCommentAction = async (commentId) => {
-  await requireAdmin()
+  await requireAdmin();
   try {
     const findComment = await getCommentId(commentId);
     if (!findComment) {
@@ -46,13 +46,13 @@ export const acceptCommentAction = async (commentId) => {
 
     await prisma.comment.update({
       where: { id: commentId },
-      data:{status:"ACCEPT"}
+      data: { status: "ACCEPT" },
     });
   } catch {}
 };
 
 export const rejectCommentAction = async (commentId) => {
-  await requireAdmin()
+  await requireAdmin();
   try {
     const findComment = await getCommentId(commentId);
     if (!findComment) {
@@ -61,13 +61,15 @@ export const rejectCommentAction = async (commentId) => {
 
     await prisma.comment.update({
       where: { id: commentId },
-      data:{status:"REJECTED"}
+      data: { status: "REJECTED" },
     });
-  } catch {}
+  } catch {
+    return { success: false };
+  }
 };
 
 export const deleteCommentAction = async (commentId) => {
-  await requireAdmin()
+  await requireAdmin();
   try {
     const findComment = await getCommentId(commentId);
     if (!findComment) {
@@ -77,5 +79,32 @@ export const deleteCommentAction = async (commentId) => {
     await prisma.comment.delete({
       where: { id: commentId },
     });
+    return {
+      success: true,
+
+    };
   } catch {}
+};
+
+export const replyCommentAction = async (commentId, replyText) => {
+  await requireAdmin();
+  try {
+    const findComment = await getCommentId(commentId);
+    if (!findComment) {
+      return { success: false ,error:"کامنت یافت نشد"};
+    }
+    await prisma.comment.update({
+      where: { id: commentId },
+      data: {
+        adminReply: replyText,
+        replyedAt:new Date()
+      },
+    });
+    revalidatePath("/admin/comments")
+    return {
+      success: true
+    };
+  } catch (error) {
+    return { success: false, error:"خطا در ارسال پاسخ" };
+  }
 };

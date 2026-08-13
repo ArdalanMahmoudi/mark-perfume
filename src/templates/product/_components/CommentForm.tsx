@@ -15,7 +15,7 @@ const CommentForm = ({ productId }) => {
     setValue,
     watch,
     reset,
-    formState: { errors, isSubmitting},
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(commentSchema),
   });
@@ -27,16 +27,15 @@ const CommentForm = ({ productId }) => {
       toast.success("کامنت شما ارسال شد");
       reset();
     } catch {
-      toast.error("مشکلی پیش آمد مجدد امتحان کنید")
+      toast.error("مشکلی پیش آمد مجدد امتحان کنید");
     }
   };
 
   return (
     <div className="flex flex-col gap-5">
       <div className="lg:text-lg text-sm">
-        <p>دیدگاه خود را بنویسید</p>
         <p>
-          نشانی ایمیل شما منتشر نخواهد شد. بخش‌های موردنیاز علامت‌گذاری شده‌اند
+          دیدگاه خود را بنویسید. بخش‌های موردنیاز علامت‌گذاری شده‌اند
           <b className="text-error500">*</b>{" "}
         </p>
       </div>
@@ -69,7 +68,7 @@ const CommentForm = ({ productId }) => {
             {...register("body")}
             classNameLabel="text-sm lg:text-base"
             className="w-full"
-            label="دیدگاه شما"
+            label="دیدگاه شما *"
             type="text"
             caption={errors.body?.message}
           />
@@ -100,10 +99,11 @@ const CommentForm = ({ productId }) => {
             type="submit"
             className="bg-primary hover:bg-white hover:text-primary transition-all duration-200 border border-primary cursor-pointer px-4 py-2  rounded-sm  text-white  disabled:opacity-50"
           >
-            {
-              isSubmitting ? <Loader size={16} className="animate-spin"/> :"ثبت نظر"
-            }
-            
+            {isSubmitting ? (
+              <Loader size={16} className="animate-spin" />
+            ) : (
+              "ثبت نظر"
+            )}
           </button>
         </div>
       </form>
