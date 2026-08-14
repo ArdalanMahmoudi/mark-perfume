@@ -53,7 +53,7 @@ const CartPageTemplate = () => {
   ) : (
     <section className="pt-6">
       <Container>
-        <div className="bg-secondary my-12  rounded-sm border border-grey220 p-8 flex flex-col items-center gap-5">
+        <div className="bg-secondary-layout items-center">
           <Image
             src={"/images/empty-cart.svg"}
             width={200}
