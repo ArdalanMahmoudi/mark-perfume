@@ -28,6 +28,9 @@ import { notFound } from "next/navigation";
 import { useCart } from "@/src/context/cart-context";
 import { calculatedDiscountedPrice } from "@/src/lib/helper";
 import { useToast } from "@/src/context/toast-context";
+import { TooltipDemo } from "@/src/components/common/Tooltip";
+import { TooltipProvider } from "@/src/components/ui/tooltip";
+import { useWishlist } from "@/src/context/wishList-context";
 
 const ProductTemplate = ({
   product,
@@ -46,16 +49,32 @@ const ProductTemplate = ({
   ];
 
   const { addToCart, totalPrice } = useCart();
-  const toast = useToast()
+  const toast = useToast();
+  const { addToWishList, wishList, removeFromWishList } = useWishlist();
+  const isInWishlist = wishList.some((p) => p.id === product.id);
+
   const addToCartHandler = (product) => {
-    addToCart(product)
-toast.success("محصول به سبد خرید اضافه شد")
+    addToCart(product);
+    toast.success("محصول به سبد خرید اضافه شد");
+  };
+
+  const wishListHandler = (product) => {
+    if (isInWishlist) {
+      removeFromWishList(product.id);
+      toast.success("محصول از لیست علاقه مندی حذف شد");
+    } else {
+      addToWishList(product);
+      toast.success("محصول به لیست علاقه‌مندی ها اضافه شد");
+    }
   };
   return (
-<>
+    <>
       <div className="lg:hidden fixed inset-x-0 bottom-0 w-full bg-white z-30   border-t border-grey220 px-1">
         <div className="flex justify-between items-center my-4">
-          <button onClick={() => addToCartHandler(product)} className="bg-primary text-sm text-white w-fit px-3 py-2 text-center rounded-sm cursor-pointer border border-grey220 transition-all duration-200 hover:bg-white hover:text-primary">
+          <button
+            onClick={() => addToCartHandler(product)}
+            className="bg-primary text-sm text-white w-fit px-3 py-2 text-center rounded-sm cursor-pointer border border-grey220 transition-all duration-200 hover:bg-white hover:text-primary"
+          >
             افزودن به سبد خرید
           </button>
           <div className="flex flex-col gap-1">
@@ -184,7 +203,7 @@ toast.success("محصول به سبد خرید اضافه شد")
                     )}
                   </div>
                   {/* qty */}
-                  <div className="flex gap-1 items-center justify-between w-full">
+                  <div className="flex gap-2 items-center justify-between w-full">
                     <input
                       type="number"
                       className="w-10 p-1 outline-0 text-xs"
@@ -198,6 +217,20 @@ toast.success("محصول به سبد خرید اضافه شد")
                     >
                       افزودن به سبد خرید
                     </button>
+                    {/* Add To Wishlist */}
+                    <TooltipProvider>
+                      <TooltipDemo
+                        btn={
+                          <button
+                            onClick={() => wishListHandler(product)}
+                            className="cursor-pointer text-black "
+                          >
+                            <Heart className={`size-6 text-black ${isInWishlist ? "fill-red-600 stroke-red-600" : "fill-white"}`} />
+                          </button>
+                        }
+                        textTolltip={isInWishlist ? "حذف از علاقه‌مندی" :"افزودن به علاقه مندی"}
+                      />
+                    </TooltipProvider>
                   </div>
                 </div>
               </div>
@@ -232,7 +265,7 @@ toast.success("محصول به سبد خرید اضافه شد")
           </div>
         </Container>
       </section>
-</>
+    </>
   );
 };
 

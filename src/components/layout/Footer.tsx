@@ -21,7 +21,7 @@ import ActiveLink from "../common/ActiveLink";
 const Footer = () => {
   return (
     <footer className="w-full mt-24">
-      <div className="lg:py-12 py-8 bg-[url-('/images/footer-background.png')] bg-no-repeat bg-center border-t-2 border-primary bg-secondary">
+      <div className="lg:py-12 py-8 bg-no-repeat bg-center border-t-2 border-primary bg-secondary" style={{backgroundImage:"url('/images/footer-background.png')"}}>
         <Container>
           <div className="grid grid-cols-3 gap-6">
             <div className="col-span-3 lg:col-span-1 flex flex-col gap-4">

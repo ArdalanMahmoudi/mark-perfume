@@ -9,7 +9,7 @@ const AboutusSection = () => {
     <section className="pt-24">
       <Container>
         <div className="w-full relative ">
-          <div className="lg:w-[90%] bg-secondary-layout flex-row! w-full py-8! px-5! bg-center bg-cover  bg-[url('/images/about-background.png')] bg-no-repeat ">
+          <div className="lg:w-[90%] bg-secondary-layout lg:flex-row! w-full py-8! px-5! bg-center bg-cover bg-no-repeat" style={{backgroundImage:"url('/images/about-background.png')"}}>
             <Image
               src={"/images/about-index.png"}
               className="lg:size-52 mx-auto -mt-45 w-full static max-w-75 lg:absolute lg:left-0 lg:top-1/2 lg:mt-0 lg:-translate-y-1/2"

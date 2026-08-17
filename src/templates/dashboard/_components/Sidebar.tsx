@@ -16,21 +16,22 @@ import {
 import Image from "next/image";
 import React from "react";
 
-const Sidebar = () => {
+const Sidebar = ({userName, userImage}) => {
   return (
     <div className="sticky top-8 h-fit w-full flex flex-col gap-4 border border-grey220 p-5 rounded-lg bg-secondary min-w-60">
       {/* user image */}
       <div className="flex justify-center">
+
         <Image
           className="w-25 rounded-full border border-primary"
-          src={""}
+          src={`${userImage? userImage : "/images/user.png"}`}
           width={260}
           height={260}
           alt="user image"
         />
       </div>
       {/* user name */}
-      <p className="text-primary text-center">ardal</p>
+      <p className="text-primary text-center">{userName}</p>
       {/* dashboard item */}
       <ActiveLink
         href={"/dashboard"}

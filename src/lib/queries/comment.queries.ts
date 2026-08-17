@@ -17,3 +17,21 @@ export async function getCommentId(productId) {
         }
     })
 }
+
+export async function getCommentUserId(userId) {
+    return await prisma.comment.findMany({
+        where:{userId},
+        orderBy:{
+            createdAt:"desc"
+        },
+        include:{
+            product:{
+                select:{
+                    thumbnail:true,
+                    name:true,
+                    slug:true
+                }
+            }
+        }
+    })
+}

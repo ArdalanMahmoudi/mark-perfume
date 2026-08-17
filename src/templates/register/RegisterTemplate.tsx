@@ -75,13 +75,13 @@ const RegisterTemplate = () => {
 
   return (
   
-      <section>
+      <section className="py-6">
         <div className="w-screen h-screen p-5 py-4 flex items-center justify-center my-12">
           <div className="w-full max-w-225 flex  shadow-lg rounded-lg overflow-hidden">
-            <div className="p-7.5 bg-secondary w-1/2">
+            <div className="lg:p-7.5 p-4 bg-secondary w-full lg:w-1/2">
               <Link href={"/"} className="flex justify-center mb-6">
                 <Image
-                  className="max-w-50 w-50"
+                  className="max-w-50 lg:w-50 w-40"
                   width={600}
                   height={300}
                   src={"/images/logo.png"}
@@ -174,14 +174,14 @@ const RegisterTemplate = () => {
                  {loading ? <Loader size={16}/> : 'ثبت نام'} 
                 </button>
               </form>
-              <p className="flex items-center mt-4">
+              <p className="flex items-center mt-4 text-sm lg:text-base gap-1">
                 حساب کاربری دارید؟{" "}
                 <Link href={"/login"} className="text-primary underline">
                   ورود
                 </Link>
               </p>
             </div>
-            <div className="w-1/2 bg-center bg-no-repeat bg-cover bg-[url('/images/register.jpg')]"></div>
+            <div className="hidden lg:block w-1/2 bg-center bg-no-repeat bg-cover "style={{backgroundImage:"url('/images/register.jpg')"}}></div>
           </div>
         </div>
       </section>

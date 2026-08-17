@@ -7,8 +7,10 @@ import {
 } from "lucide-react";
 import React from "react";
 import OverviewItem from "../_components/OverviewItem";
+import { getCurrentUser } from "@/src/lib/queries/user.queries";
 
-function DashboardIndexTemplate  ()  {
+async function DashboardIndexTemplate  ()  {
+  const user = await getCurrentUser() 
   return (
     <>
       <div className="flex flex-col gap-8 h-fit">
@@ -16,7 +18,7 @@ function DashboardIndexTemplate  ()  {
         <div className="flex justify-between p-5 rounded-lg border border-grey220 bg-secondary">
           <div className="flex flex-col gap-2.5">
             <p className="text-primary">داشبورد کاربری</p>
-            <p>به پنل کاربری خود خوش آمدید، ardal عزیز </p>
+            <p>به پنل کاربری خود خوش آمدید، {user?.username} عزیز </p>
           </div>
           <div className="flex gap-2.5 items-center">
             <div className="flex flex-col gap-2.5 text-sm ">

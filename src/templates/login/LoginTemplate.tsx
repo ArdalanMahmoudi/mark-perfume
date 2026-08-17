@@ -87,10 +87,10 @@ const LoginTemplate = () => {
       <section>
         <div className="w-screen h-screen p-5 py-4 flex items-center justify-center">
           <div className="w-full max-w-225 flex  shadow-lg rounded-lg overflow-hidden">
-            <div className="p-7.5 bg-secondary w-1/2">
-              <Link href={"/"} className="flex justify-center mb-6">
+            <div className="lg:p-7.5 p-4 bg-secondary w-full lg:w-1/2">
+              <Link href={"/"} className=" flex justify-center mb-6 w-full items-center">
                 <Image
-                  className="max-w-50 w-50"
+                  className="max-w-50 lg:w-50 w-40"
                   width={600}
                   height={300}
                   src={"/images/logo.png"}
@@ -144,31 +144,31 @@ const LoginTemplate = () => {
                 <button
                   type="submit"
                   disabled={loading ? true : false}
-                  className="py-1 px-6 transition-all duration-200 bg-primary rounded-xs cursor-pointer  border border-grey220 text-white hover:bg-white hover:text-primary"
+                  className="py-1 px-6 w-full lg:w-fit transition-all duration-200 bg-primary rounded-xs cursor-pointer  border border-grey220 text-white hover:bg-white hover:text-primary"
                 >
                   {loading ? <Loader2Icon className="animate-spin" /> : "ورود"}
                 </button>
               </form>
-              <p className="flex items-center mt-4">
+              <p className="flex items-center mt-4 text-sm lg:text-base">
                 حساب کاربری ندارید؟{" "}
                 <Link
                   href={"/register"}
-                  className="text-primary underline text-sm ms-1"
+                  className="text-primary underline  ms-1 text-xs lg:text-sm "
                 >
                   ثبت‌نام کنید
                 </Link>
               </p>
-              <p className="flex items-center mt-3">
+              <p className="flex items-center mt-3 text-sm lg:text-base">
                 رمز خود را فراموش کرده اید؟{" "}
                 <Link
                   href={"/forgot-password"}
-                  className="text-primary underline text-sm ms-1"
+                  className="text-primary underline text-xs lg:text-sm ms-1"
                 >
                   کلیک کنید
                 </Link>
               </p>
             </div>
-            <div className="w-1/2 bg-center bg-no-repeat bg-cover bg-[url('/images/register.jpg')]"></div>
+            <div className="lg:block hidden w-1/2 bg-center bg-no-repeat bg-cover" style={{backgroundImage:"url('/images/register.jpg')"}}></div>
           </div>
         </div>
       </section>

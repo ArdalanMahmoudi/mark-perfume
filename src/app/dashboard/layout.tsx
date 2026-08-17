@@ -16,12 +16,12 @@ export default async function DashboardLayout({
     }
   return (
     <>
-      <Header isLoggedIn={session}/>
-      <main>
+      <Header isLoggedIn={session} />
+      <main className="mt-16 lg:mt-40">
         <section>
           <Container>
             <div className="my-12 grid gap-8 grid-cols-[280px_1fr]">
-              <Sidebar />
+              <Sidebar userName={session.username} userImage={session.image}/>
               {children}
             </div>
           </Container>

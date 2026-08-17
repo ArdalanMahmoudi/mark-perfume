@@ -21,12 +21,12 @@ const CartPageTemplate = () => {
       </section>
       <section>
         <Container>
-          <div className="grid grid-cols-[1fr_300px] gap-7.5 mb-12 relative">
+          <div className="grid grid-cols-[repeat(1,100%)] lg:grid-cols-[1fr_300px] gap-7.5 mb-12 relative">
             {/* ============right========== */}
             <div className="flex flex-col gap-5">
               {/* title */}
               <div className="flex justify-between items-center border-b border-b-primary">
-                <p className="font-bold leading-7">سبد خرید شما</p>
+                <p className="font-bold leading-7 text-sm lg:text-base">سبد خرید شما</p>
                 <p className="text-sm">
                   {cart.length && cart.length.toLocaleString("fa-IR") }
                   <span className="pr-0.5">کالا</span>

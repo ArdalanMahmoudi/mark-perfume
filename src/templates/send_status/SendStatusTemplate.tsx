@@ -39,11 +39,11 @@ const SendStatusTemplate = () => {
                   </Link>
                   <div className="flex gap-1 items-center">
                     <MapPin size={14} />
-                    <p className="leading-8">
+                    <p className="leading-8 text-sm lg:text-base">
                       تهران، خیابان ولی‌عصر، پلاک ۱، واحد ۲
                     </p>
                   </div>
-                  <p className="leading-8">اردلان محمودی</p>
+                  <p className="leading-8 text-sm lg:text-base">اردلان محمودی</p>
                 </div>
                 <Link
                   href={"/send_status"}

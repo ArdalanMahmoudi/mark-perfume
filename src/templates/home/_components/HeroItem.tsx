@@ -1,3 +1,4 @@
+import Counter from "@/src/components/common/Counter";
 import React from "react";
 
 const HeroItem = ({
@@ -14,7 +15,7 @@ const HeroItem = ({
       <div className="flex items-center">
         <span className="w-3 h-10 rounded-s-md bg-primary"></span>
         <div className="w-12.5 h-15 flex items-center justify-center rounded-l-4xl bg-secondary border border-green-220 gap-1">
-          <p>{count.toLocaleString("fa-IR")}</p>+
+          <Counter end={count} suffix="+"/>
         </div>
       </div>
       <div>

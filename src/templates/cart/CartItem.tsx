@@ -21,7 +21,7 @@ const CartItem = ({ product, removeProduct }) => {
     });
   };
   return (
-    <div className="grid p-5 bg-secondary grid-cols-[140px_auto_50px] border border-grey220 gap-3.5 rounded-md items-center">
+    <div className="grid p-5 bg-secondary grid-cols-[repeat(1,100%)] lg:grid-cols-[140px_auto_50px] border border-grey220 gap-3.5 rounded-md items-center">
       {/* img-item */}
       <Image
         src={product.thumbnail}
@@ -32,7 +32,7 @@ const CartItem = ({ product, removeProduct }) => {
       />
       {/* middle-item */}
       <div className="flex flex-col gap-3">
-        <p className="text-primary text-start">{product.name}</p>
+        <p className="text-primary text-start text-sm lg:text-base">{product.name}</p>
         <div className="flex items-center gap-1.5 text-sm">
           <CheckCheck className="text-primary size-3.5" />
           موجود در انبار
@@ -50,7 +50,7 @@ const CartItem = ({ product, removeProduct }) => {
       </div>
 
       {/* =======Left-item====== */}
-      <div className="border border-grey220 bg-white h-full flex justify-evenly items-center rounded-3xl flex-col">
+      <div className="border border-grey220 bg-white h-full flex justify-evenly items-center rounded-3xl lg:flex-col py-2 ">
         <Plus className="size-4 cursor-pointer" />
         <p>{product.qty}</p>
         <Trash

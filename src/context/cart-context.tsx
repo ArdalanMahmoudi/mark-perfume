@@ -2,6 +2,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { ProductType } from "../lib/types/product.type";
 import { useToast } from "./toast-context";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 type CartContextType = {
   cart: ProductType[];
@@ -11,14 +12,9 @@ type CartContextType = {
 };
 const CartContext = createContext<CartContextType | null>(null);
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useLocalStorage("cart",[]);
   
-  useEffect(() => {
-    const savedCart = localStorage.getItem("cart");
-    if (savedCart) {
-      setCart(JSON.parse(savedCart));
-    }
-  }, []);
+  
 
   function addToCart(product) {
     const newCart = [...cart];

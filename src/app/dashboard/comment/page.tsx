@@ -1,11 +1,16 @@
-import React from 'react';
+import { getCommentUserId } from "@/src/lib/queries/comment.queries";
+import { getCurrentUser } from "@/src/lib/queries/user.queries";
+import DashboardCommentTemplate from "@/src/templates/dashboard/comment/DashboardCommentTemplate";
+import { redirect } from "next/navigation";
+import React from "react";
 
-const CommentPage = () => {
-    return (
-        <div className='flex flex-col gap-8 h-fit bg-secondary p-5 border border-grey220  rounded-lg'>
-            <p className='text-primary'>کامنت های من</p>
-        </div>
-    );
-}
+const CommentPage = async() => {
+    const user = await getCurrentUser()
+    if (!user) {
+        redirect('/login')
+    }
+    const comments = await getCommentUserId(user?.id)
+  return <DashboardCommentTemplate comments={comments}  />;
+};
 
 export default CommentPage;

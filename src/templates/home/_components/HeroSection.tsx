@@ -4,6 +4,11 @@ import HeroItem from "./HeroItem";
 import Image from "next/image";
 import Slider from "@/src/components/common/Slider";
 
+const heroImage= [
+  {id:1, src:"/images/slider1.png"},
+  {id:2, src:"/images/slider2.png"},
+  {id:3, src:"/images/slider3.png"},
+]
 const HeroSection = () => {
   return (
     <section className="pt-8">
@@ -35,7 +40,7 @@ const HeroSection = () => {
                 desc="محصولاتی از دل آمریکا"
               />
               <HeroItem
-                count={270}
+                count={4567}
                 title="کاربر فعال"
                 desc="در سایت ما عضو شده اند"
               />
@@ -44,9 +49,10 @@ const HeroSection = () => {
           {/* left */}
           <div className="col-span-3 lg:col-span-1 lg:order-2 order-1">
             <Slider
-              slides={Array.from({ length: 3 }).map((i) => (
+              slides={heroImage.map((i) => (
                 <Image
-                  src={"/images/slider1.png"}
+                key={i.id}
+                  src={i.src}
                   width={600}
                   height={600}
                   alt="slide-1 image"

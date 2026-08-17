@@ -6,6 +6,7 @@ import Link from "next/link";
 import {
   Bell,
   BookText,
+  ChevronLeft,
   CircleQuestionMark,
   FileText,
   Home,
@@ -31,7 +32,8 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
   const router = useRouter();
   const handleLogout = async () => {
     Swal.fire({
-      title: "آیا میخواهید از حسابتان خارج شوید؟",
+      title: "خروج از حساب کاربری",
+      text: "آیا میخواهید از حسابتان خارج شوید؟",
       icon: "question",
       confirmButtonText: "بله",
       cancelButtonText: "خیر",
@@ -49,6 +51,7 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
           toast.error("مشکلی پیش آمد مجدد امتحان کنید");
           return;
         }
+        toast.success("خروج از حساب کاربری انجام شد");
         router.refresh();
       }
     });
@@ -122,22 +125,25 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
                     <div className="absolute left-1/2 -translate-x-1/2  w-48 bg-secondary rounded-md shadow-lg border border-grey220 z-50 mt-20 invisible opacity-0 group-hover:opacity-100 group-hover:mt-2 group-hover:visible transition-all duration-500  ">
                       <div className="py-1  backdrop-blur-3xl">
                         <Link
-                          className="flex items-center gap-1 px-4 py-2 text-sm text-black hover:bg-primary/10"
+                          className="flex items-center justify-between px-4 py-2 text-sm text-black hover:bg-primary/10"
                           href="/admin"
                           data-discover="true"
                         >
-                          <Image
-                            src={
-                              isLoggedIn.image
-                                ? isLoggedIn.image
-                                : "/images/user.png"
-                            }
-                            className="size-8 bg-transparent rounded-full"
-                            width={100}
-                            height={100}
-                            alt="user image"
-                          />
-                          {isLoggedIn.username}
+                           <div className="flex gap-1 items-center">
+                            <Image
+                              src={
+                                isLoggedIn.image
+                                  ? isLoggedIn.image
+                                  : "/images/user.png"
+                              }
+                              className="size-8 bg-transparent rounded-full"
+                              width={100}
+                              height={100}
+                              alt="user image"
+                            />
+                            {isLoggedIn.username}
+                          </div>
+                          <ChevronLeft size={16} />
                         </Link>
                         <hr />
                         <Link
@@ -195,22 +201,25 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
                     <div className="absolute right-0  w-48 bg-secondary rounded-md shadow-lg border border-grey220 z-50 mt-20 invisible opacity-0 group-hover:opacity-100 group-hover:mt-2 group-hover:visible transition-all duration-500  ">
                       <div className="py-1 font-Vazir-L backdrop-blur-3xl">
                         <Link
-                          className="flex items-center gap-1 px-4 py-2 text-sm text-black hover:bg-primary/10"
+                          className="flex items-center justify-between px-4 py-2 text-sm text-black hover:bg-primary/10"
                           href="/dashboard"
                           data-discover="true"
                         >
-                          <Image
-                            src={
-                              isLoggedIn.image
-                                ? isLoggedIn.image
-                                : "/images/user.png"
-                            }
-                            className="size-8 bg-transparent rounded-full"
-                            width={100}
-                            height={100}
-                            alt="user image"
-                          />
-                          {isLoggedIn.username}
+                          <div className="flex gap-1 items-center">
+                            <Image
+                              src={
+                                isLoggedIn.image
+                                  ? isLoggedIn.image
+                                  : "/images/user.png"
+                              }
+                              className="size-8 bg-transparent rounded-full"
+                              width={100}
+                              height={100}
+                              alt="user image"
+                            />
+                            {isLoggedIn.username}
+                          </div>
+                          <ChevronLeft size={16} />
                         </Link>
                         <hr />
                         <Link

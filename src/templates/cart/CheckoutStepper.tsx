@@ -4,13 +4,13 @@ import Link from "next/link";
 import React from "react";
 
 const steps = [
-  { label: "سبد خرید", href:"/cart", icon: <ShoppingCart /> },
-  { label: "نحوه ارسال", href:"/send_status", icon: <Truck /> },
-  { label: "پرداخت", href:"/payment", icon: <CreditCard /> },
+  { label: "سبد خرید", href:"/cart", icon: <ShoppingCart className="size-4 lg:size-5" /> },
+  { label: "نحوه ارسال", href:"/send_status", icon: <Truck className="size-4 lg:size-5" /> },
+  { label: "پرداخت", href:"/payment", icon: <CreditCard className="size-4 lg:size-5" /> },
 ];
 const CheckoutStepper = ({ currentStep }) => {
   return (
-    <div className="flex items-center justify-center my-12">
+    <div className="flex items-center justify-center my-8 lg:my-12">
       {steps.map((step, index) => {
         const isActive = index === currentStep;
         const isComplete = currentStep > index;
@@ -20,7 +20,7 @@ const CheckoutStepper = ({ currentStep }) => {
             <Link
             href={step.href}
               className={cn(
-                "flex items-center cursor-pointer gap-2 rounded-full px-4 py-2 border border-grey220 transition-colors",
+                "flex items-center cursor-pointer gap-2 rounded-full px-2 lg:px-4 py-2 border border-grey220 transition-colors",
                 isActive && "bg-primary text-primary-foreground border-primary",
                 isComplete && "bg-primary/10 text-primary border-primary",
                 !isActive &&
@@ -29,7 +29,7 @@ const CheckoutStepper = ({ currentStep }) => {
               )}
             >
               {isComplete ? <Check size={16} /> : icon}
-              <span className="text-sm whitespace-nowrap">{step.label}</span>
+              <span className="text-xs lg:text-sm whitespace-nowrap">{step.label}</span>
             </Link>
             {index < steps.length - 1 && (
               <div

@@ -20,7 +20,7 @@ const PaymentTemplate = () => {
               {/* layout */}
               <div className="bg-secondary-layout">
                 {/* title */}
-                <p className="text-primary">انتخاب روش پرداخت</p>
+                <p className="text-primary text-sm lg:text-base">انتخاب روش پرداخت</p>
                 {/* card */}
                 <div className="w-full grid grid-cols-[1fr_auto] gap-5 justify-between items-center bg-white p-5  rounded-sm">
                   <div className="flex gap-1 items-center">
@@ -32,7 +32,7 @@ const PaymentTemplate = () => {
                     />
                     <label
                       htmlFor="bank-card"
-                      className="leading-8 flex gap-1 items-center"
+                      className="leading-8 flex gap-1 items-center text-sm lg:text-base"
                     >
                       <CreditCard size={18} />
                       کارت بانکی
@@ -46,7 +46,7 @@ const PaymentTemplate = () => {
                     <input type="radio" name="pay-method" id="bank-card" />
                     <label
                       htmlFor="bank-card"
-                      className="leading-8 flex gap-1 items-center"
+                      className="leading-8 flex gap-1 items-center text-sm lg:text-base"
                     >
                       <Wallet size={18} />
                       کیف پول
@@ -66,7 +66,7 @@ const PaymentTemplate = () => {
                     name=""
                     id=""
                   />
-                  <button className="h-full bg-primary text-white  rounded-3xl px-6  transition-all duration-300 border border-grey220 hover:bg-white hover:text-primary">
+                  <button className="h-full bg-primary text-white  rounded-3xl px-6 text-sm lg:text-base transition-all duration-300 border border-grey220 hover:bg-white hover:text-primary">
                     {" "}
                     ثبت
                   </button>
@@ -75,7 +75,7 @@ const PaymentTemplate = () => {
               {/*  Order Detail Layout  */}
               <div className="bg-secondary-layout">
                 <p className="text-primary ">خلاصه سفارش </p>
-                <div className="grid grid-cols-[1fr_auto] text-sm p-5 rounded-md bg-white">
+                <div className="grid grid-cols-[repeat(1,100%)] lg:grid-cols-[1fr_auto] text-sm p-5 gap-2 rounded-md bg-white ">
                   <div className="flex items-center gap-1">
                     <RocketIcon size={14} />
                     شنبه ۱۵ فروردین - بازه ۱۰ - ۱۱
