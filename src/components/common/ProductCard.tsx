@@ -6,6 +6,7 @@ import { ProductType } from "@/src/lib/types/product.type";
 import Button from "./Button";
 import { useCart } from "@/src/context/cart-context";
 import { useToast } from "@/src/context/toast-context";
+import { useCartStore } from "@/src/stores/cart-store";
 
 const ProductCard = ({
   className,
@@ -14,13 +15,17 @@ const ProductCard = ({
   product: ProductType;
   className?: string;
 }) => {
-  const { addToCart } = useCart();
+  // const { addToCart } = useCart();
+  const addToCart = useCartStore((state) => state.addToCart) 
+  const cart = useCartStore((state) => state.cart)
   const toast = useToast();
+  console.log("cart",cart);
   
-  const addToCartHandler = (product) => {
-    addToCart(product);
-    toast.success("محصول به سبد خرید اضافه شد");
-  };
+  
+  // const addToCartHandler = (product) => {
+  //   addToCart(product);
+  //   toast.success("محصول به سبد خرید اضافه شد");
+  // };
   return (
     <div className={`group h-full overflow-hidden ${className}`}>
       {/* p-top */}
@@ -50,7 +55,7 @@ const ProductCard = ({
         <div className="flex items-end justify-between mb-3">
           <Button
             className="rounded-sm! cursor-pointer px-6!"
-            onClick={() => addToCartHandler(product)}
+            onClick={() => addToCart(product)}
           >
             افزودن به سبد
           </Button>

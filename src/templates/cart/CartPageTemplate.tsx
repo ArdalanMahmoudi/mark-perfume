@@ -9,9 +9,11 @@ import { useCart } from "@/src/context/cart-context";
 import Link from "next/link";
 import { Button } from "@/src/components/ui/button";
 import CheckOutSidebar from "@/src/components/common/CheckOutSidebar";
+import { useCartStore } from "@/src/stores/cart-store";
 
 const CartPageTemplate = () => {
-  const { cart, removeProductInCart } = useCart();
+  // const { cart, removeProductInCart } = useCart();
+  const cart = useCartStore((state) => state.cart)
   return cart.length ? (
     <>
       <section className="pt-6">
