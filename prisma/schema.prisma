@@ -15,10 +15,14 @@ enum Role {
 
 enum OrderStatus {
   PENDING
-  SHIPPED
   PAID
-  DELIVERED
+  FAILED
   CANCELED
+}
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
 }
 
 enum CommentStatus {
@@ -44,7 +48,6 @@ model User {
 model Product {
   id            String         @id @default(cuid())
   name          String
-  latinName     String
   slug          String         @unique
   description   String //توضیح کوتاه
   details       String? //توضیح کامل
@@ -66,9 +69,9 @@ model Product {
 model Comment {
   id         String        @id @default(cuid())
   productId  String
-  product    Product       @relation(fields: [productId], references: [id])
+  product    Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
   userId     String
-  user       User          @relation(fields: [userId], references: [id])
+  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   score      Int           @default(5)
   body       String
   status     CommentStatus @default(PENDING)
@@ -89,12 +92,14 @@ model ProductImage {
 }
 
 model Order {
-  id         String      @unique @default(cuid())
+  id         String      @id @default(cuid())
   user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String
   status     OrderStatus @default(PENDING)
-  totalPrice Float
+  totalPrice Int
+  address    String
   orderItems OrderItem[]
+  payment Payment?
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
 }
@@ -104,10 +109,24 @@ model OrderItem {
   orderId   String
   order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
   productId String
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  quantity  Int
-  price     Float
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+  qty  Int
+  price     Int
   createdAt DateTime @default(now())
+}
+
+model Payment {
+  id String @id @default(cuid())
+  orderId String @unique
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  amount Int
+  authority String? @unique
+  refId String?
+  status PaymentStatus @default(PENDING)
+  paidAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
 }
 
 model Category {

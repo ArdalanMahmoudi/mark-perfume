@@ -1,9 +1,9 @@
 "use server";
 import { prisma } from "../prisma";
-import { ProductType } from "../types/product.type";
+import { ProductType, ProductWithScoreType } from "../types/product.type";
 
-export async function getProductHomePage(): Promise<ProductType[]> {
-  return prisma.product.findMany({
+export async function getProductWithScore(): Promise<ProductWithScoreType[]> {
+  const products = await prisma.product.findMany({
     take: 8,
     orderBy: {
       createdAt: "desc",
@@ -12,12 +12,21 @@ export async function getProductHomePage(): Promise<ProductType[]> {
       id: true,
       slug: true,
       name: true,
-      latinName: true,
       price: true,
       discount: true,
       thumbnail: true,
+      stock: true,
+      comments: { select: { score:true  },
     },
-  });
+  }})
+  return products.map(({comments, ...product}) => ({
+    ...product,
+    avgScore:comments.length > 0
+    ? comments.reduce((sum, c) => sum + c.score, 0) / comments.length
+    : 5,
+    reviewCount:comments.length
+
+  }))
 }
 
 export async function getCategories() {

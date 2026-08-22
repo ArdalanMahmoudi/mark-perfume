@@ -17,6 +17,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ProductType } from "@/src/lib/types/product.type";
 import { useRouter } from "next/navigation";
 import TextEditor from "@/src/components/common/TextEditor";
+import num2persian from "num2persian"
+import { numberToPersianWords } from "@/src/lib/helper";
 
 type ProductFormProps = {
   categories: string[];
@@ -33,14 +35,13 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
     watch,
     reset,
     getValues,
-    formState: { errors,isLoading },
+    formState: { errors, isLoading },
   } = useForm({
     resolver: zodResolver(
       mode === "create" ? createProductSchema : updateProductSchema,
     ),
     defaultValues: {
       name: product?.name ?? "",
-      latinName: product?.latinName ?? "",
       categoryId: product?.categoryId ?? "",
       price: product?.price,
       discount: product?.discount,
@@ -55,6 +56,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
       gallery: product?.gallery.map((item) => item.url) ?? [],
     },
   });
+    const price = watch("price");
 
   // RHF
   const { fields, remove, append } = useFieldArray({
@@ -120,17 +122,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
           classNameLabel="text-base"
           caption={errors.name?.message}
         />
-        <InputGroupInlineStart
-          element="input"
-          label="نام محصول(لاتین)"
-          {...register("latinName")}
-          classNameLabel="text-base"
-          caption={errors.latinName?.message}
-        />
-      </div>
-      {/* ------------------------category------------------------ */}
-      <div className="grid my-8 gap-4 grid-cols-4">
-        <div className="flex gap-2 flex-col col-span-2">
+        <div className="flex gap-2 flex-col">
           <label htmlFor="category">دسته‌بندی</label>
           <select
             {...register("categoryId")}
@@ -145,15 +137,25 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
           </select>
           <p className="text-error500">{errors.categoryId?.message}</p>
         </div>
+      </div>
+      {/* ------------------------category------------------------ */}
+      <div className="grid my-8 gap-4 grid-cols-2">
         {/* ------------------------prices------------------------ */}
-        <InputGroupInlineStart
-          element="input"
-          label="قیمت"
-          {...register("price")}
-          classNameLabel="text-base"
-          type="number"
-          caption={errors.price?.message || errors.price?.type}
-        />
+        <div className="flex flex-col gap-1">
+          <InputGroupInlineStart
+            element="input"
+            label="قیمت"
+            {...register("price",{valueAsNumber:true})}
+            classNameLabel="text-base"
+            type="number"
+            caption={errors.price?.message || errors.price?.type}
+          />
+          {
+            price > 0 && (
+              <p className="text-muted-foreground text-sm text-start">{numberToPersianWords(price)} تومان</p>
+            )
+          }
+        </div>
         <InputGroupInlineStart
           element="input"
           label="تخفیف"
@@ -180,7 +182,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
             name="details"
             control={control}
             render={({ field }) => (
-              <TextEditor value={field.value} onChange={field.onChange}/>
+              <TextEditor value={field.value} onChange={field.onChange} />
             )}
           />
         </div>
@@ -264,7 +266,9 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
             setValue={setValue}
             watch={watch}
           />
-           <p className="text-error500 text-sm mt-2">{errors.thumbnail?.message}</p>
+          <p className="text-error500 text-sm mt-2">
+            {errors.thumbnail?.message}
+          </p>
         </div>
         <div className="">
           <span> گالری تصاویر محصول</span>
@@ -274,7 +278,9 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
             watch={watch}
             getValues={getValues}
           />
-           <p className="text-error500 text-sm mt-2">{errors.gallery?.message}</p>
+          <p className="text-error500 text-sm mt-2">
+            {errors.gallery?.message}
+          </p>
         </div>
       </div>
       {/* ------------------------Button Submit------------------------ */}

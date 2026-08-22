@@ -1,7 +1,7 @@
 "use client"
 import Container from "@/src/components/common/Container";
 import React from "react";
-import CheckoutStepper from "../cart/CheckoutStepper";
+import CheckoutStepper from "../cart/_components/CheckoutStepper";
 import Link from "next/link";
 import { ChevronsLeftIcon, Clock, MapPin, Truck } from "lucide-react";
 import { useCart } from "@/src/context/cart-context";

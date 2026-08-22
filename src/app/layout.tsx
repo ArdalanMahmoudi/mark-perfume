@@ -3,7 +3,6 @@ import localFont from "next/font/local";
 import { Inter } from "next/font/google";
 import { cn } from "@/src/lib/utils";
 import { ToastProvider } from "../context/toast-context";
-import { CartProvider } from "../context/cart-context";
 import { WishlistProvider } from "../context/wishList-context";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
@@ -35,11 +34,8 @@ export default function RootLayout({
       dir="rtl"
     >
       <body>
-        <CartProvider>
-          <ToastProvider>
-            <WishlistProvider>{children}</WishlistProvider>
-          </ToastProvider>
-        </CartProvider>
+        <ToastProvider>{children}</ToastProvider>
+
         <div id="toast-root"></div>
       </body>
     </html>

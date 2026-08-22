@@ -1,19 +1,17 @@
 "use client";
 import Container from "@/src/components/common/Container";
-import React from "react";
-import CheckoutStepper from "./CheckoutStepper";
+import CheckoutStepper from "./_components/CheckoutStepper";
 import Image from "next/image";
-import { CheckCheck, Plus, ShoppingBag, Trash, Truck } from "lucide-react";
-import CartItem from "./CartItem";
-import { useCart } from "@/src/context/cart-context";
+import CartItem from "./_components/CartItem";
 import Link from "next/link";
 import { Button } from "@/src/components/ui/button";
 import CheckOutSidebar from "@/src/components/common/CheckOutSidebar";
 import { useCartStore } from "@/src/stores/cart-store";
 
 const CartPageTemplate = () => {
-  // const { cart, removeProductInCart } = useCart();
   const cart = useCartStore((state) => state.cart)
+  const removeFromCart = useCartStore((state) => state.removeFromCart)
+  
   return cart.length ? (
     <>
       <section className="pt-6">
@@ -41,7 +39,7 @@ const CartPageTemplate = () => {
                 {cart.map((item) => (
                   <CartItem
                     product={item}
-                    removeProduct={removeProductInCart}
+                    removeProduct={() => removeFromCart(item.id)}
                   />
                 ))}
               </div>

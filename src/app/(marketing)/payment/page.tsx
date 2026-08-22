@@ -1,4 +1,5 @@
-import PaymentTemplate from '@/src/templates/payment/PaymentTemplate';
+
+import PaymentTemplate from '@/src/templates/payment/_components/PaymentTemplate';
 import React from 'react';
 
 const Page = () => {

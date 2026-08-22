@@ -1,12 +1,12 @@
 "use client";
-import { useWishlist } from "@/src/context/wishList-context";
+import { useWishlistStore } from "@/src/stores/wishlist-store";
 import WishCard from "@/src/templates/dashboard/_components/WishCard";
 import { Trash } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
 const WishlistPage = () => {
-  const { wishList } = useWishlist();
+  const wishList = useWishlistStore((state) => state.wishList);
   return (
     <div className="bg-secondary-layout h-fit!">
       <p className="text-primary font-bold">لیست علاقه مندی من</p>

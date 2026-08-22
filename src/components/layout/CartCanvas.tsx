@@ -9,16 +9,17 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/src/components/ui/drawer";
-import { useCart } from "@/src/context/cart-context";
 import { calculatedDiscountedPrice } from "@/src/lib/helper";
+import { useCartStore } from "@/src/stores/cart-store";
 
 import { Minus, Plus, ShoppingCart, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 export function CartCanvas() {
-  const { cart, totalPrice } = useCart();
 
+  const cart = useCartStore((state) => state.cart)
+  const totalPrice = useCartStore((state) => state.totalPrice)
   return (
     <Drawer direction={"left"}>
       <DrawerTrigger asChild>
@@ -100,7 +101,7 @@ export function CartCanvas() {
             </div>
             <DrawerFooter className="pt-2.5 flex flex-col gap-2.5 border-t-2 border-primary ">
               <p className="bg-white rounded-4xl border border-grey220 text-center text-sm py-1 px-2 text-primary">
-                مبلغ قابل پرداخت = {totalPrice.toLocaleString("fa-IR")}
+                مبلغ قابل پرداخت = {totalPrice().toLocaleString("fa-IR")}
               </p>
               <div className="grid grid-cols-2 gap-2.5">
                 <Link

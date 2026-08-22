@@ -25,12 +25,12 @@ import Slider from "@/src/components/common/Slider";
 import ProductCard from "@/src/components/common/ProductCard";
 import { ProductType } from "@/src/lib/types/product.type";
 import { notFound } from "next/navigation";
-import { useCart } from "@/src/context/cart-context";
 import { calculatedDiscountedPrice } from "@/src/lib/helper";
 import { useToast } from "@/src/context/toast-context";
 import { TooltipDemo } from "@/src/components/common/Tooltip";
 import { TooltipProvider } from "@/src/components/ui/tooltip";
-import { useWishlist } from "@/src/context/wishList-context";
+import { useCartStore } from "@/src/stores/cart-store";
+import { useWishlistStore } from "@/src/stores/wishlist-store";
 
 const ProductTemplate = ({
   product,
@@ -48,9 +48,14 @@ const ProductTemplate = ({
     { href: "/", label: product?.name },
   ];
 
-  const { addToCart, totalPrice } = useCart();
+
+  const addToCart = useCartStore((state) => state.addToCart);
+  const totalPrice = useCartStore((state) => state.totalPrice);
   const toast = useToast();
-  const { addToWishList, wishList, removeFromWishList } = useWishlist();
+  const wishList = useWishlistStore((state) => state.wishList)
+  const addToWishList = useWishlistStore((state) => state.addToWishList)
+  const removeFromWishList = useWishlistStore((state) => state.removeFromWishList)
+
   const isInWishlist = wishList.some((p) => p.id === product.id);
 
   const addToCartHandler = (product) => {
@@ -120,10 +125,7 @@ const ProductTemplate = ({
                 <h1 className="text-primary lg:leading-8 leading-6 font-bold text-center lg:text-start">
                   {product.name}
                 </h1>
-                {/* p-lName */}
-                <p className="text-xs text-gray-500">
-                  {product.latinName && product.latinName}
-                </p>
+               
                 {/* meta */}
                 <div className="flex gap-4">
                   <div className="flex gap-0.5">
@@ -225,10 +227,16 @@ const ProductTemplate = ({
                             onClick={() => wishListHandler(product)}
                             className="cursor-pointer text-black "
                           >
-                            <Heart className={`size-6 text-black ${isInWishlist ? "fill-red-600 stroke-red-600" : "fill-white"}`} />
+                            <Heart
+                              className={`size-6 text-black ${isInWishlist ? "fill-red-600 stroke-red-600" : "fill-white"}`}
+                            />
                           </button>
                         }
-                        textTolltip={isInWishlist ? "حذف از علاقه‌مندی" :"افزودن به علاقه مندی"}
+                        textTolltip={
+                          isInWishlist
+                            ? "حذف از علاقه‌مندی"
+                            : "افزودن به علاقه مندی"
+                        }
                       />
                     </TooltipProvider>
                   </div>

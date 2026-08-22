@@ -7,3 +7,8 @@ export type ProductType = Prisma.ProductGetPayload<{
     comments:true
  }
 }>;
+
+export type ProductWithScoreType = Omit<ProductType,"comments"> & {
+   avgScore:number,
+   reviewCount:number
+}

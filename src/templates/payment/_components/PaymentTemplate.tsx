@@ -1,8 +1,8 @@
 import Container from "@/src/components/common/Container";
-import React from "react";
-import CheckoutStepper from "../cart/CheckoutStepper";
+
 import { CreditCard, RocketIcon, Wallet } from "lucide-react";
 import CheckOutSidebar from "@/src/components/common/CheckOutSidebar";
+import CheckoutStepper from "../../cart/_components/CheckoutStepper";
 
 const PaymentTemplate = () => {
   return (

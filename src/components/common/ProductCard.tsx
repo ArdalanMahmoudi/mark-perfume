@@ -2,75 +2,62 @@
 import Image from "next/image";
 import Link from "next/link";
 import { calculatedDiscountedPrice } from "@/src/lib/helper";
-import { ProductType } from "@/src/lib/types/product.type";
-import Button from "./Button";
-import { useCart } from "@/src/context/cart-context";
-import { useToast } from "@/src/context/toast-context";
-import { useCartStore } from "@/src/stores/cart-store";
+import { ProductWithScoreType } from "@/src/lib/types/product.type";
+import { useMemo, useState } from "react";
+import { Star } from "lucide-react";
 
 const ProductCard = ({
   className,
   product,
 }: {
-  product: ProductType;
+  product: ProductWithScoreType;
   className?: string;
 }) => {
-  // const { addToCart } = useCart();
-  const addToCart = useCartStore((state) => state.addToCart) 
-  const cart = useCartStore((state) => state.cart)
-  const toast = useToast();
-  console.log("cart",cart);
-  
-  
-  // const addToCartHandler = (product) => {
-  //   addToCart(product);
-  //   toast.success("محصول به سبد خرید اضافه شد");
-  // };
   return (
-    <div className={`group h-full overflow-hidden ${className}`}>
+    <Link
+      href={`/product/${product.slug}`}
+      className={`group h-full overflow-hidden ${className}`}
+    >
       {/* p-top */}
-      <Link href={`/product/${product.slug}`}>
-        <Image
-          width={500}
-          height={500}
-          src={product.thumbnail}
-          className="relative min-h-60 border border-grey220 w-full items-end  flex bg-center bg-cover bg-no-repeat rounded-t-[50%] "
-          alt={product.name}
-        />
-      </Link>
+
+      <Image
+        width={500}
+        height={500}
+        src={product.thumbnail}
+        className="relative min-h-60 border border-grey220 w-full items-end  flex bg-center bg-cover bg-no-repeat rounded-t-[50%] "
+        alt={product.name}
+      />
+
       {/* p-bottom */}
-      <div className="flex flex-col h-32.5 justify-between gap-2.5 bg-secondary p-2.5 rounded-b-lg border border-grey220">
+      <div className="flex flex-col h-32.5 justify-between gap-2.5 bg-secondary p-2.5 py-1 rounded-b-lg border border-grey220">
         {/* p-name */}
-        <Link
-          href={`/product/${product.slug}`}
-          className="text-primary line-clamp-1"
-        >
-          {product.name}
-        </Link>
-        {/* p-desc */}
-        <p className="text-gray-500 text-xs flex items-center gap-1 text-justify line-clamp-1!">
-          {product.latinName && product.latinName}
-        </p>
-        {/* p-price */}
+        <div className="text-primary line-clamp-1">{product.name}</div>
+
+        {/* p-price & stock*/}
+
         <div className="flex items-end justify-between mb-3">
-          <Button
-            className="rounded-sm! cursor-pointer px-6!"
-            onClick={() => addToCart(product)}
-          >
-            افزودن به سبد
-          </Button>
-          <div className="flex flex-col items-end">
-            {/* discount */}
-            {product.discount > 0 && (
-              <p className="space-x-1 flex">
-                <span className="text-sm line-through text-muted-foreground">
-                  {Number(product.price).toLocaleString("fa-IR")} تومان
-                </span>
-                <span className="bg-primary text-[10px] text-white px-2 py-0.5 rounded-3xl flex items-center justify-center w-fit">
-                  {product.discount.toLocaleString("fa-IR")}%
-                </span>
-              </p>
+          <div className="flex flex-col gap-1">
+            {product.discount > 0 ? (
+              <span className="bg-primary text-xs font-bold text-white px-2 py-0.5 rounded-3xl flex items-center justify-center w-fit">
+                {product.discount.toLocaleString("fa-IR")}%
+              </span>
+            ) : (
+              <div className="h-5 invisible"></div>
             )}
+          </div>
+          <div className="flex flex-col items-end">
+            <div className="flex items-center gap-1">
+              {product?.avgScore && (
+                <>
+                  <Star className="size-3 fill-warning400 stroke-warning400" />
+                  <span className="text-sm">
+                    {product.avgScore
+                      .toLocaleString("fa-IR", { maximumFractionDigits: 1 })
+                      .replace("٫", ".")}
+                  </span>
+                </>
+              )}
+            </div>
             {/* price */}
             <p className="text-black ">
               {calculatedDiscountedPrice({
@@ -79,10 +66,18 @@ const ProductCard = ({
               }).toLocaleString("fa-IR")}{" "}
               تومان
             </p>
+            {/* discount */}
+            {product.discount > 0 && (
+              <p className="space-x-1 flex">
+                <span className="text-[12px] line-through text-muted-foreground">
+                  {Number(product.price).toLocaleString("fa-IR")}
+                </span>
+              </p>
+            )}
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

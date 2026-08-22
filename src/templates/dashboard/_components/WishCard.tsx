@@ -1,14 +1,12 @@
 "use client";
 import { useToast } from "@/src/context/toast-context";
-import { useWishlist } from "@/src/context/wishList-context";
 import { calculatedDiscountedPrice } from "@/src/lib/helper";
+import { useWishlistStore } from "@/src/stores/wishlist-store";
 import { Trash } from "lucide-react";
-import Image from "next/image";
-import React from "react";
 import Swal from "sweetalert2";
 
 const WishCard = ({ product }) => {
-  const { removeFromWishList } = useWishlist();
+  const removeFromWishList = useWishlistStore((state) => state.removeFromWishList)
   const toast = useToast();
 
   const removeWishCardHandler = (productId) => {
@@ -49,10 +47,7 @@ const WishCard = ({ product }) => {
       <div className="flex flex-col h-32.5 justify-between gap-2.5 bg-secondary p-2.5 rounded-b-lg border border-grey220">
         {/* p-name */}
         <p className="text-primary line-clamp-1">{product.name}</p>
-        {/* p-desc */}
-        <p className="text-gray-500 text-xs flex items-center gap-1 text-justify line-clamp-1!">
-          {product.latinName && product.latinName}
-        </p>
+        
         {/* p-price */}
         <div className="flex items-center justify-end mb-3">
           <div className="flex flex-col items-end">
@@ -69,11 +64,11 @@ const WishCard = ({ product }) => {
             )}
             {/* price */}
             <p className="text-black ">
-              {calculatedDiscountedPrice({
+              {/* {calculatedDiscountedPrice({
                 price: product.price,
                 discount: product.discount,
               }).toLocaleString("fa-IR")}{" "}
-              تومان
+              تومان */}
             </p>
           </div>
         </div>

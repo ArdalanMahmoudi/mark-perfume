@@ -4,9 +4,6 @@ import ProductActions from "@/src/templates/admin/_components/products/ProductAc
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
 
-
-
-
 export const productColumns: ColumnDef<ProductType>[] = [
   {
     accessorKey: "thumbnail",
