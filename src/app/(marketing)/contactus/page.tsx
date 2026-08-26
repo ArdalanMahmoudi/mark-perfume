@@ -37,6 +37,14 @@ const items = [
     content:
       "تمام عطرهای ارائه‌شده دارای گارانتی اصالت کالا هستند. در صورتی که پلمپ محصول باز نشده باشد، تا ۷ روز امکان تعویض یا مرجوعی وجود دارد. اگر مشکلی در بسته‌بندی، نشتی یا مغایرت کالا مشاهده کنید، پشتیبانی فروشگاه بلافاصله برای تعویض محصول اقدام می‌کند. ",
   },
+  {
+    value: "item-5",
+    trigger: "عطرهای فروشگاه شما چه تفاوتی با بازار دارند؟",
+    content:
+      "تمامی عطرها و ادکلن‌های ما اصل بوده و مستقیماً از نمایندگی‌های معتبر تهیه می‌شوند. هر محصول دارای شناسه اصالت و پلمپ اصلی برند است. همچنین تمام کالاها در شرایط استاندارد نگهداری می‌شوند تا کیفیت رایحه و ماندگاری آن‌ها حفظ شود. ",
+  },
+  
+  
 ];
 
 const Page = () => {
@@ -85,7 +93,7 @@ const Page = () => {
           </div>
           {/* Faq & Contact Form  */}
           <div className="my-12 grid grid-cols-10 gap-8">
-            <div className="bg-secondary-layout rounded-tl-[140px]! lg:col-span-7 col-span-10">
+            <div className="bg-secondary-layout rounded-tl-[140px]! lg:col-span-7 col-span-10 overflow-hidden">
               <p className="text-primary text-center mt-5">- سوالات متداول -</p>
               <Accordion
                 type="single"

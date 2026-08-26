@@ -1,3 +1,4 @@
+"use server"
 import { prisma } from "../prisma";
 
 export async function getOrders() {
@@ -9,6 +10,10 @@ export async function getOrders() {
 export async function getOrdersPerUser(userId) {
   return await prisma.order.findMany({
     where:{userId},
+    include:{
+      orderItems:true,
+      payment:true
+    }
   })
 
 }

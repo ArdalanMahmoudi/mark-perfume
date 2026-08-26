@@ -34,7 +34,7 @@ export function   DataTable<TData, TValue>({
   return (
     <div className="overflow-hidden rounded-md border bg-white">
       <Table>
-        <TableHeader className="border-b border-grey220">
+        <TableHeader className="border-b border-grey220 bg-secondary">
           {table.getFlatHeaders().map((header) => (
             <TableHead
             className="text-center!"

@@ -1,29 +1,57 @@
 import {
+  Check,
   CircleDollarSignIcon,
   Heart,
   PlusCircleIcon,
   ShoppingBag,
   Wallet,
+  Wallet2,
 } from "lucide-react";
-import React from "react";
-import OverviewItem from "../_components/OverviewItem";
-import { getCurrentUser } from "@/src/lib/queries/user.queries";
 
-async function DashboardIndexTemplate  ()  {
-  const user = await getCurrentUser() 
+import OverviewItem from "../_components/OverviewItem";
+import { DataTable } from "../_components/data-table";
+import { orderColumns } from "../order/orderColumns";
+import ItemActivity from "../_components/ItemActivity";
+import Link from "next/link";
+
+const item_activity = [
+  {
+    id: 1,
+    title: "سفارش شما تحویل داده شد",
+    desc: "سفارش #ORD-7842 در تاریخ ۱۴۰۲/۱۰/۱۵ تحویل داده شد.",
+    icon: <Check className="size-4 text-primary" />,
+    date: "۲ روز پیش",
+  },
+  {
+    id: 2,
+    title: "شارژ کیف پول",
+    desc: "مبلغ ۵۰۰,۰۰۰ تومان به کیف پول شما اضافه شد.",
+    icon: <Wallet2 className="size-4 text-primary" />,
+    date: "۲ روز پیش",
+  },
+  {
+    id: 3,
+    title: "افزودن به علاقه‌مندی‌ها",
+    desc: "محصول  ادکلن Johnwin  به لیست علاقه‌مندی‌ها اضافه شد.",
+    icon: <Heart className="size-4 text-primary" />,
+    date: "۵ روز پیش",
+  },
+];
+
+function DashboardIndexTemplate({ user, orders }) {
   return (
     <>
       <div className="flex flex-col gap-8 h-fit">
         {/*  Welcome */}
-        <div className="flex justify-between p-5 rounded-lg border border-grey220 bg-secondary">
+        <div className="flex lg:flex-row flex-col justify-between p-5 rounded-lg border border-grey220 bg-secondary">
           <div className="flex flex-col gap-2.5">
             <p className="text-primary">داشبورد کاربری</p>
             <p>به پنل کاربری خود خوش آمدید، {user?.username} عزیز </p>
           </div>
-          <div className="flex gap-2.5 items-center">
+          <div className="flex justify-between lg:justify-start mt-6 lg:mt-0 gap-2.5 items-center">
             <div className="flex flex-col gap-2.5 text-sm ">
               <p> اعتبار کیف پول</p>
-              <p>{(1_800_000).toLocaleString("fa-IR")} تومان</p>
+              <p className="font-bold">{(1_800_000).toLocaleString("fa-IR")} تومان</p>
             </div>
             <div className="size-10 bg-white rounded-full flex items-center justify-center border border-grey220">
               <CircleDollarSignIcon className="size-5 text-primary" />
@@ -31,7 +59,7 @@ async function DashboardIndexTemplate  ()  {
           </div>
         </div>
         {/* Overview */}
-        <div className="grid grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <OverviewItem
             title="سفارشات فعال"
             count="۳"
@@ -52,72 +80,51 @@ async function DashboardIndexTemplate  ()  {
           />
         </div>
         {/* Order table */}
-        <div className="flex flex-col gap-4 bg-secondary border border-grey220 rounded-lg p-5 overflow-x-auto whitespace-nowrap">
-          <div>سفارشات اخیر</div>
-          <table>
-            <thead className="bg-white min-w-2xl text-sm border border-grey220 overflow-hidden">
-              <th className="border-l p-2.5 border-grey220 text-primary">
-                شماره
-              </th>
-              <th className="border-l p-2.5 border-grey220 text-primary">
-                شماره سفارش
-              </th>
-              <th className="border-l p-2.5 border-grey220 text-primary">
-                تاریخ ثبت سفارش
-              </th>
-              <th className="border-l p-2.5 border-grey220 text-primary">
-                وضعیت سفارش
-              </th>
-              <th className="border-l p-2.5 border-grey220 text-primary">
-                جزئیات سفارش
-              </th>
-            </thead>
-            <tbody>
-              <tr className="text-sm text-center border-b border-grey220">
-                <td className="p-2">1</td>
-                <td className="p-2">392874934</td>
-                <td className="p-2"> 1405/1/10 --8:24</td>
-                <td className="p-2">
-                  <div className="bg-pending px-2.5 py-1 rounded-xs text-white text-xs m-auto cursor-pointer w-fit h-fit">
-                    درحال انجام
-                  </div>
-                </td>
-                <td className="p-2 flex justify-center">
-                  <PlusCircleIcon className="size-5" />
-                </td>
-              </tr>
-              <tr className="text-sm text-center border-b border-grey220">
-                <td className="p-2">2</td>
-                <td className="p-2">392874934</td>
-                <td className="p-2"> 1405/1/10 --8:24</td>
-                <td className="p-2">
-                  <div className="bg-success600 px-2.5 py-1 rounded-xs text-white text-xs m-auto cursor-pointer w-fit h-fit">
-                    تکمیل شده
-                  </div>
-                </td>
-                <td className="p-2 flex justify-center">
-                  <PlusCircleIcon className="size-5" />
-                </td>
-              </tr>
-              <tr className="text-sm text-center border-b border-grey220">
-                <td className="p-2">3</td>
-                <td className="p-2">392874934</td>
-                <td className="p-2"> 1405/1/10 --8:24</td>
-                <td className="p-2">
-                  <div className="bg-error500 px-2.5 py-1 rounded-xs text-white text-xs m-auto cursor-pointer w-fit h-fit">
-                    لغو شده
-                  </div>
-                </td>
-                <td className="p-2 flex justify-center">
-                  <PlusCircleIcon className="size-5" />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div className="bg-secondary-layout overflow-x-auto whitespace-nowrap">
+          <p className="font-bold leading-8">سفارشات اخیر</p>
+          <DataTable columns={orderColumns} data={orders} />
+        </div>
+        {/* Activity Layout  */}
+        <div className="grid lg:grid-cols-2 gap-7">
+          {/* Activity Right  */}
+          <div className="bg-secondary-layout">
+            <p className="leading-8 font-bold">فعالیت های اخیر</p>
+            {/* items */}
+            {item_activity.map((item) => (
+              <ItemActivity
+                key={item.id}
+                title={item.title}
+                desc={item.desc}
+                icon={item.icon}
+                date={item.date}
+              />
+            ))}
+          </div>
+          {/* Activity Left  */}
+          <div className="bg-secondary-layout">
+            <p className="font-bold leading-8">پیشنهادات ویژه برای شما</p>
+            <div className="flex bg-white border border-grey220 rounded-sm p-2 lg:p-3.5 gap-2.5 items-center justify-between">
+              <div className="flex gap-2.5 items-center">
+                <p className="text-xs lg:text-sm border border-grey220 rounded-sm flex items-center justify-center min-w-20 min-h-20 bg-secondary text-primary">
+                  تخفیف ویژه
+                </p>
+                <div className="flex flex-col gap-2.5 text-sm">
+                  <p className="text-xs lg:text-base">کد تخفیف 5۰٪</p>
+                  <p className="text-xs lg:text-base">برای خریدهای بالای 2 میلیون تومان</p>
+                </div>
+              </div>
+              <Link
+                href={"/dashboard"}
+                className="text-xs lg:text-sm text-primary text-end"
+              >
+                استفاده
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </>
   );
-};
+}
 
 export default DashboardIndexTemplate;

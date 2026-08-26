@@ -10,9 +10,9 @@ const WishlistPage = () => {
   return (
     <div className="bg-secondary-layout h-fit!">
       <p className="text-primary font-bold">لیست علاقه مندی من</p>
-      <div className="grid grid-cols-3 gap-4  p-5 overflow-x-auto whitespace-nowrap">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4  p-5 overflow-x-auto whitespace-nowrap">
         {wishList.length > 0 ? (
-          wishList.map((card) => <WishCard product={card} />)
+          wishList.map((card) => <WishCard key={card.id} product={card} />)
         ) : (
           <div className="flex flex-col gap-5 items-center justify-center col-span-3">
             <Image

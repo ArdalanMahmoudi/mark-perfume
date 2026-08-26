@@ -17,7 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ProductType } from "@/src/lib/types/product.type";
 import { useRouter } from "next/navigation";
 import TextEditor from "@/src/components/common/TextEditor";
-import num2persian from "num2persian"
+import num2persian from "num2persian";
 import { numberToPersianWords } from "@/src/lib/helper";
 
 type ProductFormProps = {
@@ -27,6 +27,7 @@ type ProductFormProps = {
 };
 
 const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
+  // RHF
   const {
     control,
     register,
@@ -56,9 +57,8 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
       gallery: product?.gallery.map((item) => item.url) ?? [],
     },
   });
-    const price = watch("price");
+  const price = watch("price");
 
-  // RHF
   const { fields, remove, append } = useFieldArray({
     name: "specification",
     control,
@@ -100,7 +100,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
         toast.success("محصول ایجاد شد");
         reset();
       } else {
-        console.log("edited");
+
         await updateProductAction(product?.id, formData);
         toast.success("تغییرات محصول اعمال شد");
         router.push("/admin/products");
@@ -145,16 +145,16 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
           <InputGroupInlineStart
             element="input"
             label="قیمت"
-            {...register("price",{valueAsNumber:true})}
+            {...register("price", { valueAsNumber: true })}
             classNameLabel="text-base"
             type="number"
             caption={errors.price?.message || errors.price?.type}
           />
-          {
-            price > 0 && (
-              <p className="text-muted-foreground text-sm text-start">{numberToPersianWords(price)} تومان</p>
-            )
-          }
+          {price > 0 && (
+            <p className="text-muted-foreground text-sm text-start">
+              {numberToPersianWords(price)} تومان
+            </p>
+          )}
         </div>
         <InputGroupInlineStart
           element="input"

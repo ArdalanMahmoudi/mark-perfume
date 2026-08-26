@@ -1,4 +1,5 @@
 import { prisma } from "@/src/lib/prisma";
+import FailVerifyTemplate from "@/src/templates/payment/_components/FailVerifyTemplate";
 import SuccessVerifyTemplate from "@/src/templates/payment/_components/SuccessVerifyTemplate";
 
 import Link from "next/link";
@@ -32,12 +33,7 @@ const VerifyPaymentPage = async ({ searchParams }: Props) => {
       where: { id: payment.id },
       data: { status: "FAILED" },
     });
-    return (
-      <div>
-        <h1>پرداخت ناموفق بود</h1>
-        <Link href={"/payment"}>تلاش مجدد</Link>
-      </div>
-    );
+    return <FailVerifyTemplate refId={payment.refId} />;
   }
 
   const response = await fetch(ZARINPAL_VERIFY_URL, {
@@ -51,32 +47,34 @@ const VerifyPaymentPage = async ({ searchParams }: Props) => {
   });
   const data = await response.json();
   if (data.data?.code === 100 || data.data?.code === 101) {
+    const paidAt = new Date()
     await prisma.$transaction([
       prisma.payment.update({
         where: { id: payment.id },
         data: {
           status: "SUCCESS",
           refId: String(data.data.ref_id),
-          paidAt: new Date(),
+          paidAt,
         },
       }),
       prisma.order.update({
-        where:{id:payment.orderId},
-        data:{status:'PAID'}
-      })
+        where: { id: payment.orderId },
+        data: { status: "PAID" },
+      }),
     ]);
     return (
-        <SuccessVerifyTemplate refId={data.data.ref_id} amount={payment.amount} paidAt={payment.paidAt}/>
-    )
+      <SuccessVerifyTemplate
+        refId={data.data.ref_id}
+        amount={payment.amount}
+        paidAt={paidAt}
+      />
+    );
   }
   await prisma.payment.update({
-    where:{id:payment.id},
-    data:{status:'FAILED'}
-  })
-  return <div>
-    <h1>پرداخت تایید نشد</h1>
-    <Link href={"/payment"}>تلاش مجدد</Link>
-  </div>;
+    where: { id: payment.id },
+    data: { status: "FAILED" },
+  });
+  return <FailVerifyTemplate refId={data.data.ref_id} />;
 };
 
 export default VerifyPaymentPage;

@@ -24,6 +24,7 @@ import SectionTitle from "../home/_components/SectionTitle";
 import Slider from "@/src/components/common/Slider";
 import ProductCard from "@/src/components/common/ProductCard";
 import { ProductType } from "@/src/lib/types/product.type";
+import { CommentType } from "@/src/lib/types/comment.type";
 import { notFound } from "next/navigation";
 import { calculatedDiscountedPrice } from "@/src/lib/helper";
 import { useToast } from "@/src/context/toast-context";
@@ -32,29 +33,29 @@ import { TooltipProvider } from "@/src/components/ui/tooltip";
 import { useCartStore } from "@/src/stores/cart-store";
 import { useWishlistStore } from "@/src/stores/wishlist-store";
 
-const ProductTemplate = ({
-  product,
-  comments,
-}: {
-  comments: any;
+type Props = {
   product: ProductType;
-}) => {
+  initialComments: CommentType[];
+  initialCursor: string | null;
+};
+
+const ProductTemplate = ({ product, initialComments, initialCursor }: Props) => {
   if (!product) {
     notFound();
   }
+
   const links = [
     { href: "/", label: "خانه" },
     { href: "/shop", label: "فروشگاه" },
     { href: "/", label: product?.name },
   ];
 
-
   const addToCart = useCartStore((state) => state.addToCart);
   const totalPrice = useCartStore((state) => state.totalPrice);
   const toast = useToast();
-  const wishList = useWishlistStore((state) => state.wishList)
-  const addToWishList = useWishlistStore((state) => state.addToWishList)
-  const removeFromWishList = useWishlistStore((state) => state.removeFromWishList)
+  const wishList = useWishlistStore((state) => state.wishList);
+  const addToWishList = useWishlistStore((state) => state.addToWishList);
+  const removeFromWishList = useWishlistStore((state) => state.removeFromWishList);
 
   const isInWishlist = wishList.some((p) => p.id === product.id);
 
@@ -72,9 +73,10 @@ const ProductTemplate = ({
       toast.success("محصول به لیست علاقه‌مندی ها اضافه شد");
     }
   };
+
   return (
     <>
-      <div className="lg:hidden fixed inset-x-0 bottom-0 w-full bg-white z-30   border-t border-grey220 px-1">
+      <div className="lg:hidden fixed inset-x-0 bottom-0 w-full bg-white z-30 border-t border-grey220 px-1">
         <div className="flex justify-between items-center my-4">
           <button
             onClick={() => addToCartHandler(product)}
@@ -84,7 +86,7 @@ const ProductTemplate = ({
           </button>
           <div className="flex flex-col gap-1">
             <div className="flex items-end gap-1">
-              {product.discount && (
+              {product.discount > 0 && (
                 <>
                   <span className="text-sm font-bold text-gray-500 line-through">
                     {Number(product.price).toLocaleString("fa-IR")} تومان
@@ -103,14 +105,16 @@ const ProductTemplate = ({
           </div>
         </div>
       </div>
+
       <BreadCrumbs
         links={links}
         secondTextClass=" lg:w-full line-clamp-1"
         classNameWrapper={true}
       />
+
       <section>
         <Container>
-          <div className="grid grid-cols-10 bg-secondary  rounded-lg p-2 lg:p-5  gap-5 border border-grey220">
+          <div className="grid grid-cols-10 bg-secondary rounded-lg p-2 lg:p-5 gap-5 border border-grey220">
             {/* right */}
             <div className="col-span-10 lg:col-span-3">
               <Gallery
@@ -118,15 +122,14 @@ const ProductTemplate = ({
                 plugins={[Autoplay({ delay: 3000, stopOnInteraction: false })]}
               />
             </div>
+
             {/* middle */}
             <div className="col-span-10 lg:col-span-4">
               <div className="flex flex-col items-center lg:items-start gap-4">
-                {/* p-name */}
                 <h1 className="text-primary lg:leading-8 leading-6 font-bold text-center lg:text-start">
                   {product.name}
                 </h1>
-               
-                {/* meta */}
+
                 <div className="flex gap-4">
                   <div className="flex gap-0.5">
                     {Array.from({ length: 5 }).map((_, idx) => (
@@ -138,9 +141,9 @@ const ProductTemplate = ({
                   </div>
                   <MessageCircle className="text-primary fill-primary size-3.5" />
                   <Heart className="text-error500 fill-error500 size-3.5" />
-                  <ChartLine className="text-primary  size-3.5" />
+                  <ChartLine className="text-primary size-3.5" />
                 </div>
-                {/* detail */}
+
                 <div
                   className="product-content"
                   dangerouslySetInnerHTML={{
@@ -149,6 +152,7 @@ const ProductTemplate = ({
                 />
               </div>
             </div>
+
             {/* left */}
             <div className="col-span-10 lg:col-span-3">
               <div className="bg-white border border-grey220 p-5 rounded-lg flex flex-col gap-6">
@@ -204,6 +208,7 @@ const ProductTemplate = ({
                       </div>
                     )}
                   </div>
+
                   {/* qty */}
                   <div className="flex gap-2 items-center justify-between w-full">
                     <input
@@ -212,14 +217,13 @@ const ProductTemplate = ({
                       placeholder="1"
                       min={1}
                     />
-                    {/* Add-To-Cart */}
                     <button
                       onClick={() => addToCartHandler(product)}
+                      disabled={product.stock === 0}
                       className="bg-primary text-sm text-white w-full py-1 text-center rounded-xs cursor-pointer border border-grey220 transition-all duration-200 hover:bg-white hover:text-primary"
                     >
                       افزودن به سبد خرید
                     </button>
-                    {/* Add To Wishlist */}
                     <TooltipProvider>
                       <TooltipDemo
                         btn={
@@ -233,9 +237,7 @@ const ProductTemplate = ({
                           </button>
                         }
                         textTolltip={
-                          isInWishlist
-                            ? "حذف از علاقه‌مندی"
-                            : "افزودن به علاقه مندی"
+                          isInWishlist ? "حذف از علاقه‌مندی" : "افزودن به علاقه مندی"
                         }
                       />
                     </TooltipProvider>
@@ -246,14 +248,17 @@ const ProductTemplate = ({
           </div>
         </Container>
       </section>
+
       {/* Product-Tabs */}
       <ProductTabs
         description={product.description}
         volume={product.volume}
         specification={product.specification}
-        comments={comments}
+        initialComments={initialComments}
+        initialCursor={initialCursor}
         productId={product.id}
       />
+
       {/* Related-Product */}
       <section>
         <Container>
@@ -266,8 +271,8 @@ const ProductTemplate = ({
               autoplay
               loop
               slidesToShow={{ default: 1, sm: 1, md: 2, lg: 4 }}
-              slides={Array.from({ length: 5 }).map(() => (
-                <ProductCard product={product} />
+              slides={Array.from({ length: 5 }).map((_, idx) => (
+                <ProductCard key={idx} product={product} />
               ))}
             />
           </div>

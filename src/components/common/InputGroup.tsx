@@ -53,7 +53,7 @@ export function InputGroupInlineStart({
           />
           <InputGroupAddon align="inline-end">{icon}</InputGroupAddon>
         </InputGroup>
-        <FieldDescription className="text-start text-red-500">
+        <FieldDescription className={`text-start text-red-500 h-6 `}>
           {caption}
         </FieldDescription>
       </Field>

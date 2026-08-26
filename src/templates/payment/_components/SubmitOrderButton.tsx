@@ -15,7 +15,7 @@ export function SubmitOrderButton() {
       const order = await createOrder(orderInput,"پیرانشهر");
       await initialPayment(order.id);
     } catch (err) {
-      console.log(err);
+      throw new Error("Error Payment")
     }
 
     

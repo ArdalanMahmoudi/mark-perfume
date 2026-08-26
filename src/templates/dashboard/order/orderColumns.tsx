@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { OrderType } from "@/src/lib/types/orders.type";
 import { ColumnDef } from "@tanstack/react-table";
 import { PlusCircleIcon } from "lucide-react";
@@ -6,15 +6,15 @@ import { PlusCircleIcon } from "lucide-react";
 export const orderColumns: ColumnDef<OrderType>[] = [
   {
     accessorKey: "refId",
-    header: "شماره سفارش",
-    cell: ({ row }) => <span>{row.original.payment?.refId}</span>,
+    header: () => <span className="text-primary">شماره سفارش</span>,
+    cell: ({ row }) => <p>{row.original.status === "PAID" ? row.original.payment?.refId : <span className="text-gray-400">پرداخت نشده</span>}</p>,
   },
   {
     accessorKey: "paidAt",
-    header: "تاریخ ثبت سفارش",
+    header: () => <span className="text-primary">تاریخ ثبت سفارش</span>,
     cell: ({ row }) => (
       <span>
-        {row.original.payment?.paidAt?.toLocaleDateString("fa-IR", {
+        {row.original.createdAt?.toLocaleDateString("fa-IR", {
           year: "numeric",
           month: "long",
           day: "numeric",
@@ -24,12 +24,12 @@ export const orderColumns: ColumnDef<OrderType>[] = [
   },
   {
     accessorKey: "status",
-    header: "وضعیت سفارش",
+    header: () => <span className="text-primary">وضعیت سفارش</span>,
     cell: ({ row }) => (
       <span>
         {(row.original.status === "PAID" && (
           <div className="bg-success600 px-2.5 py-1 rounded-xs text-white text-xs m-auto cursor-pointer w-fit h-fit">
-            تکمیل شده
+            پرداخت شده
           </div>
         )) ||
           (row.original.status === "PENDING" && (
@@ -46,10 +46,12 @@ export const orderColumns: ColumnDef<OrderType>[] = [
     ),
   },
   {
-    accessorKey:"detail",
-    header:"وضعیت سفارش",
-    cell:() => (
-        <PlusCircleIcon className="size-5" />
-    )
-  }
+    accessorKey: "detail",
+    header: () => <span className="text-primary">جزئیات سفارش</span>,
+    cell: () => (
+      <div className="flex justify-center">
+        <PlusCircleIcon className="size-5 cursor-pointer" />
+      </div>
+    ),
+  },
 ];

@@ -1,21 +1,27 @@
-import Header from "@/src/components/layout/Header";
-import { prisma } from "@/src/lib/prisma";
-import { getCommentId, getComments } from "@/src/lib/queries/comment.queries";
+import { UserProvider } from "@/src/context/user-context";
+import { getCommentsMore } from "@/src/lib/queries/comment.queries";
 import { getProductUniq } from "@/src/lib/queries/product.queries";
+import { getCurrentUser } from "@/src/lib/queries/user.queries";
 import ProductTemplate from "@/src/templates/product/ProductTemplate";
-import React from "react";
+import { notFound } from "next/navigation";
 
 const ProductPage = async ({ params }: { params: { slug: string } }) => {
   const { slug } = await params;
   const product = await getProductUniq(slug);
-  const comments = await prisma.comment.findMany({
-    where: { productId: product?.id, status: "ACCEPT" },
-  });
+  if (!product) {
+    return notFound();
+  }
+  const user = await getCurrentUser();
+  const { comments, nextCursor } = await getCommentsMore(product.id);
 
   return (
-    <>
-      <ProductTemplate product={product} comments={comments} />
-    </>
+    <UserProvider user={user}>
+      <ProductTemplate
+        product={product}
+        initialComments={comments}
+        initialCursor={nextCursor}
+      />
+    </UserProvider>
   );
 };
 

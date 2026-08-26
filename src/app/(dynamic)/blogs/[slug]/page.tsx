@@ -15,7 +15,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
   const links = [
     { href: "/", label: "خانه" },
     { href: "/blogs", label: "مقالات" },
-    { href: "/", label: slug },
+    { href: slug, label: slug },
   ];
   return (
     <>
@@ -26,7 +26,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
       />
       <section>
         <Container>
-          <div className="grid grid-cols-[repeat_1_1fr] lg:grid-cols-[1fr_320px] gap-8 my-4 lg:my-8 p-2 lg:p-5 ">
+          <div className="grid grid-cols-[repeat_1_1fr] lg:grid-cols-[1fr_320px] gap-8 my-4 p-2 lg:p-5 ">
             {/* template-blog */}
             <div className="p-5 bg-secondary rounded-md flex flex-col gap-4 border border-grey220">
               <Image

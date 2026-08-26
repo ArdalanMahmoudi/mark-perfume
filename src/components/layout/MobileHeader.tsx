@@ -16,12 +16,12 @@ import { UserType } from "@/src/lib/types/user.type";
 
 export function MobileHeader({ user }:{user:UserType}) {
   return (
-    <div className="flex flex-wrap lg:hidden gap-2">
+
       <Drawer direction={"right"}>
         <DrawerTrigger asChild>
           <Button
             variant="outline"
-            className="relative capitalize group transition-all duration-200 cursor-pointer text-primary hover:bg-primary hover:text-white size-8 lg:size-10 rounded-full"
+            className="relative lg:hidden capitalize group transition-all duration-200 cursor-pointer text-primary hover:bg-primary hover:text-white size-8 lg:size-10 rounded-full"
           >
             <Menu className="size-4" />
           </Button>
@@ -34,7 +34,7 @@ export function MobileHeader({ user }:{user:UserType}) {
                 <>
                   <div className="flex items-center gap-x-2.5">
                     <Image
-                      src={"/images"}
+                      src={user.image ? user.image : "/images/user.png"}
                       width={32}
                       height={32}
                       className="size-12 object-cover rounded-full border border-grey220"
@@ -82,6 +82,6 @@ export function MobileHeader({ user }:{user:UserType}) {
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
-    </div>
+
   );
 }

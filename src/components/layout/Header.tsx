@@ -45,6 +45,7 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
       if (res.isConfirmed) {
         const result = await fetch("/api/auth/logout", {
           method: "POST",
+          headers:{'Content-type':'application/json'},
         });
 
         if (!result.ok) {

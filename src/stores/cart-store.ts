@@ -1,9 +1,7 @@
-"use client"
+"use client";
 import { create } from "zustand";
 import { ProductType } from "../lib/types/product.type";
 import { persist } from "zustand/middleware";
-
-
 
 export const useCartStore = create(
   persist(
@@ -30,8 +28,14 @@ export const useCartStore = create(
           cart: state.cart.filter((p) => p.id !== productId),
         }));
       },
+      clearCart: () => {
+        set((state) => ({
+          cart: [],
+        }));
+      },
+
       totalPrice: () => {
-        const cart = get().cart
+        const cart = get().cart;
         return cart.reduce((total, item) => {
           if (item.discount > 0) {
             const discountAmount = item.price * (item.discount / 100);

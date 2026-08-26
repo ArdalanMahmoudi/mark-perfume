@@ -1,9 +1,15 @@
+"use client"
 import Container from "@/src/components/common/Container";
+import { useCartStore } from "@/src/stores/cart-store";
 import { CheckCircle2, PackageIcon } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 
 const SuccessVerifyTemplate = ({ refId, amount, paidAt }) => {
+  const clearCart = useCartStore((state) => state.clearCart);
+  useEffect(() => {
+    clearCart();
+  }, []);
   return (
     <section>
       <Container>
@@ -41,7 +47,9 @@ const SuccessVerifyTemplate = ({ refId, amount, paidAt }) => {
             {/* item-1 */}
             <div className="border border-grey220 bg-white rounded-sm flex flex-col gap-2.5 items-center p-5">
               <p className="text-sm text-grey100 font-bold">مبلغ پرداختی</p>
-              <p className="text-primary font-bold">{amount.toLocaleString("fa-IR")} تومان</p>
+              <p className="text-primary font-bold">
+                {amount.toLocaleString("fa-IR")} تومان
+              </p>
             </div>
           </div>
           {/* Send Product  */}

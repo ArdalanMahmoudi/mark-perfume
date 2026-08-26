@@ -3,7 +3,7 @@ import { FileWarningIcon, X } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
-const FailPaymentTemplate = () => {
+const FailVerifyTemplate = ({refId}) => {
   return (
     <section>
       {/* fail-payment-template */}
@@ -31,12 +31,12 @@ const FailPaymentTemplate = () => {
             {/* item-1 */}
             <div className="border border-grey220 bg-white rounded-sm flex flex-col gap-2.5 items-center p-5">
               <p className="text-sm text-grey100 font-bold">کد پیگیری تراکنش</p>
-              <p className="text-primary font-bold">MIT-1324212</p>
+              <p className="text-primary font-bold">{refId}</p>
             </div>
             {/* item-2 */}
             <div className="border border-grey220 bg-white rounded-sm flex flex-col gap-2.5 items-center p-5">
               <p className="text-sm text-grey100 font-bold"> زمان وقوع خطا</p>
-              <p className="text-primary font-bold">15 فروردین - 20:15</p>
+              <p className="text-primary font-bold">{new Date()}</p>
             </div>
           </div>
           {/*  Warning Layout  */}
@@ -67,4 +67,4 @@ const FailPaymentTemplate = () => {
   );
 };
 
-export default FailPaymentTemplate;
+export default FailVerifyTemplate;
