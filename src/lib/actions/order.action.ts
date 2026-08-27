@@ -35,7 +35,7 @@ export async function createOrder(cartItems: CartItem[],address:string) {
     if (product.stock < item.qty) {
       throw new Error(`موجودی ${item.productId} کافی نیست`)
     }
-    const itemTotal = product.price * item.qty
+    const itemTotal = product.discount > 0 ? (product.price - ((product.price * product.discount)/100)) * item.qty: product.price * item.qty
     totalPrice+= itemTotal
     return {
       productId:product.id,

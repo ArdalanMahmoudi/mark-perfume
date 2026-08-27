@@ -3,14 +3,14 @@ import { FileWarningIcon, X } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
-const FailVerifyTemplate = ({refId}) => {
+const FailVerifyTemplate = ({refId, failAt}) => {
   return (
     <section>
       {/* fail-payment-template */}
       <Container>
         <div className="my-20 mx-auto p-8 rounded-lg max-w-200 flex flex-col items-center gap-5 bg-secondary border border-grey220">
           {/* icon */}
-          <X className="size-19 rounded-full p-3.5 text-white border-2 border-white bg-error500 shadow-2xl shadow-error500" />
+          <X className="size-19 rounded-full p-3.5 text-white border-2 border-white bg-error500 shadow-lg shadow-error500" />
           {/* payment-title */}
           <div className="flex flex-col">
             <p className="text-xl font-bold">متاسفانه پرداخت انجام نشد !</p>
@@ -27,16 +27,16 @@ const FailVerifyTemplate = ({refId}) => {
             </p>
           </div>
           {/* Payment Details */}
-          <div className="grid grid-cols-3 justify-between w-full gap-6">
+          <div className="grid grid-cols-3 justify-center w-full gap-6">
             {/* item-1 */}
             <div className="border border-grey220 bg-white rounded-sm flex flex-col gap-2.5 items-center p-5">
               <p className="text-sm text-grey100 font-bold">کد پیگیری تراکنش</p>
-              <p className="text-primary font-bold">{refId}</p>
+              <p className="text-primary font-bold truncate w-full">{refId}</p>
             </div>
             {/* item-2 */}
             <div className="border border-grey220 bg-white rounded-sm flex flex-col gap-2.5 items-center p-5">
               <p className="text-sm text-grey100 font-bold"> زمان وقوع خطا</p>
-              <p className="text-primary font-bold">{new Date()}</p>
+              <p className="text-primary font-bold">{failAt.toLocaleDateString("fa-IR",{year:"numeric", month:"long", day:"numeric"})}</p>
             </div>
           </div>
           {/*  Warning Layout  */}

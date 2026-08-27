@@ -4,14 +4,7 @@ import { DataTable } from "@/src/templates/admin/_components/data-table";
 
 const Page = async () => {
   const data = await prisma.comment.findMany({
-    select: {
-      id: true,
-      body: true,
-      score: true,
-      status: true,
-      createdAt: true,
-      adminReply:true,
-      replyedAt:true,
+    include: {
       user:{
         select:{
           email:true

@@ -7,6 +7,7 @@ import { userInfoSchema } from "@/src/lib/schemas/user.schema";
 import { UserType } from "@/src/lib/types/user.type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -28,13 +29,13 @@ const DashboardUserInfoTemplate = ({ user }: { user: UserType }) => {
   });
 
   const [preview, setPreview] = useState(user.image || "/images/user.png");
-  const toast = useToast()
+  const toast = useToast();
+  const router = useRouter();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (!selectedFile) return;
 
-   
     if (preview.startsWith("blob:")) {
       URL.revokeObjectURL(preview);
     }
@@ -47,16 +48,20 @@ const DashboardUserInfoTemplate = ({ user }: { user: UserType }) => {
   const onSubmit = async (data) => {
     const result = await updateUserInfo(data);
     if (!result.success) {
-      toast.error(result.message) 
+      toast.error(result.message);
       return;
     }
-    toast.success(result.message)
+    toast.success(result.message);
+    router.refresh();
   };
 
   return (
     <div className="bg-secondary-layout">
       <p>مدیریت پروفایل</p>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col items-center"
+      >
         <InputGroupInlineStart
           element="input"
           label="نام کاربری"
@@ -111,12 +116,14 @@ const DashboardUserInfoTemplate = ({ user }: { user: UserType }) => {
             onChange={handleFileChange}
           />
           {errors.image?.message && (
-            <p className="text-red-500 text-xs">{String(errors.image.message)}</p>
+            <p className="text-red-500 text-xs">
+              {String(errors.image.message)}
+            </p>
           )}
         </div>
 
         <Button type="submit" disabled={isSubmitting}>
-          ذخیره اطلاعات
+          {isSubmitting ? "درحال ذخیره سازی..." : "ذخیره اطلاعات"}
         </Button>
       </form>
     </div>

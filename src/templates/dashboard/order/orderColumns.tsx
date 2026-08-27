@@ -5,7 +5,8 @@ import { PlusCircleIcon } from "lucide-react";
 
 export const orderColumns: ColumnDef<OrderType>[] = [
   {
-    accessorKey: "refId",
+    id:"paymentStatus",
+    accessorFn:(row) =>  row.payment?.status,
     header: () => <span className="text-primary">شماره سفارش</span>,
     cell: ({ row }) => <p>{row.original.status === "PAID" ? row.original.payment?.refId : <span className="text-gray-400">پرداخت نشده</span>}</p>,
   },
@@ -46,7 +47,7 @@ export const orderColumns: ColumnDef<OrderType>[] = [
     ),
   },
   {
-    accessorKey: "detail",
+    id: "detail",
     header: () => <span className="text-primary">جزئیات سفارش</span>,
     cell: () => (
       <div className="flex justify-center">

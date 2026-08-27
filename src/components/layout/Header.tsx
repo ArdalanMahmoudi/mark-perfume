@@ -45,7 +45,7 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
       if (res.isConfirmed) {
         const result = await fetch("/api/auth/logout", {
           method: "POST",
-          headers:{'Content-type':'application/json'},
+          headers: { "Content-type": "application/json" },
         });
 
         if (!result.ok) {
@@ -89,7 +89,7 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
 
             <Link
               href={"/"}
-              className="max-w-30 lg:max-w-37.5 max-h-20 lg:block hidden"
+              className="max-w-30 lg:max-w-37.5  lg:block hidden"
             >
               <Image
                 src={"/images/logo.png"}
@@ -130,7 +130,7 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
                           href="/admin"
                           data-discover="true"
                         >
-                           <div className="flex gap-1 items-center">
+                          <div className="flex gap-1 items-center">
                             <Image
                               src={
                                 isLoggedIn.image
@@ -168,14 +168,6 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
                         >
                           مدیریت کامنت ها
                         </Link>
-
-                        {/* <Link
-                          className="block px-4 py-2 text-sm text-charcoal hover:bg-primary/10"
-                          href="/admin/profile"
-                          data-discover="true"
-                        >
-                          مدیریت تیکت ها
-                        </Link> */}
 
                         <button
                           onClick={handleLogout}

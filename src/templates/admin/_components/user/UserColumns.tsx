@@ -43,7 +43,7 @@ export const userColumns: ColumnDef<UserType>[] = [
     },
   },
   {
-    accessorKey: "action",
+    id: "action",
     header: "عملیات",
     cell: ({ row }) => (
       <UsersActions user={row.original}/>

@@ -6,7 +6,7 @@ import Link from "next/link";
 import BreadCrumbs from "@/src/components/common/BreadCrumbs";
 import AdminBreadcrumb from "./AdminBreadcrumb";
 
-export const Topbar = () => {
+export const Topbar = ({username, image}) => {
   return (
     <>
       <div className="bg-gray-50 border-b border-grey220 h-16 w-full flex items-center p-4 justify-between">
@@ -22,11 +22,12 @@ export const Topbar = () => {
                 className="cursor-pointer flex-1 flex flex-row items-center gap-2 pl-2.5 md:pr-1 py-2 group/owner-breadcrumb min-w-0"
               >
                 <span className="flex-1 flex flex-row items-center gap-2 min-w-0 font-bold">
-                  <span className="truncate leading-5 max-w-28">ardal</span>
+                  <span className="truncate leading-5 max-w-28">{username}</span>
                 </span>
+
                 <Image
-                  src={"/"}
-                  className="size-5 rounded-full"
+                  src={image ? image : "/images/user.png"}
+                  className="size-8 rounded-full"
                   width={20}
                   height={20}
                   alt="profile image"

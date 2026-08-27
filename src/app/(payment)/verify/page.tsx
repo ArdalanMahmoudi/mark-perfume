@@ -2,9 +2,6 @@ import { prisma } from "@/src/lib/prisma";
 import FailVerifyTemplate from "@/src/templates/payment/_components/FailVerifyTemplate";
 import SuccessVerifyTemplate from "@/src/templates/payment/_components/SuccessVerifyTemplate";
 
-import Link from "next/link";
-import React from "react";
-
 const ZARINPAL_VERIFY_URL =
   "https://sandbox.zarinpal.com/pg/v4/payment/verify.json";
 const ZARINPAL_MERCHANT_ID = process.env.ZARINPAL_MERCHANT_ID!;
@@ -33,7 +30,7 @@ const VerifyPaymentPage = async ({ searchParams }: Props) => {
       where: { id: payment.id },
       data: { status: "FAILED" },
     });
-    return <FailVerifyTemplate refId={payment.refId} />;
+    return <FailVerifyTemplate refId={Authority} failAt={new Date()}/>;
   }
 
   const response = await fetch(ZARINPAL_VERIFY_URL, {
@@ -65,7 +62,7 @@ const VerifyPaymentPage = async ({ searchParams }: Props) => {
     return (
       <SuccessVerifyTemplate
         refId={data.data.ref_id}
-        amount={payment.amount}
+        amount={payment.amount / 10}
         paidAt={paidAt}
       />
     );
@@ -74,7 +71,7 @@ const VerifyPaymentPage = async ({ searchParams }: Props) => {
     where: { id: payment.id },
     data: { status: "FAILED" },
   });
-  return <FailVerifyTemplate refId={data.data.ref_id} />;
+  return <FailVerifyTemplate refId={Authority} failAt={new Date()}/>;
 };
 
 export default VerifyPaymentPage;

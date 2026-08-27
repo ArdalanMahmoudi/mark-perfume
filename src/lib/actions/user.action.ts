@@ -77,7 +77,7 @@ export async function updateUserInfo(data: {
       userWithPassword?.password,
     );
     if (!isValid) {
-      return { success: false, message: "رمز فعلی اشتباه است" };
+      return { success: false, message: "رمزعبور فعلی اشتباه است" };
     }
     updateData.password = await bcrypt.hash(data.newPassword, 10);
   }

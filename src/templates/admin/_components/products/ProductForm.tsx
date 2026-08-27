@@ -14,15 +14,21 @@ import {
   updateProductSchema,
 } from "@/src/lib/schemas/product.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ProductType } from "@/src/lib/types/product.type";
+
 import { useRouter } from "next/navigation";
 import TextEditor from "@/src/components/common/TextEditor";
-import num2persian from "num2persian";
+
 import { numberToPersianWords } from "@/src/lib/helper";
+import { Prisma } from "@/src/generated/prisma/client";
 
 type ProductFormProps = {
-  categories: string[];
-  product?: ProductType;
+  categories: Prisma.CategoryGetPayload<{ select: { id: true; name: true } }>[];
+  product?: Prisma.ProductGetPayload<{
+    include: {
+      gallery: true;
+      category: true;
+    };
+  }>;
   mode: "edit" | "create";
 };
 
@@ -100,7 +106,6 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
         toast.success("محصول ایجاد شد");
         reset();
       } else {
-
         await updateProductAction(product?.id, formData);
         toast.success("تغییرات محصول اعمال شد");
         router.push("/admin/products");

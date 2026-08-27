@@ -1,13 +1,28 @@
-"use client"
+"use client";
 import { Badge } from "@/src/components/ui/badge";
 import { Button } from "@/src/components/ui/button";
 import { useToast } from "@/src/context/toast-context";
+import { Prisma } from "@/src/generated/prisma/client";
 import { toggleBanUser } from "@/src/lib/actions/user.action";
 import { UserType } from "@/src/lib/types/user.type";
 import { Ban, ShieldCheck, User } from "lucide-react";
 import Swal from "sweetalert2";
 
-export function UserSummaryHeader({ user }: { user: UserType }) {
+export function UserSummaryHeader({
+  user,
+}: {
+  user: Prisma.UserGetPayload<{
+    select: {
+      id: true;
+      isBanned: true;
+      image: true;
+      username: true;
+      email: true;
+      createdAt: true;
+      role: true;
+    };
+  }>;
+}) {
   const toast = useToast();
   const banUserHandler = async (userId) => {
     Swal.fire({

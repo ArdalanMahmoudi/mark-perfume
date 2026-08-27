@@ -23,7 +23,7 @@ export default async function AdminPanelLayout({
       </div>
       {/* -------- main content-------- */}
       <div className="flex flex-col flex-1">
-         <Topbar /> {/* Sidebar mobile in Topbar */}
+         <Topbar username={user.username} image={user.image}/> {/* Sidebar mobile in Topbar */}
         <main className="flex-1 p-4 overflow-y-auto bg-gray-50">{children}</main>
       </div>
     </div>

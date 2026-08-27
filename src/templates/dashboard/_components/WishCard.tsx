@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 const WishCard = ({ product }) => {
   const removeFromWishList = useWishlistStore((state) => state.removeFromWishList)
   const toast = useToast();
-
+  
   const removeWishCardHandler = (productId) => {
     Swal.fire({
       title: "حذف از لیست",
@@ -44,32 +44,56 @@ const WishCard = ({ product }) => {
         </button>
       </div>
       {/* p-bottom */}
-      <div className="flex flex-col h-32.5 justify-between gap-2.5 bg-secondary p-2.5 rounded-b-lg border border-grey220">
+      <div className="flex flex-col h-32.5 justify-between gap-2.5 bg-secondary p-2.5 py-1 rounded-b-lg border border-grey220">
         {/* p-name */}
-        <p className="text-primary line-clamp-1">{product.name}</p>
-        
-        {/* p-price */}
-        <div className="flex items-center justify-end mb-3">
-          <div className="flex flex-col items-end">
-            {/* discount */}
-            {product.discount > 0 && (
-              <p className="space-x-1 flex">
-                <span className="text-sm line-through text-muted-foreground">
-                  {Number(product.price).toLocaleString("fa-IR")} تومان
-                </span>
-                <span className="bg-primary text-[10px] text-white px-2 py-0.5 rounded-3xl flex items-center justify-center w-fit">
+        <div className="text-primary line-clamp-1">{product.name}</div>
+
+        {/* p-price & stock*/}
+
+        <div className="flex items-end justify-between mb-3">
+          {/* Product Discount > 0 */}
+          {product.discount > 0 ? (
+            <>
+            
+              <div className="flex flex-col gap-1">
+                <div className="flex items-center gap-0.5">
+              {product?.avgScore && (
+                <>
+                  <Star className="size-3 fill-warning400 stroke-warning400" />
+                  <span className="text-sm">
+                    {product.avgScore
+                      .toLocaleString("fa-IR", { maximumFractionDigits: 1 })
+                      .replace("٫", ".")}
+                  </span>
+                </>
+              )}
+            </div>
+                <span className="bg-primary text-xs font-bold text-white px-2 py-0.5 rounded-3xl flex items-center justify-center w-fit">
                   {product.discount.toLocaleString("fa-IR")}%
                 </span>
-              </p>
-            )}
+              </div>
+            </>
+          ) : (
+            <div className="h-5 invisible"></div>
+          )}
+          <div className="flex flex-col items-end">
             {/* price */}
             <p className="text-black ">
-              {/* {calculatedDiscountedPrice({
+              {calculatedDiscountedPrice({
                 price: product.price,
                 discount: product.discount,
               }).toLocaleString("fa-IR")}{" "}
-              تومان */}
+              تومان
             </p>
+
+            {/* discount */}
+            {product.discount > 0 && (
+              <p className="space-x-1 flex">
+                <span className="text-[12px] line-through text-muted-foreground">
+                  {Number(product.price).toLocaleString("fa-IR")}
+                </span>
+              </p>
+            )}
           </div>
         </div>
       </div>

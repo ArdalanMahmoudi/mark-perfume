@@ -1,10 +1,10 @@
 "use client";
-import { ProductType } from "@/src/lib/types/product.type";
+import { ProductColumnsType} from "@/src/lib/types/product.type";
 import ProductActions from "@/src/templates/admin/_components/products/ProductActions";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
 
-export const productColumns: ColumnDef<ProductType>[] = [
+export const productColumns: ColumnDef<ProductColumnsType>[] = [
   {
     accessorKey: "thumbnail",
     header: "تصویر",
@@ -41,7 +41,7 @@ export const productColumns: ColumnDef<ProductType>[] = [
     header: "حجم(ml)",
   },
   {
-    accessorKey: "actions",
+    id: "actions",
     header: "عملیات",
     cell: ({ row }) => (
       <ProductActions productId={row.original.id} slug={row.original.slug}/>

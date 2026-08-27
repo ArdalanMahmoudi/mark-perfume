@@ -1,11 +1,29 @@
 import { Badge } from "@/src/components/ui/badge";
 import { Separator } from "@/src/components/ui/separator";
+import { Prisma } from "@/src/generated/prisma/client";
+import { dateToPersian } from "@/src/lib/helper";
 import { CommentType } from "@/src/lib/types/comment.type";
 import { OrderType } from "@/src/lib/types/orders.type";
 
 interface UserDetailBodyProps {
-  orders: OrderType[];
-  comments: CommentType[];
+  orders: Prisma.OrderGetPayload<{
+    select: {
+      id: true;
+      totalPrice: true;
+      status: true;
+    };
+  }>[];
+  comments: Prisma.CommentGetPayload<{
+    select: {
+      id: true;
+      body: true;
+      createdAt: true;
+
+      product: {
+        select: { name: true };
+      };
+    };
+  }>[];
 }
 
 export function UserDetailBody({ orders, comments }: UserDetailBodyProps) {
@@ -18,21 +36,54 @@ export function UserDetailBody({ orders, comments }: UserDetailBodyProps) {
         {orders.length === 0 ? (
           <p className="text-muted-foreground text-sm">سفارشی ثبت نشده است</p>
         ) : (
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 max-h-80 overflow-y-auto">
             {orders.map((order, index) => (
               <div key={order.id}>
                 <div className="flex justify-between items-center text-sm">
                   <div className="flex flex-col gap-1">
-                    <span className="font-medium">سفارش #{order.id.slice(0, 8)}</span>
+                    <span className="font-medium">
+                      سفارش #{order.id.slice(0, 8)}
+                    </span>
                     <span className="text-muted-foreground text-xs">
-                      {new Date(order.createdAt).toLocaleDateString("fa-IR")}
+                      {(order.createdAt).toLocaleDateString("fa-IR",{})}
                     </span>
                   </div>
                   <div className="flex flex-col items-end gap-1">
-                    <span>{order.totalPrice.toLocaleString("fa-IR")} تومان</span>
-                    <Badge variant="outline" className="text-xs">
-                      {order.status}
-                    </Badge>
+                    <span>
+                      {order.totalPrice.toLocaleString("fa-IR")} تومان
+                    </span>
+                    {(order.status === "PAID" && (
+                      <Badge
+                        variant="outline"
+                        className="text-xs bg-success100 text-success600"
+                      >
+                        پرداخت شده
+                      </Badge>
+                    )) ||
+                      (order.status === "PENDING" && (
+                        <Badge
+                          variant="outline"
+                          className="text-xs bg-warning100 text-warning400"
+                        >
+                          در انتظار پرداخت
+                        </Badge>
+                      )) ||
+                      (order.status === "CANCELED" && (
+                        <Badge
+                          variant="outline"
+                          className="text-xs bg-grey220 text-black"
+                        >
+                          لغو شده
+                        </Badge>
+                      )) ||
+                      (order.status === "FAILED" && (
+                        <Badge
+                          variant="outline"
+                          className="text-xs bg-error500 text-error100"
+                        >
+                           خطا در پرداخت
+                        </Badge>
+                      ))}
                   </div>
                 </div>
                 {index < orders.length - 1 && <Separator className="mt-3" />}
@@ -60,7 +111,7 @@ export function UserDetailBody({ orders, comments }: UserDetailBodyProps) {
                   )}
                   <p>{comment.body}</p>
                   <span className="text-muted-foreground text-xs">
-                    {new Date(comment.createdAt).toLocaleDateString("fa-IR")}
+                    {dateToPersian(comment.createdAt)}
                   </span>
                 </div>
                 {index < comments.length - 1 && <Separator className="mt-3" />}

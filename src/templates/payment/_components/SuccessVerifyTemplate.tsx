@@ -66,7 +66,7 @@ const SuccessVerifyTemplate = ({ refId, amount, paidAt }) => {
             </div>
             {/* left */}
             <Link
-              href={"/payment"}
+              href={"/dashboard/order"}
               className="text-sm hover:text-primary transition-colors duration-300 cursor-pointer font-bold"
             >
               مشاهده جزئیات سفارش{" "}

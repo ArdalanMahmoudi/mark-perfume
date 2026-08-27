@@ -1,4 +1,4 @@
-import { getOrdersPerUser } from "@/src/lib/queries/order.queries";
+import { getLastOrders } from "@/src/lib/queries/order.queries";
 import { getCurrentUser } from "@/src/lib/queries/user.queries";
 import DashboardIndexTemplate from "@/src/templates/dashboard/index/DashboardIndexTemplate";
 import { redirect } from "next/navigation";
@@ -8,7 +8,7 @@ export default async function Page() {
   if (!user) {
     redirect('/login')
   }
-  const orders = await getOrdersPerUser(user.id);
+  const orders = await getLastOrders(user.id);
   return (
     <DashboardIndexTemplate user={user} orders={orders}/>
   )

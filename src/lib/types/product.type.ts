@@ -7,6 +7,16 @@ export type ProductType = Prisma.ProductGetPayload<{
     comments:true
  }
 }>;
+export type ProductColumnsType = Prisma.ProductGetPayload<{
+ select:{
+   thumbnail:true,
+   name:true,
+   price:true,
+   stock:true,
+   volume:true,
+   slug:true
+ }
+}>;
 
 export type ProductWithScoreType = Omit<ProductType,"comments"> & {
    avgScore:number,

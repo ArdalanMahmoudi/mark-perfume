@@ -1,5 +1,5 @@
 "use client";
-import { CommentType } from "@/src/lib/types/comment.type";
+import { CommentColumnsType } from "@/src/lib/types/comment.type";
 import { ColumnDef } from "@tanstack/react-table";
 import { Star } from "lucide-react";
 import Swal from "sweetalert2";
@@ -13,14 +13,14 @@ const showComment = (bodyComment) => {
 
 
 
-export const commentColumns: ColumnDef<CommentType>[] = [
+export const commentColumns: ColumnDef<CommentColumnsType>[] = [
   {
-    accessorKey: "product",
+    accessorFn:(row) =>  row.product.name,
     header: "محصول",
     cell: ({ row }) => row.original.product.name,
   },
   {
-    accessorKey: "user",
+    accessorFn:(row) => row.user.email,
     header: "ایمیل کاربر",
     cell: ({ row }) => row.original.user.email,
   },
@@ -51,7 +51,7 @@ export const commentColumns: ColumnDef<CommentType>[] = [
     ),
   },
   {
-    accessorKey: "actions",
+    id: "actions",
     header: "عملیات",
     cell: ({ row }) => <CommentActions comment={row.original}/>,
   },

@@ -14,7 +14,7 @@ export async function initialPayment(orderId:string) {
     if (!order) {
         throw new Error("سفارش یافت نشد")
     }
-    const amount = order.totalPrice
+    const amount = order.totalPrice * 10
     const response = await fetch(ZARINPAL_REQUEST_URL, {
         method:"POST",
         headers:{"Content-Type":"application/json"},

@@ -131,3 +131,7 @@ export function numberToPersianWords(num: number): string {
 
   return parts.join(" و ");
 }
+
+export function dateToPersian(date:Date) {
+  return date.toLocaleDateString("fa-IR",{year:"numeric", month:"long", day:"numeric"})
+}
