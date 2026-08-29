@@ -10,25 +10,32 @@ import {
 } from "@/src/lib/actions/product.action";
 import { useToast } from "@/src/context/toast-context";
 import {
+  CreateProductFormValues,
   createProductSchema,
+  UpdateProductFormValues,
   updateProductSchema,
 } from "@/src/lib/schemas/product.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import { useRouter } from "next/navigation";
 import TextEditor from "@/src/components/common/TextEditor";
-
 import { numberToPersianWords } from "@/src/lib/helper";
 import { Prisma } from "@/src/generated/prisma/client";
 
 type ProductFormProps = {
-  categories: Prisma.CategoryGetPayload<{ select: { id: true; name: true } }>[];
+  categories: Prisma.CategoryGetPayload<{
+    select: {
+      id: true;
+      name: true;
+    };
+  }>[];
+
   product?: Prisma.ProductGetPayload<{
     include: {
       gallery: true;
       category: true;
     };
   }>;
+
   mode: "edit" | "create";
 };
 
@@ -43,7 +50,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
     reset,
     getValues,
     formState: { errors, isLoading },
-  } = useForm({
+  } = useForm<UpdateProductFormValues>({
     resolver: zodResolver(
       mode === "create" ? createProductSchema : updateProductSchema,
     ),
@@ -55,7 +62,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
       description: product?.description ?? "",
       details: product?.details ?? "",
       specification: product?.specification
-        ? product.specification
+        ? (product.specification as { key: string; value: string }[])
         : [{ key: "", value: "" }],
       stock: product?.stock,
       volume: product?.volume,
@@ -74,28 +81,29 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
   const toast = useToast();
   const router = useRouter();
 
-  // ----------------handleform
-  const onSubmit = async (data) => {
+  // ----------------handleform------------------
+  const onSubmit = async (data: UpdateProductFormValues) => {
     const formData = new FormData();
-    const fields = Object.keys(data);
+    const fields = Object.keys(data) as (keyof UpdateProductFormValues)[];
     fields.forEach((field) => {
       if (
         field !== "thumbnail" &&
         field !== "gallery" &&
         field !== "specification"
       ) {
-        formData.append(field, data[field]);
+        const value = data[field];
+        if (value !== undefined && value !== null) {
+          formData.append(field, String(value));
+        }
       }
     });
 
-    data.thumbnail instanceof File
-      ? formData.append("thumbnail", data.thumbnail)
-      : formData.append("thumbnail", data.thumbnail);
+    if (data.thumbnail) {
+      formData.append("thumbnail", data.thumbnail);
+    }
 
-    data.gallery.forEach((file) => {
-      file instanceof File
-        ? formData.append("gallery", file)
-        : formData.append("gallery", file);
+    data.gallery?.forEach((file) => {
+      formData.append("gallery", file);
     });
 
     formData.append("specification", JSON.stringify(data.specification));
@@ -105,7 +113,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
         await createProductAction(formData);
         toast.success("محصول ایجاد شد");
         reset();
-      } else {
+      } else if (product?.id) {
         await updateProductAction(product?.id, formData);
         toast.success("تغییرات محصول اعمال شد");
         router.push("/admin/products");
@@ -155,15 +163,15 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
             type="number"
             caption={errors.price?.message || errors.price?.type}
           />
-          {price > 0 && (
+          {Number(price) > 0 && (
             <p className="text-muted-foreground text-sm text-start">
-              {numberToPersianWords(price)} تومان
+              {numberToPersianWords(Number(price))} تومان
             </p>
           )}
         </div>
         <InputGroupInlineStart
           element="input"
-          label="تخفیف"
+          label="تخفیف(درصد)"
           {...register("discount")}
           classNameLabel="text-base"
           type="number"
@@ -187,7 +195,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
             name="details"
             control={control}
             render={({ field }) => (
-              <TextEditor value={field.value} onChange={field.onChange} />
+              <TextEditor value={field.value?? ""} onChange={field.onChange} />
             )}
           />
         </div>

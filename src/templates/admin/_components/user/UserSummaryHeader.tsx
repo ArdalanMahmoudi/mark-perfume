@@ -4,7 +4,6 @@ import { Button } from "@/src/components/ui/button";
 import { useToast } from "@/src/context/toast-context";
 import { Prisma } from "@/src/generated/prisma/client";
 import { toggleBanUser } from "@/src/lib/actions/user.action";
-import { UserType } from "@/src/lib/types/user.type";
 import { Ban, ShieldCheck, User } from "lucide-react";
 import Swal from "sweetalert2";
 
@@ -24,7 +23,7 @@ export function UserSummaryHeader({
   }>;
 }) {
   const toast = useToast();
-  const banUserHandler = async (userId) => {
+  const banUserHandler = async (userId:string) => {
     Swal.fire({
       title: `آیا از ${user.isBanned ? "رفع مسدودیت" : "مسدود"} کاربر مطمئنید؟`,
       icon: "question",
@@ -34,8 +33,8 @@ export function UserSummaryHeader({
     }).then(async (res) => {
       if (res.isConfirmed) {
         const result = await toggleBanUser(userId);
-        if (result.error) {
-          toast.error(result.error);
+        if (result.success !== true) {
+          toast.error(result.message);
         } else {
           toast.success(result.message);
         }

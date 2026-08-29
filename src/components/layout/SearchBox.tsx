@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+
 import debounce from "lodash.debounce";
 import {
   Command,
@@ -15,13 +15,14 @@ import { ArrowLeft, ArrowRight, Loader, Search } from "lucide-react";
 import { searchProducts } from "@/src/lib/queries/product.queries";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 export function SearchBox() {
-  const [open, setOpen] = React.useState(false);
-  const [result, setResult] = React.useState([]);
-  const [query, setQuery] = React.useState("");
-  const [isLoading, setIsLoading] = React.useState(false);
-  const performSearch = React.useCallback(async (searchQuery) => {
+  const [open, setOpen] = useState(false);
+  const [result, setResult] = useState<{name:string, id:string, slug:string}[]>([]);
+  const [query, setQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const performSearch = useCallback(async (searchQuery:string) => {
     if (!searchQuery.trim()) {
       setResult([]);
       setIsLoading(false);
@@ -31,25 +32,24 @@ export function SearchBox() {
       const data = await searchProducts(searchQuery);
       setResult(data);
     } catch (err) {
-      console.error("search fail:", err);
       setResult([]);
     } finally {
       setIsLoading(false);
     }
   }, []);
 
-  const debounceSearch = React.useMemo(
+  const debounceSearch = useMemo(
     () => debounce(performSearch, 400),
     [performSearch],
   );
 
-  const handleChange = (val) => {
+  const handleChange = (val:string) => {
     setIsLoading(true);
     setQuery(val);
     debounceSearch(val);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     return () => debounceSearch.cancel();
   }, [debounceSearch]);
 

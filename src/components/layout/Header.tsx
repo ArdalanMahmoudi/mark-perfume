@@ -26,8 +26,13 @@ import Swal from "sweetalert2";
 import { UserType } from "@/src/lib/types/user.type";
 import { SearchBox } from "./SearchBox";
 import NavBottomHeader from "./NavBottomHeader";
+import { Prisma } from "@/src/generated/prisma/client";
 
-const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
+type HeaderPropsType = {
+  user: Pick<UserType, "username" | "role" | "image" | "email"> | null
+};
+
+const Header = ({ user }: HeaderPropsType) => {
   const toast = useToast();
   const router = useRouter();
   const handleLogout = async () => {
@@ -82,7 +87,7 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
         <div className=" py-2.5 flex flex-col gap-2.5">
           {/* top */}
           <div className="flex items-center justify-between">
-            <MobileHeader user={isLoggedIn} />
+            <MobileHeader user={user} />
             <div className="lg:block hidden">
               <SearchBox />
             </div>
@@ -110,8 +115,8 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
             </Link>
             {/* Buttons */}
             <div className="flex gap-2">
-              {isLoggedIn ? (
-                isLoggedIn.role === "ADMIN" ? (
+              {user ? (
+                user.role === "ADMIN" ? (
                   <div className="relative group hidden lg:block">
                     <Link
                       href={"/admin"}
@@ -133,8 +138,8 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
                           <div className="flex gap-1 items-center">
                             <Image
                               src={
-                                isLoggedIn.image
-                                  ? isLoggedIn.image
+                                user.image
+                                  ? user.image
                                   : "/images/user.png"
                               }
                               className="size-8 bg-transparent rounded-full"
@@ -142,7 +147,7 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
                               height={100}
                               alt="user image"
                             />
-                            {isLoggedIn.username}
+                            {user.username}
                           </div>
                           <ChevronLeft size={16} />
                         </Link>
@@ -201,8 +206,8 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
                           <div className="flex gap-1 items-center">
                             <Image
                               src={
-                                isLoggedIn.image
-                                  ? isLoggedIn.image
+                                user.image
+                                  ? user.image
                                   : "/images/user.png"
                               }
                               className="size-8 bg-transparent rounded-full"
@@ -210,7 +215,7 @@ const Header = ({ isLoggedIn }: { isLoggedIn: UserType }) => {
                               height={100}
                               alt="user image"
                             />
-                            {isLoggedIn.username}
+                            {user.username}
                           </div>
                           <ChevronLeft size={16} />
                         </Link>

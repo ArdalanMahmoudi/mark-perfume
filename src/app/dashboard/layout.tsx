@@ -17,7 +17,7 @@ export default async function DashboardLayout({
     }
   return (
     <>
-      <Header isLoggedIn={session} />
+      <Header user={session} />
       <main className="mt-32 lg:mt-40">
         <section>
           <Container>

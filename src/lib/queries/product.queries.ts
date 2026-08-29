@@ -33,7 +33,7 @@ export async function getCategories() {
   return prisma.category.findMany();
 }
 
-export async function searchProducts(query) {
+export async function searchProducts(query:string) {
   return await prisma.product.findMany({
     where: {
       name: {
@@ -49,7 +49,7 @@ export async function searchProducts(query) {
   });
 }
 
-export async function getProductUniq(slug) {
+export async function getProductUniq(slug:string) {
   return await prisma.product.findUnique({
     where: {
       slug,

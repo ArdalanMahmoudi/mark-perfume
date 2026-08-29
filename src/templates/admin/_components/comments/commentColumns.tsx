@@ -5,7 +5,7 @@ import { Star } from "lucide-react";
 import Swal from "sweetalert2";
 import CommentActions from "./CommentActions";
 
-const showComment = (bodyComment) => {
+const showComment = (bodyComment:string) => {
   Swal.fire({
     text: bodyComment,
   });

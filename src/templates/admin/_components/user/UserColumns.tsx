@@ -1,12 +1,12 @@
 "use client";
-import { UserType } from "@/src/lib/types/user.type";
+import { UserColumnsType} from "@/src/lib/types/user.type";
 import { ColumnDef } from "@tanstack/react-table";
 import React from "react";
 
 import { Role } from "@/src/generated/prisma/enums";
 import { UsersActions } from "./UsersActions";
 
-export const userColumns: ColumnDef<UserType>[] = [
+export const userColumns: ColumnDef<UserColumnsType>[] = [
   {
     accessorKey: "username",
     header: "نام کاربر",

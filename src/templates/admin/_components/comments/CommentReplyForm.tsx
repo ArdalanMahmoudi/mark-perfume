@@ -13,14 +13,14 @@ import {
 import { Textarea } from "@/src/components/ui/textarea";
 import { useToast } from "@/src/context/toast-context";
 import { replyCommentAction } from "@/src/lib/actions/comment.action";
-import { CommentType } from "@/src/lib/types/comment.type";
+import { CommentColumnsType, CommentType } from "@/src/lib/types/comment.type";
 import React, { useState } from "react";
 
-const CommentReplyForm = ({ comment }: { comment: CommentType }) => {
+const CommentReplyForm = ({ comment }: { comment: Pick<CommentColumnsType,"adminReply" | "body" | "id"> }) => {
   const [reply, setReply] = useState(comment.adminReply ?? "");
   const toast = useToast();
   
-  const handleReplySubmit = async (commentId) => {
+  const handleReplySubmit = async (commentId:string) => {
     const replyedComment = await replyCommentAction(commentId, reply);
     
     if (!replyedComment.success) {
@@ -33,7 +33,7 @@ const CommentReplyForm = ({ comment }: { comment: CommentType }) => {
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline" size="sm">
-          {comment.adminReply?.length > 0 ? "مشاهده پاسخ" : "پاسخ"}
+          {(comment.adminReply?.length ?? 0) > 0 ? "مشاهده پاسخ" : "پاسخ"}
         </Button>
       </DialogTrigger>
       <DialogContent>

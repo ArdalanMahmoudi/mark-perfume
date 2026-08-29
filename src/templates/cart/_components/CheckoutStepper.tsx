@@ -8,7 +8,7 @@ const steps = [
   { label: "نحوه ارسال", href:"/send_status", icon: <Truck className="size-4 lg:size-5" /> },
   { label: "پرداخت", href:"/payment", icon: <CreditCard className="size-4 lg:size-5" /> },
 ];
-const CheckoutStepper = ({ currentStep }) => {
+const CheckoutStepper = ({ currentStep }:{currentStep:number}) => {
   return (
     <div className="flex items-center justify-center my-8 lg:my-12">
       {steps.map((step, index) => {

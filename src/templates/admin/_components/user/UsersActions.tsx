@@ -11,16 +11,22 @@ import {
   DropdownMenuTrigger,
 } from "@/src/components/ui/dropdown-menu";
 import Link from "next/link";
-import { UserType } from "@/src/lib/types/user.type";
 import { toggleBanUser } from "@/src/lib/actions/user.action";
 import { useToast } from "@/src/context/toast-context";
 import Swal from "sweetalert2";
+import { Prisma } from "@/src/generated/prisma/client";
 
-export function UsersActions({ user }: UserType) {
+type UsersActionsProps = Prisma.UserGetPayload<{
+  select: {
+    id: true;
+    isBanned: true;
+  };
+}>;
+export function UsersActions({ user }: { user: UsersActionsProps }) {
   const toast = useToast();
-  const banUserHandler = async (userId) => {
+  const banUserHandler = async (userId: string) => {
     Swal.fire({
-      title: `آیا از ${user.isBanned ? 'رفع مسدودیت' :'مسدود کردن'} کاربر مطمئنید؟`,
+      title: `آیا از ${user.isBanned ? "رفع مسدودیت" : "مسدود کردن"} کاربر مطمئنید؟`,
       icon: "question",
       showCancelButton: true,
       confirmButtonText: "بله",
@@ -28,8 +34,8 @@ export function UsersActions({ user }: UserType) {
     }).then(async (res) => {
       if (res.isConfirmed) {
         const result = await toggleBanUser(userId);
-        if (result.error) {
-          toast.error(result.error);
+        if (result.success !== true) {
+          toast.error(result.message);
         } else {
           toast.success(result.message);
         }

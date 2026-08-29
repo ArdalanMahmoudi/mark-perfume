@@ -1,7 +1,7 @@
 "use server"
 import { prisma } from "../prisma";
 
-export async function getLastOrders(userId) {
+export async function getLastOrders(userId:string) {
     return await prisma.order.findMany({
     where:{userId},
     include:{
@@ -15,7 +15,7 @@ export async function getLastOrders(userId) {
   })
 }
 
-export async function getOrdersPerUser(userId) {
+export async function getOrdersPerUser(userId:string) {
   return await prisma.order.findMany({
     where:{userId},
     include:{

@@ -13,8 +13,13 @@ import MobileHeaderTabs from "./MobileHeaderTabs";
 import { CiInstagram, CiLinkedin } from "react-icons/ci";
 import { PiWhatsappLogoThin } from "react-icons/pi";
 import { UserType } from "@/src/lib/types/user.type";
+import { Prisma } from "@/src/generated/prisma/client";
 
-export function MobileHeader({ user }:{user:UserType}) {
+type MobileHeaderPropsType = {
+  user:Pick<UserType, "image" | "username" | "email" | "role"> | null
+}
+
+export function MobileHeader({ user }:MobileHeaderPropsType) {
   return (
 
       <Drawer direction={"right"}>

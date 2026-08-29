@@ -8,13 +8,13 @@ import { getCurrentUser } from "../queries/user.queries";
 import bcrypt from "bcrypt";
 import { uploadFile } from "../upload";
 
-export async function toggleBanUser(userId) {
+export async function toggleBanUser(userId:string) {
   const sesion = await verifySession();
   if (!sesion || sesion.role !== Role.ADMIN) {
-    return { error: "Unauthorized" };
+    return { success:false ,message: "Unauthorized" };
   }
   if (sesion.id === userId) {
-    return { error: "نمیتوانید خودتان را مسدود کنید" };
+    return { success:false, message: "نمیتوانید خودتان را مسدود کنید" };
   }
   try {
     const user = await prisma.user.findUnique({
@@ -22,7 +22,7 @@ export async function toggleBanUser(userId) {
       select: { isBanned: true },
     });
     if (!user) {
-      return { error: "کاربر یافت نشد" };
+      return { success:false, message: "کاربر یافت نشد" };
     }
     await prisma.user.update({
       where: { id: userId },
@@ -36,7 +36,7 @@ export async function toggleBanUser(userId) {
       message: user.isBanned ? "کاربر رفع مسدودیت شد" : "کاربر مسدود شد",
     };
   } catch (error) {
-    return { error: "خطا در انجام عملیات" };
+    return { success:false, message: "خطا در انجام عملیات" };
   }
 }
 

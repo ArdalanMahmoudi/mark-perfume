@@ -6,14 +6,15 @@ import {
   deleteCommentAction,
   rejectCommentAction,
 } from "@/src/lib/actions/comment.action";
-import { CommentType } from "@/src/lib/types/comment.type";
+
 import { Check, EyeIcon, PencilIcon, TrashIcon, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import CommentReplyForm from "./CommentReplyForm";
 import { Button } from "@/src/components/ui/button";
+import { CommentColumnsType } from "@/src/lib/types/comment.type";
 
-const CommentActions = ({ comment }: { comment: CommentType }) => {
+const CommentActions = ({ comment }: { comment: Pick<CommentColumnsType, "id" | "status" | "adminReply" | "body">}) => {
   const toast = useToast();
   const router = useRouter();
 

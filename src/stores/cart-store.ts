@@ -3,7 +3,18 @@ import { create } from "zustand";
 import { ProductType } from "../lib/types/product.type";
 import { persist } from "zustand/middleware";
 
-export const useCartStore = create(
+type CartCard = Omit<ProductType,"comments" | "gallery"> & { qty :number}
+
+
+interface CartState {
+  cart:CartCard[]
+  addToCart:(product:Omit<CartCard ,"qty">) => void
+  removeFromCart:(productId:string) => void
+  clearCart:() => void
+  totalPrice:() => number
+}
+
+export const useCartStore = create<CartState>()(
   persist(
     (set, get) => ({
       cart: [],

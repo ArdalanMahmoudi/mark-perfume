@@ -3,29 +3,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { calculatedDiscountedPrice } from "@/src/lib/helper";
 import { ProductWithScoreType } from "@/src/lib/types/product.type";
-import { useMemo, useState } from "react";
-import { ShoppingBasket, Star } from "lucide-react";
-import Button from "./Button";
-import { useCartStore } from "@/src/stores/cart-store";
-import { useToast } from "@/src/context/toast-context";
-import { TooltipProvider } from "../ui/tooltip";
-import { TooltipDemo } from "./Tooltip";
+import { Star } from "lucide-react";
+
 
 const ProductCard = ({
   className,
   product,
-  isBtnAddToCart = false,
+
 }: {
   product: ProductWithScoreType;
   className?: string;
-  isBtnAddToCart?: boolean;
+
 }) => {
-  const addToCart = useCartStore((state) => state.addToCart);
-  const toast = useToast();
-  const addToCartHandler = (product) => {
-    addToCart(product);
-    toast.success("محصول به سبد خرید اضافه شد");
-  };
   return (
     <Link
       href={`/product/${product.slug}`}

@@ -68,6 +68,7 @@ export const createProductAction = async (formData: FormData) => {
         data: {
           ...product,
           slug,
+          volume:product.volume ?? 0,
           thumbnail: thumbnailUrl,
           gallery: {
             create: galleryUrl.map((url) => ({
@@ -86,7 +87,7 @@ export const createProductAction = async (formData: FormData) => {
   }
 };
 
-export const deleteProductAction = async (productId) => {
+export const deleteProductAction = async (productId:string) => {
   try {
     await requireAdmin();
     const product = await prisma.product.findUnique({

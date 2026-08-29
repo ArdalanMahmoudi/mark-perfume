@@ -6,7 +6,7 @@ import Link from "next/link";
 import BreadCrumbs from "@/src/components/common/BreadCrumbs";
 import AdminBreadcrumb from "./AdminBreadcrumb";
 
-export const Topbar = ({username, image}) => {
+export const Topbar = ({username, image}:{username:string | null, image:string | null}) => {
   return (
     <>
       <div className="bg-gray-50 border-b border-grey220 h-16 w-full flex items-center p-4 justify-between">

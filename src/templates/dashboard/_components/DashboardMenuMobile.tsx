@@ -62,7 +62,7 @@ const activeLinks = [
   },
 ];
 
-const DashboardMenuMobile = ({ username, profileImg }) => {
+const DashboardMenuMobile = ({ username, profileImg }:{ username:string, profileImg:string}) => {
   const toast = useToast();
   const router = useRouter();
   const handleLogout = async () => {

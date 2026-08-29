@@ -10,16 +10,31 @@ import {
 } from "@/src/components/ui/tabs";
 import CommentForm from "./CommentForm";
 import Comment from "@/src/components/common/Comment";
-import { CommentType } from "@/src/lib/types/comment.type";
 import { Badge } from "@/src/components/ui/badge";
 import { getCommentsMore } from "@/src/lib/queries/comment.queries";
+import { Prisma } from "@/src/generated/prisma/client";
 
 type Props = {
   description: string;
   specification: { key: string; value: string }[];
   volume: number;
   productId: string;
-  initialComments: CommentType[];
+  initialComments: Prisma.CommentGetPayload<{
+    select: {
+      id: true;
+      score: true;
+      body: true;
+      createdAt: true;
+      adminReply: true;
+      replyedAt: true;
+      user: {
+        select: {
+          username: true;
+          image: true;
+        };
+      };
+    };
+  }>[];
   initialCursor: string | null;
 };
 
@@ -135,14 +150,20 @@ const ProductTabs = ({
                               {comment.adminReply && (
                                 <div className="mt-4 mr-6 pr-4 border-r-2 border-primary bg-muted rounded-md p-3">
                                   <div className="flex items-center gap-2 mb-1">
-                                    <Badge variant="outline" className="text-xs">
+                                    <Badge
+                                      variant="outline"
+                                      className="text-xs"
+                                    >
                                       پاسخ فروشگاه
                                     </Badge>
                                     <span className="text-xs text-muted-foreground">
-                                      {new Date(comment.replyedAt).toLocaleDateString(
-                                        "fa-IR",
-                                        { year: "numeric", month: "long", day: "numeric" },
-                                      )}
+                                      {new Date(
+                                        comment.replyedAt,
+                                      ).toLocaleDateString("fa-IR", {
+                                        year: "numeric",
+                                        month: "long",
+                                        day: "numeric",
+                                      })}
                                     </span>
                                   </div>
                                   <p className="text-sm text-muted-foreground">
@@ -160,7 +181,9 @@ const ProductTabs = ({
                             disabled={loading}
                             className="mt-4 text-sm text-primary cursor-pointer disabled:opacity-50"
                           >
-                            {loading ? "در حال بارگذاری..." : "نمایش نظرات بیشتر"}
+                            {loading
+                              ? "در حال بارگذاری..."
+                              : "نمایش نظرات بیشتر"}
                           </button>
                         )}
                       </>

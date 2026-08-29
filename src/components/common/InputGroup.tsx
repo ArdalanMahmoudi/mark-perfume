@@ -32,7 +32,7 @@ export function InputGroupInlineStart({
     (element === "input" && (
       <Field className={`w-full text-start ${props.hidden && "hidden"}`}>
         <FieldLabel className={classNameLabel!} htmlFor={props.id}>
-          {props.required && label.length ? (
+          {props.required && label?.length ? (
             <>
               {label} <b className="text-error500">*</b>
             </>
@@ -61,7 +61,7 @@ export function InputGroupInlineStart({
     (element === "textarea" && (
       <Field className={`w-full text-start ${classNameField}`}>
         <FieldLabel className={classNameLabel!} htmlFor={props.name}>
-          {props.required && label.length ? (
+          {props.required && label?.length ? (
             <>
               {label} <b className="text-error500">*</b>
             </>

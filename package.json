@@ -55,6 +55,8 @@
   },
   "devDependencies": {
     "@base-ui/react": "^1.6.0",
+    "@types/bcrypt": "^6.0.0",
+    "@types/lodash.debounce": "^4.0.9",
     "@types/lodash.throttle": "^4.1.9",
     "@types/node": "^20.14.10",
     "@types/react": "^18.3.3",

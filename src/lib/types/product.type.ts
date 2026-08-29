@@ -1,4 +1,6 @@
 import type{ Prisma } from "@/src/generated/prisma/client";
+import z from "zod";
+import {  createProductSchema, updateProductSchema } from "../schemas/product.schema";
 
 export type ProductType = Prisma.ProductGetPayload<{
  include:{
@@ -9,6 +11,7 @@ export type ProductType = Prisma.ProductGetPayload<{
 }>;
 export type ProductColumnsType = Prisma.ProductGetPayload<{
  select:{
+   id:true,
    thumbnail:true,
    name:true,
    price:true,
@@ -18,7 +21,7 @@ export type ProductColumnsType = Prisma.ProductGetPayload<{
  }
 }>;
 
-export type ProductWithScoreType = Omit<ProductType,"comments"> & {
+export type ProductWithScoreType = Pick<ProductType,"id" | "name" | "slug" | "stock" | "thumbnail" | "price" | "discount" > & {
    avgScore:number,
    reviewCount:number
 }

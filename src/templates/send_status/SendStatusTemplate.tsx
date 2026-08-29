@@ -4,7 +4,6 @@ import React from "react";
 import CheckoutStepper from "../cart/_components/CheckoutStepper";
 import Link from "next/link";
 import { ChevronsLeftIcon, Clock, MapPin, Truck } from "lucide-react";
-import { useCart } from "@/src/context/cart-context";
 import CheckOutSidebar from "@/src/components/common/CheckOutSidebar";
 
 const SendStatusTemplate = () => {
@@ -85,7 +84,7 @@ const SendStatusTemplate = () => {
                     {/*  */}
                     <div className="w-full py-5 flex justify-evenly items-center flex-wrap gap-3.5">
                         <div className="flex items-center gap-1 text-sm ">
-                            <input type="radio"  name="send-time-usual" id="9to12" checked/>
+                            <input type="radio"  name="send-time-usual" id="9to12" defaultChecked />
                             <label htmlFor="9to12">ساعت ۹ تا ۱۲</label>
                         </div>
                         <div className="flex items-center gap-1 text-sm ">

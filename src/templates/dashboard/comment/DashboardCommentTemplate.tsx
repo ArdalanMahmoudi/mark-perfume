@@ -2,15 +2,34 @@ import { CommentType } from "@/src/lib/types/comment.type";
 import React from "react";
 import CommentItem from "../_components/CommentItem";
 import Image from "next/image";
+import { Prisma } from "@/src/generated/prisma/client";
 
-const DashboardCommentTemplate = ({ comments }) => {
+type CommentItemPropsType = {
+  comments: Prisma.CommentGetPayload<{
+    select: {
+      id:true
+      body: true;
+      score: true;
+      status: true;
+      product: {
+        select: {
+          thumbnail: true;
+          name: true;
+          slug: true;
+        };
+      };
+    };
+  }>[];
+};
+
+const DashboardCommentTemplate = ({ comments }:CommentItemPropsType) => {
   return (
     <div className="bg-secondary-layout h-fit!">
       <p className="text-primary">کامنت های من</p>
       {comments.length > 0 ? (
         <div className="flex flex-col gap-5">
           {comments.map((c) => (
-            <CommentItem key={c.id} productImg={c.product.thumbnail} productName={c.product.name} productSlug={c.product.slug} commentBody={c.body} score={c.score} status={c.status}/>
+            <CommentItem key={c.id} data={c}/>
           ))}
         </div>
       ) : (

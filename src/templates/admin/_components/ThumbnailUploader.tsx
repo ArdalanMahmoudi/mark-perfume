@@ -1,7 +1,7 @@
 "use client";
-import { CloudUploadIcon, X } from "lucide-react";
+import { CloudUploadIcon, Loader, X } from "lucide-react";
 import Image from "next/image";
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
 const ThumbnailUploader = ({
@@ -14,7 +14,7 @@ const ThumbnailUploader = ({
   name: string;
 }) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop(acceptedFiles) {
+    async onDrop(acceptedFiles) {
       const file = acceptedFiles[0];
       if (!file) return;
       setValue(name, file);
@@ -29,7 +29,8 @@ const ThumbnailUploader = ({
       setPreview("");
       return;
     }
-    const objectUrl = file instanceof File ? URL.createObjectURL(file) : file ?? null;
+    const objectUrl =
+      file instanceof File ? URL.createObjectURL(file) : (file ?? null);
     setPreview(objectUrl);
     return () => {
       URL.revokeObjectURL(objectUrl);
@@ -58,7 +59,7 @@ const ThumbnailUploader = ({
           <div className="flex justify-center items-center">
             <div className="flex flex-col gap-2 items-start">
               <button
-              type="button"
+                type="button"
                 className="p-1 rounded-full cursor-pointer bg-gray-50"
                 onClick={() => setValue(name, undefined)}
               >

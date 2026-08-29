@@ -16,6 +16,8 @@ const AdminBreadcrumb = () => {
     users: "کاربران",
 
   };
+  type RouteKey = keyof typeof routes
+  
   const segments = pathName.split("/").filter(Boolean);
 // ["admin", "products", "vdffdbdf"] => 0 < 1 . 1 < 1 !==
   return (
@@ -27,11 +29,11 @@ const AdminBreadcrumb = () => {
             {/* <span>{routes[segment] || segment}</span> */}
             {index < segments.length - 1  ? (
             <div className="flex items-center gap-2">
-              <Link className="" href={href}>{routes[segment] ? routes[segment] : segment}</Link>
+              <Link className="" href={href}>{routes[segment as RouteKey] ? routes[segment as RouteKey] : segment}</Link>
               <span><ChevronLeft className="size-4"/></span>
             </div>
             ) : (
-              <span className="text-muted-foreground text-sm truncate">{routes[segment] ? routes[segment] : segment}</span>
+              <span className="text-muted-foreground text-sm truncate">{routes[segment as RouteKey] ? routes [segment  as RouteKey] : segment as RouteKey}</span>
             )}
           </div>
         );

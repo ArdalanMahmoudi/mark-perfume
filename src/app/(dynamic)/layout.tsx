@@ -6,9 +6,10 @@ import React from "react";
 
 async function MainLayout({ children }: { children: React.ReactNode }) {
   const session = await getCurrentUser();
+
   return (
     <>
-      <Header isLoggedIn={session} />
+      <Header user={session} />
       <main className="mt-16 lg:mt-40">{children}</main>
       <Footer />
     </>

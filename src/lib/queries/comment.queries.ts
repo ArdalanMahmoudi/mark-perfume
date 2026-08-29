@@ -1,4 +1,4 @@
-"use server"
+"use server";
 import { prisma } from "../prisma";
 
 export async function getComments() {
@@ -9,7 +9,7 @@ export async function getComments() {
   });
 }
 
-export async function getCommentId(productId) {
+export async function getCommentId(productId: string) {
   return await prisma.comment.findMany({
     where: { productId },
     orderBy: {
@@ -18,13 +18,17 @@ export async function getCommentId(productId) {
   });
 }
 
-export async function getCommentUserId(userId) {
+export async function getCommentUserId(userId: string) {
   return await prisma.comment.findMany({
     where: { userId },
     orderBy: {
       createdAt: "desc",
     },
-    include: {
+    select: {
+      id: true,
+      body: true,
+      score: true,
+      status: true,
       product: {
         select: {
           thumbnail: true,
@@ -45,11 +49,17 @@ export async function getCommentsMore(productId: string, cursor?: string) {
       skip: 1,
     }),
     orderBy: { createdAt: "desc" },
-    include:{
-        user:{
-            select:{username:true, image:true}
-        }
-    }
+    select: {
+      id: true,
+      score: true,
+      body: true,
+      createdAt: true,
+      adminReply: true,
+      replyedAt: true,
+      user: {
+        select: { username: true, image: true },
+      },
+    },
   });
   const nextCursor =
     comments.length === 5 ? comments[comments.length - 1].id : null;

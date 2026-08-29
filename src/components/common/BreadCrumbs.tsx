@@ -21,10 +21,10 @@ const BreadCrumbs = ({
   secondTextClass = "",
   classNameWrapper = false
 }: BreadCrumbsProps) => {
-  const isClassNameWrapper = " bg-secondary py-4 text-primary border border-grey220"
+
   return (
     <section className="py-6">
-      <div className={classNameWrapper === true && isClassNameWrapper}>
+      <div className={classNameWrapper ? "bg-secondary py-4 text-primary border border-grey220" : ""}>
         <div className="m-auto text-sm max-w-7xl px-5">
           <ol className="flex list-none ">
             {links?.map((link, idx) => (

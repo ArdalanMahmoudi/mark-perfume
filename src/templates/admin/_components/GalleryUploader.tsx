@@ -3,17 +3,25 @@ import { CloudUploadIcon, X } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useMemo, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { FieldValues, Path, PathValue, UseFormGetValues, UseFormSetValue, UseFormWatch } from "react-hook-form";
 
-const GalleryUploader = ({ name, setValue, watch, getValues }) => {
+type GalleryUploaderPropsType<T extends FieldValues> = {
+  name:Path<T>,
+  setValue:UseFormSetValue<T>
+  getValues:UseFormGetValues<T>
+  watch:UseFormWatch<T>
+}
+
+const GalleryUploader = <T extends FieldValues,>({ name, setValue, watch, getValues }:GalleryUploaderPropsType<T>) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop(acceptedFiles) {
       const currentFiles = getValues(name) ?? []
-      setValue(name, [...currentFiles, ...acceptedFiles]);
+      setValue(name, [...currentFiles, ...acceptedFiles] as PathValue<T, Path<T>>);
     },
     multiple: true,
   });
 
-  const files = watch(name,[]);
+  const files = watch(name,[] as PathValue<T, Path<T>>) as (File | string)[];
   const previews = useMemo(() => {
     return files.map((file) => file instanceof File ? URL.createObjectURL(file) 
     : file
@@ -39,7 +47,7 @@ const GalleryUploader = ({ name, setValue, watch, getValues }) => {
                 className="p-1 rounded-full cursor-pointer bg-gray-50"
                 onClick={() => {
                   const newFile = files.filter((_, i) => i !== index);
-                  setValue(name, newFile);
+                  setValue(name, newFile as PathValue<T, Path<T>>);
                 }}
               >
                 <X size={14} />

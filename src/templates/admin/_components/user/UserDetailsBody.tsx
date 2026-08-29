@@ -11,6 +11,7 @@ interface UserDetailBodyProps {
       id: true;
       totalPrice: true;
       status: true;
+      createdAt:true
     };
   }>[];
   comments: Prisma.CommentGetPayload<{

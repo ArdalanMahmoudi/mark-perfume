@@ -16,7 +16,7 @@ type ToastContextType = {
 export const ToastContext = createContext<ToastContextType | null>(null);
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
-  const [toasts, setToasts] = useState([]);
+  const [toasts, setToasts] = useState<ToastType[]>([]);
 
   function addToast(toast: ToastType) {
     setToasts((prevToast) => [...prevToast,toast].slice(-3));

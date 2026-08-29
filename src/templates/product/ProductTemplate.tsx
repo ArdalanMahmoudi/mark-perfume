@@ -32,14 +32,34 @@ import { TooltipDemo } from "@/src/components/common/Tooltip";
 import { TooltipProvider } from "@/src/components/ui/tooltip";
 import { useCartStore } from "@/src/stores/cart-store";
 import { useWishlistStore } from "@/src/stores/wishlist-store";
+import { Prisma } from "@/src/generated/prisma/client";
 
-type Props = {
-  product: ProductType;
-  initialComments: CommentType[];
+type ProductTemplatePropsType = {
+  product: Omit<ProductType, "comments">;
+  initialComments: Prisma.CommentGetPayload<{
+    select: {
+      id: true;
+      score: true;
+      body: true;
+      createdAt: true;
+      adminReply: true;
+      replyedAt: true,
+      user:{
+        select:{
+          username:true,
+          image:true
+        }
+      }
+    };
+  }>[];
   initialCursor: string | null;
 };
 
-const ProductTemplate = ({ product, initialComments, initialCursor }: Props) => {
+const ProductTemplate = ({
+  product,
+  initialComments,
+  initialCursor,
+}: ProductTemplatePropsType) => {
   if (!product) {
     notFound();
   }
@@ -55,7 +75,9 @@ const ProductTemplate = ({ product, initialComments, initialCursor }: Props) => 
   const toast = useToast();
   const wishList = useWishlistStore((state) => state.wishList);
   const addToWishList = useWishlistStore((state) => state.addToWishList);
-  const removeFromWishList = useWishlistStore((state) => state.removeFromWishList);
+  const removeFromWishList = useWishlistStore(
+    (state) => state.removeFromWishList,
+  );
 
   const isInWishlist = wishList.some((p) => p.id === product.id);
 
@@ -237,7 +259,9 @@ const ProductTemplate = ({ product, initialComments, initialCursor }: Props) => 
                           </button>
                         }
                         textTolltip={
-                          isInWishlist ? "حذف از علاقه‌مندی" : "افزودن به علاقه مندی"
+                          isInWishlist
+                            ? "حذف از علاقه‌مندی"
+                            : "افزودن به علاقه مندی"
                         }
                       />
                     </TooltipProvider>

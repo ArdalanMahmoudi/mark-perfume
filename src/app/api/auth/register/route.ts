@@ -42,7 +42,7 @@ export async function POST(req: Request) {
         password: hashedPassword,
       },
     });
-    await createSession(user.id);
+    await createSession({id:user.id, role:user.role});
     return NextResponse.json(
       {
         success: true,

@@ -21,7 +21,7 @@ const CommentForm = ({ productId }) => {
   });
   const toast = useToast();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data:{score:number, body:string, productId:string}) => {
     try {
       await submitCommentAction(data);
       toast.success("کامنت شما ارسال شد");

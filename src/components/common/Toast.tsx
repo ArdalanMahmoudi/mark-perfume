@@ -13,7 +13,7 @@ const statusIcons = {
 const Toast = ({ id, message, status, isLeaving, removeToast }: ToastType) => {
   const handleAnimationEnd = () => {
     if (isLeaving) {
-      removeToast(id);
+      removeToast?.(id);
     }
   };
   return (

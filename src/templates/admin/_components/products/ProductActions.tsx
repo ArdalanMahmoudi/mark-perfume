@@ -8,10 +8,10 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import Swal from "sweetalert2";
 
-const ProductActions = ({ productId, slug }) => {
+const ProductActions = ({ productId, slug }:{productId:string, slug:string}) => {
   const toast = useToast();
   const router = useRouter();
-  const onDelete = (productId) => {
+  const onDelete = (productId:string) => {
     if (!productId) return;
     Swal.fire({
       title: "آیا از حذف محصول اطمینان دارید؟",

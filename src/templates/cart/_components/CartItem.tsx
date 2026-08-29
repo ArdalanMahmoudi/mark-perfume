@@ -1,11 +1,17 @@
 import { useToast } from "@/src/context/toast-context";
 import { calculatedDiscountedPrice } from "@/src/lib/helper";
+import { ProductType } from "@/src/lib/types/product.type";
 import { CheckCheck, Plus, Trash, Truck } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import Swal from "sweetalert2";
 
-const CartItem = ({ product, removeProduct }) => {
+interface CartItemState  {
+  product:Pick<ProductType,"id" | "thumbnail" | "name" | "price" | "discount"> & {qty:number}
+  removeProduct:(productId:string) => void
+}
+
+const CartItem = ({ product, removeProduct }: CartItemState) => {
   const toast = useToast();
   const removeProductHandler = () => {
     Swal.fire({

@@ -6,7 +6,7 @@ import { getCommentId } from "../queries/comment.queries";
 import { requireAdmin } from "../session";
 import { revalidatePath } from "next/cache";
 
-export const submitCommentAction = async (formData) => {
+export const submitCommentAction = async (formData:{score:number, body:string, productId:string}) => {
   const user = await getCurrentUser();
   if (!user) {
     return {
@@ -36,7 +36,7 @@ export const submitCommentAction = async (formData) => {
   };
 };
 
-export const acceptCommentAction = async (commentId) => {
+export const acceptCommentAction = async (commentId:string) => {
   await requireAdmin();
   try {
     const findComment = await getCommentId(commentId);
@@ -51,7 +51,7 @@ export const acceptCommentAction = async (commentId) => {
   } catch {}
 };
 
-export const rejectCommentAction = async (commentId) => {
+export const rejectCommentAction = async (commentId:string) => {
   await requireAdmin();
   try {
     const findComment = await getCommentId(commentId);
@@ -68,7 +68,7 @@ export const rejectCommentAction = async (commentId) => {
   }
 };
 
-export const deleteCommentAction = async (commentId) => {
+export const deleteCommentAction = async (commentId:string) => {
   await requireAdmin();
   try {
     const findComment = await getCommentId(commentId);
@@ -86,7 +86,7 @@ export const deleteCommentAction = async (commentId) => {
   } catch {}
 };
 
-export const replyCommentAction = async (commentId, replyText) => {
+export const replyCommentAction = async (commentId:string, replyText:string) => {
   await requireAdmin();
   try {
     const findComment = await getCommentId(commentId);

@@ -38,6 +38,7 @@ const CartPageTemplate = () => {
               <div className="flex flex-col gap-8">
                 {cart.map((item) => (
                   <CartItem
+                  key={item.id}
                     product={item}
                     removeProduct={() => removeFromCart(item.id)}
                   />

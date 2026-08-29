@@ -2,7 +2,9 @@ import z from "zod";
 
 export const createImageSchema = z
   .instanceof(File, { message: "فایلی انتخاب نشده است" })
-  .refine((file) => file.size > 0, { message: "فایلی انتخاب نشده است" })
+  .refine((file) => file.size > 0, {
+    message: "فایلی انتخاب نشده است",
+  })
   .refine((file) => file.type.startsWith("image/"), {
     message: "فقط تصویر مجاز هستند",
   })
@@ -13,64 +15,104 @@ export const createImageSchema = z
 export const updateImageSchema = z.union([
   z
     .instanceof(File, { message: "فایلی انتخاب نشده است" })
-    .refine((file) => file.size > 0, { message: "فایلی انتخاب نشده است" })
+    .refine((file) => file.size > 0, {
+      message: "فایلی انتخاب نشده است",
+    })
     .refine((file) => file.type.startsWith("image/"), {
       message: "فقط تصویر مجاز هستند",
     })
     .refine((file) => file.size <= 5 * 1024 * 1024, {
       message: "حداکثر حجم 5 مگابایت است",
     }),
-  z.string().min(1,{ message: "آدرس تصویر معتبر نیست" }),
+
+  z.string().min(1, {
+    message: "آدرس تصویر معتبر نیست",
+  }),
 ]);
 
 export const createProductSchema = z.object({
   name: z
     .string()
-    .min(3, "نام محصول حداقل باید  3 حرف یا کاراکتر باشد")
+    .min(3, "نام محصول حداقل باید 3 حرف یا کاراکتر باشد")
     .max(100),
 
   price: z.coerce.number().int().min(1, "قیمت را وارد کنید"),
+
   discount: z.coerce
     .number()
     .min(0, "تخفیف باید بین 0-100 باشد")
     .max(100, "تخفیف باید بین 0-100 باشد"),
+
   stock: z.coerce.number().int().min(0, "موجودی را وارد کنید"),
+
   volume: z.coerce.number().optional().or(z.literal(0)),
+
   categoryId: z.string().min(1, "دسته بندی را انتخاب کنید"),
+
   description: z
     .string()
     .trim()
     .min(10, "حداقل توضیحات بیشتر از 10 حروف و کاراکتر باشد"),
+
   details: z.string().optional().or(z.literal("")),
+
   specification: z
-    .array(z.object({ key: z.string().min(0), value: z.string().min(0) }))
+    .array(
+      z.object({
+        key: z.string().min(0),
+        value: z.string().min(0),
+      }),
+    )
     .min(1, "حداقل یک ویژگی وارد کنید"),
+
   thumbnail: createImageSchema,
-  gallery: z.array(createImageSchema).max(10, "حداکثر 10 تصویر مجاز است").min(1,"حداقل یک تصویر برای گالری الزامی است"),
+
+  gallery: z
+    .array(createImageSchema)
+    .max(10, "حداکثر 10 تصویر مجاز است")
+    .min(1, "حداقل یک تصویر برای گالری الزامی است"),
 });
 
 export const updateProductSchema = z.object({
   name: z
     .string()
-    .min(3, "نام محصول حداقل باید  3 حرف یا کاراکتر باشد")
+    .min(3, "نام محصول حداقل باید 3 حرف یا کاراکتر باشد")
     .max(100),
 
   price: z.coerce.number().int().min(0, "قیمت را وارد کنید"),
+
   discount: z.coerce
     .number()
     .min(0, "تخفیف باید بین 0-100 باشد")
     .max(100, "تخفیف باید بین 0-100 باشد"),
+
   stock: z.coerce.number().int().min(0, "موجودی را وارد کنید"),
+
   volume: z.coerce.number().optional().or(z.literal(0)),
+
   categoryId: z.string().min(1, "دسته بندی را انتخاب کنید"),
+
   description: z
     .string()
     .trim()
     .min(10, "حداقل توضیحات بیشتر از 10 حروف و کاراکتر باشد"),
+
   details: z.string().optional().or(z.literal("")),
+
   specification: z
-    .array(z.object({ key: z.string().min(0), value: z.string().min(0) }))
+    .array(
+      z.object({
+        key: z.string().min(0),
+        value: z.string().min(0),
+      }),
+    )
     .min(1, "حداقل یک ویژگی وارد کنید"),
+
   thumbnail: updateImageSchema,
+
   gallery: z.array(updateImageSchema).max(10, "حداکثر 10 تصویر مجاز است"),
 });
+
+export type CreateProductFormValues = z.input<typeof createProductSchema>;
+
+export type UpdateProductFormValues = z.input<typeof updateProductSchema>;
