@@ -7,6 +7,7 @@ import {
   LogOut,
   MessageCircle,
   Package,
+  StoreIcon,
   TicketIcon,
   UsersIcon,
 } from "lucide-react";
@@ -86,6 +87,15 @@ export const Sidebar = () => {
         >
           <MessageCircle className="size-4 " />
           کامنت ها
+        </ActiveLink>
+       
+        <ActiveLink
+          activeClassName="bg-grey220 hover:bg-grey220! text-black!"
+          href={"/"}
+          className="cursor-pointer text-muted-foreground hover:bg-muted text-sm gap-1 focus-visible:outline-2  outline-offset-4 flex flex-row items-center h-9 origin-left rounded-md  group bg-gray-50 pr-5"
+        >
+          <StoreIcon className="size-4 " />
+          برگشت به سایت
         </ActiveLink>
        
 
