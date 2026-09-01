@@ -3,7 +3,7 @@ import Button from "@/src/components/common/Button";
 import { InputGroupInlineStart } from "@/src/components/common/InputGroup";
 import { useToast } from "@/src/context/toast-context";
 import { updateUserInfo } from "@/src/lib/actions/user.action";
-import { userInfoSchema } from "@/src/lib/schemas/user.schema";
+import { UserInfoFormValues, userInfoSchema } from "@/src/lib/schemas/user.schema";
 import { UserType } from "@/src/lib/types/user.type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
@@ -11,7 +11,11 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const DashboardUserInfoTemplate = ({ user }: { user: Pick<UserType,"username" | "image"> }) => {
+const DashboardUserInfoTemplate = ({
+  user,
+}: {
+  user: Pick<UserType, "username" | "image">;
+}) => {
   const {
     register,
     handleSubmit,
@@ -45,7 +49,7 @@ const DashboardUserInfoTemplate = ({ user }: { user: Pick<UserType,"username" | 
     setPreview(objectUrl);
   };
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: UserInfoFormValues) => {
     const result = await updateUserInfo(data);
     if (!result.success) {
       toast.error(result.message);

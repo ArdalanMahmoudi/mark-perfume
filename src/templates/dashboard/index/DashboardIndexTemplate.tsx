@@ -9,12 +9,15 @@ import {
 } from "lucide-react";
 
 import OverviewItem from "../_components/OverviewItem";
-import { DataTable } from "../_components/data-table";
+
 import { orderColumns } from "../order/orderColumns";
 import ItemActivity from "../_components/ItemActivity";
 import Link from "next/link";
+import { DataTable } from "@/src/components/common/data-table";
+import { OrderColumnsType, OrderType } from "@/src/lib/types/orders.type";
+import { Prisma } from "@/src/generated/prisma/client";
 
-const item_activity = [
+const itemActivityData = [
   {
     id: 1,
     title: "سفارش شما تحویل داده شد",
@@ -38,7 +41,12 @@ const item_activity = [
   },
 ];
 
-function DashboardIndexTemplate({ user, orders }) {
+type DashboardIndexTemplateProps = {
+  userName:string
+  orders:OrderColumnsType[]
+}
+
+function DashboardIndexTemplate({ userName, orders }:DashboardIndexTemplateProps) {
   return (
     <>
       <div className="flex flex-col gap-8 h-fit">
@@ -46,7 +54,7 @@ function DashboardIndexTemplate({ user, orders }) {
         <div className="flex lg:flex-row flex-col justify-between p-5 rounded-lg border border-grey220 bg-secondary">
           <div className="flex flex-col gap-2.5">
             <p className="text-primary">داشبورد کاربری</p>
-            <p>به پنل کاربری خود خوش آمدید، {user?.username} عزیز </p>
+            <p>به پنل کاربری خود خوش آمدید، {userName} عزیز </p>
           </div>
           <div className="flex justify-between lg:justify-start mt-6 lg:mt-0 gap-2.5 items-center">
             <div className="flex flex-col gap-2.5 text-sm ">
@@ -90,13 +98,10 @@ function DashboardIndexTemplate({ user, orders }) {
           <div className="bg-secondary-layout">
             <p className="leading-8 font-bold">فعالیت های اخیر</p>
             {/* items */}
-            {item_activity.map((item) => (
+            {itemActivityData.map((item) => (
               <ItemActivity
                 key={item.id}
-                title={item.title}
-                desc={item.desc}
-                icon={item.icon}
-                date={item.date}
+                data={item}
               />
             ))}
           </div>

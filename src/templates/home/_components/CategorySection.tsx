@@ -1,10 +1,10 @@
 "use client";
 import Container from "@/src/components/common/Container";
 import SectionTitle from "./SectionTitle";
-import { ChevronLeft, LayoutGrid } from "lucide-react";
+import {LayoutGrid } from "lucide-react";
 import CategoryItem from "./CategoryItem";
 import Slider from "@/src/components/common/Slider";
-import { SwiperSlide } from "swiper/react";
+
 
 const categoryItems = [
   {

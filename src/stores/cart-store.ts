@@ -1,14 +1,14 @@
 "use client";
 import { create } from "zustand";
-import { ProductType } from "../lib/types/product.type";
+import { ProductCardStoreType, ProductType } from "../lib/types/product.type";
 import { persist } from "zustand/middleware";
 
-type CartCard = Omit<ProductType,"comments" | "gallery"> & { qty :number}
+
 
 
 interface CartState {
-  cart:CartCard[]
-  addToCart:(product:Omit<CartCard ,"qty">) => void
+  cart:ProductCardStoreType[]
+  addToCart:(product:Omit<ProductCardStoreType ,"qty">) => void
   removeFromCart:(productId:string) => void
   clearCart:() => void
   totalPrice:() => number

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const RuleItem = ({id,title, descs}) => {
+const RuleItem = ({id,title, descs}:{id:number,title:string, descs:string[]}) => {
     return (
         <div className="lg:p-8 p-4 col-span-2 lg:col-span-1 rounded-lg bg-white gap-3 border border-r-grey220  flex flex-col ">
             <p className="text-primary font-bold text-center"><b>{id}.</b>{title}</p>

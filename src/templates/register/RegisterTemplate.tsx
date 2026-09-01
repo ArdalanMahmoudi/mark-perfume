@@ -6,14 +6,14 @@ import { Eye, EyeClosed, Loader, Mail, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const RegisterTemplate = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const toast = useToast();
   const router = useRouter()
-  const [clientError, setClientError] = useState({});
+  const [clientError, setClientError] = useState({email:"", password:"", username:"",confirmPassword:""});
   const [loading, setLoading] = useState(false);
   const [userInfo, setUserInfo] = useState({
     username: "",
@@ -22,11 +22,11 @@ const RegisterTemplate = () => {
     confirmPassword: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setUserInfo((prevInfo) => ({...prevInfo, [e.target.name]:e.target.value}))
   }; 
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const result = registerSchema.safeParse(userInfo);
     if (!result.success) {
@@ -39,7 +39,7 @@ const RegisterTemplate = () => {
       });
       return;
     }
-    setClientError({});
+    setClientError({email:"", password:"", username:"",confirmPassword:""});
     setLoading(true)
     try {
       const res = await fetch("/api/auth/register", {

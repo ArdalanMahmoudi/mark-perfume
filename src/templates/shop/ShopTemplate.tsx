@@ -5,9 +5,11 @@ import { SliderRange } from "./_components/SliderRange";
 import ProductCard from "@/src/components/common/ProductCard";
 import { PaginationDemo } from "@/src/components/common/Pagination";
 import { MobileFilter } from "./_components/MobileFilter";
+import { CategoryType } from "@/src/lib/types/categories.type";
+import { ProductWithScoreType } from "@/src/lib/types/product.type";
 
 
-const ShopTemplate = ({categories, products}) => {
+const ShopTemplate = ({categories, products}:{categories:CategoryType[], products:ProductWithScoreType[]}) => {
   
 
   const links = [
@@ -72,7 +74,7 @@ const ShopTemplate = ({categories, products}) => {
                 <div className="mt-5 grid grid-cols-1 lg:grid-cols-3 gap-8">
                   {
                     products.map(product => (
-                      <ProductCard key={product.id} product={product} isBtnAddToCart className="hover:scale-105 transition-all duration-300 ease-in-out" />
+                      <ProductCard key={product.id} product={product} className="hover:scale-105 transition-all duration-300 ease-in-out" />
                     ))
                   }
                 </div>

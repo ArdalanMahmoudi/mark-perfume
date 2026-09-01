@@ -7,7 +7,7 @@ import { Loader, Star } from "lucide-react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const CommentForm = ({ productId }) => {
+const CommentForm = ({ productId }:{productId:string}) => {
   const [fill, setFill] = useState(0);
   const {
     register,

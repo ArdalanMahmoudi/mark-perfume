@@ -10,7 +10,7 @@ export const updateImageSchema = z.union([
     .refine((file) => file.size <= 5 * 1024 * 1024, {
       message: "حداکثر حجم 5 مگابایت است",
     })
-    .optional(),
+
 ]);
 
 export const userInfoSchema = z
@@ -26,7 +26,7 @@ export const userInfoSchema = z
       .optional()
       .or(z.literal("")),
     confirmPassword: z.string().optional().or(z.literal("")),
-    image: updateImageSchema,
+    image: updateImageSchema.optional(),
   })
   .refine(
     (data) => {

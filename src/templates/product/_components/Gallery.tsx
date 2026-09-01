@@ -71,7 +71,7 @@ const Gallery = (props: ProductGalleryType) => {
                 key={idx}
                 onClick={() => onThumbClick(idx)}
                 selected={item.url === selectedIndex}
-                image={item}
+                image={{...item, alt:item.alt ?? undefined}}
               />
             ))}
           </div>

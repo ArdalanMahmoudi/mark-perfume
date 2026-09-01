@@ -42,8 +42,8 @@ export async function toggleBanUser(userId:string) {
 
 export async function updateUserInfo(data: {
   username?: string;
-  currentPassword: string;
-  newPassword: string;
+  currentPassword?: string;
+  newPassword?: string;
   image?:File
 }) {
   const currentUser = await getCurrentUser();

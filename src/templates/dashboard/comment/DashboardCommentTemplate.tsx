@@ -1,5 +1,3 @@
-import { CommentType } from "@/src/lib/types/comment.type";
-import React from "react";
 import CommentItem from "../_components/CommentItem";
 import Image from "next/image";
 import { Prisma } from "@/src/generated/prisma/client";

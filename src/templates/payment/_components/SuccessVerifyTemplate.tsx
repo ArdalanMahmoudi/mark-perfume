@@ -5,7 +5,7 @@ import { CheckCircle2, PackageIcon } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect } from "react";
 
-const SuccessVerifyTemplate = ({ refId, amount, paidAt }) => {
+const SuccessVerifyTemplate = ({ refId, amount, paidAt }:{ refId:string, amount:number, paidAt:Date }) => {
   const clearCart = useCartStore((state) => state.clearCart);
   useEffect(() => {
     clearCart();

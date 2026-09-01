@@ -1,6 +1,6 @@
 import { prisma } from "@/src/lib/prisma";
 import { commentColumns } from "@/src/templates/admin/_components/comments/commentColumns";
-import { DataTable } from "@/src/templates/admin/_components/data-table";
+import { DataTable } from "@/src/components/common/data-table";
 
 const Page = async () => {
   const data = await prisma.comment.findMany({

@@ -1,9 +1,12 @@
 "use client";
-import { OrderType } from "@/src/lib/types/orders.type";
+
+import { OrderColumnsType } from "@/src/lib/types/orders.type";
 import { ColumnDef } from "@tanstack/react-table";
 import { PlusCircleIcon } from "lucide-react";
 
-export const orderColumns: ColumnDef<OrderType>[] = [
+
+
+export const orderColumns: ColumnDef<OrderColumnsType>[] = [
   {
     id:"paymentStatus",
     accessorFn:(row) =>  row.payment?.status,

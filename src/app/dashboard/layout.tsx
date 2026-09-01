@@ -22,8 +22,8 @@ export default async function DashboardLayout({
         <section>
           <Container>
             <div className="my-12 grid gap-8 grid-cols-[repeat(1,100%)] lg:grid-cols-[280px_1fr]">
-              <DashboardMenuMobile username={session.username} profileImg={session.image}/>
-              <Sidebar userName={session.username} userImage={session.image}/>
+              <DashboardMenuMobile userName={session.username ?? "کاربر"} userImage={session.image ?? "/images/user.png"}/>
+              <Sidebar  userName={session.username ?? "کاربر"} userImage={session.image ?? "/images/user.png"}/>
               {children}
             </div>
           </Container>

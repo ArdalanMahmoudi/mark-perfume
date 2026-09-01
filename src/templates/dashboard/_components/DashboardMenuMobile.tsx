@@ -20,7 +20,6 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React from "react";
 import Swal from "sweetalert2";
 
 const activeLinks = [
@@ -62,7 +61,7 @@ const activeLinks = [
   },
 ];
 
-const DashboardMenuMobile = ({ username, profileImg }:{ username:string, profileImg:string}) => {
+const DashboardMenuMobile = ({ userName, userImage }:{ userName:string, userImage:string}) => {
   const toast = useToast();
   const router = useRouter();
   const handleLogout = async () => {
@@ -106,13 +105,13 @@ const DashboardMenuMobile = ({ username, profileImg }:{ username:string, profile
         <div className="w-full flex justify-center! text-center p-0">
           <Image
             className="rounded-full border border-primary size-24"
-            src={profileImg ? profileImg : "/images/user.png"}
+            src={userImage}
             width={100}
             height={100}
             alt="profile image"
           />
         </div>
-        <p className="text-primary">{username}</p>
+        <p className="text-primary">{userName}</p>
         {/* Routes */}
         {activeLinks.map((link) => (
           <DrawerClose key={link.id} className="w-full" asChild>

@@ -5,16 +5,17 @@ import Toast from "./Toast";
 import { useToast } from "@/src/context/toast-context";
 
 const ToastContainer = () => {
-  const { toasts , removeToast} = useToast();
+  const { toasts, removeToast } = useToast();
   const [mount, setMount] = useState(false);
 
   useEffect(() => {
-    setMount(true)
+    setMount(true);
   }, []);
 
-  if (!mount) return;
+  if (!mount) return null;
+
   return createPortal(
-    <div className="flex flex-col max-w-sm fixed bottom-4 left-4 z-9999">
+    <div className="flex flex-col max-w-sm fixed top-2 left-2 lg:top-auto lg:bottom-4 lg:left-4 z-9999">
       {toasts.map((toast) => (
         <Toast key={toast.id} {...toast} removeToast={removeToast} />
       ))}

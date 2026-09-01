@@ -55,7 +55,7 @@ const activeLinks = [
   },
 ];
 
-const Sidebar = ({ userName, userImage }) => {
+const Sidebar = ({ userName, userImage }:{ userName:string, userImage:string}) => {
   return (
     <div className="sticky top-8 h-fit w-full hidden lg:flex flex-col gap-4 border border-grey220 p-5 rounded-lg bg-secondary min-w-60">
       {/* user image */}

@@ -1,15 +1,16 @@
 "use client";
 import { useToast } from "@/src/context/toast-context";
 import { calculatedDiscountedPrice } from "@/src/lib/helper";
+import { ProductType } from "@/src/lib/types/product.type";
 import { useWishlistStore } from "@/src/stores/wishlist-store";
-import { Trash } from "lucide-react";
+import { Star, Trash } from "lucide-react";
 import Swal from "sweetalert2";
 
-const WishCard = ({ product }) => {
+const WishCard = ({ product }:{product:Pick<ProductType,"id" | "thumbnail" | "name" | "discount" | "price"> &{avgScore?:number}}) => {
   const removeFromWishList = useWishlistStore((state) => state.removeFromWishList)
   const toast = useToast();
   
-  const removeWishCardHandler = (productId) => {
+  const removeWishCardHandler = (productId:string) => {
     Swal.fire({
       title: "حذف از لیست",
       text: "آیا از حذف این محصول از لیست علاقمندی‌ها اطمینان دارید؟",

@@ -1,6 +1,6 @@
 import { Plus, Search } from "lucide-react";
 import Link from "next/link";
-import { DataTable } from "@/src/templates/admin/_components/data-table";
+import { DataTable } from "@/src/components/common/data-table";
 import { prisma } from "@/src/lib/prisma";
 import { productColumns } from "@/src/templates/admin/_components/products/productColumns";
 

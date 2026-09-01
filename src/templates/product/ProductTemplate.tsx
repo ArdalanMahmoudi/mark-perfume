@@ -23,7 +23,11 @@ import ProductTabs from "./_components/ProductTabs";
 import SectionTitle from "../home/_components/SectionTitle";
 import Slider from "@/src/components/common/Slider";
 import ProductCard from "@/src/components/common/ProductCard";
-import { ProductType } from "@/src/lib/types/product.type";
+import {
+  ProductCardStoreType,
+  ProductType,
+  WishCardType,
+} from "@/src/lib/types/product.type";
 import { CommentType } from "@/src/lib/types/comment.type";
 import { notFound } from "next/navigation";
 import { calculatedDiscountedPrice } from "@/src/lib/helper";
@@ -33,6 +37,7 @@ import { TooltipProvider } from "@/src/components/ui/tooltip";
 import { useCartStore } from "@/src/stores/cart-store";
 import { useWishlistStore } from "@/src/stores/wishlist-store";
 import { Prisma } from "@/src/generated/prisma/client";
+import MobileAddToCartBar from "./_components/MobileAddToCartBar";
 
 type ProductTemplatePropsType = {
   product: Omit<ProductType, "comments">;
@@ -43,13 +48,14 @@ type ProductTemplatePropsType = {
       body: true;
       createdAt: true;
       adminReply: true;
-      replyedAt: true,
-      user:{
-        select:{
-          username:true,
-          image:true
-        }
-      }
+      replyedAt: true;
+      status: true;
+      user: {
+        select: {
+          username: true;
+          image: true;
+        };
+      };
     };
   }>[];
   initialCursor: string | null;
@@ -71,7 +77,6 @@ const ProductTemplate = ({
   ];
 
   const addToCart = useCartStore((state) => state.addToCart);
-  const totalPrice = useCartStore((state) => state.totalPrice);
   const toast = useToast();
   const wishList = useWishlistStore((state) => state.wishList);
   const addToWishList = useWishlistStore((state) => state.addToWishList);
@@ -81,12 +86,12 @@ const ProductTemplate = ({
 
   const isInWishlist = wishList.some((p) => p.id === product.id);
 
-  const addToCartHandler = (product) => {
+  const addToCartHandler = (product: Omit<ProductCardStoreType, "qty">) => {
     addToCart(product);
     toast.success("محصول به سبد خرید اضافه شد");
   };
 
-  const wishListHandler = (product) => {
+  const wishListHandler = (product: WishCardType) => {
     if (isInWishlist) {
       removeFromWishList(product.id);
       toast.success("محصول از لیست علاقه مندی حذف شد");
@@ -98,36 +103,17 @@ const ProductTemplate = ({
 
   return (
     <>
-      <div className="lg:hidden fixed inset-x-0 bottom-0 w-full bg-white z-30 border-t border-grey220 px-1">
-        <div className="flex justify-between items-center my-4">
-          <button
-            onClick={() => addToCartHandler(product)}
-            className="bg-primary text-sm text-white w-fit px-3 py-2 text-center rounded-sm cursor-pointer border border-grey220 transition-all duration-200 hover:bg-white hover:text-primary"
-          >
-            افزودن به سبد خرید
-          </button>
-          <div className="flex flex-col gap-1">
-            <div className="flex items-end gap-1">
-              {product.discount > 0 && (
-                <>
-                  <span className="text-sm font-bold text-gray-500 line-through">
-                    {Number(product.price).toLocaleString("fa-IR")} تومان
-                  </span>
-                  <div className="size-5 rounded-full text-white bg-primary flex items-center justify-center">
-                    <span className="text-xs">
-                      {Number(product.discount).toLocaleString("fa-IR")}%
-                    </span>
-                  </div>
-                </>
-              )}
-            </div>
-            <span className="lg:text-lg text-sm font-bold">
-              {Number(totalPrice).toLocaleString("fa-IR")} تومان
-            </span>
-          </div>
-        </div>
-      </div>
+      {/* AddToCartButtonMobile-Start */}
+      <MobileAddToCartBar
+        price={product.price}
+        discount={product.discount}
+        stock={product.stock}
+        onAddToCart={() => addToCartHandler(product)}
+      />
+      <div className="pb-20 lg:pb-0">
 
+      
+      {/* AddToCartButtonMobile-End */}
       <BreadCrumbs
         links={links}
         secondTextClass=" lg:w-full line-clamp-1"
@@ -277,7 +263,9 @@ const ProductTemplate = ({
       <ProductTabs
         description={product.description}
         volume={product.volume}
-        specification={product.specification}
+        specification={
+          product.specification as { key: string; value: string }[]
+        }
         initialComments={initialComments}
         initialCursor={initialCursor}
         productId={product.id}
@@ -302,6 +290,8 @@ const ProductTemplate = ({
           </div>
         </Container>
       </section>
+      
+      </div>
     </>
   );
 };

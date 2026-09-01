@@ -10,6 +10,6 @@ export default async function Page() {
   }
   const orders = await getLastOrders(user.id);
   return (
-    <DashboardIndexTemplate user={user} orders={orders}/>
+    <DashboardIndexTemplate userName={user.username?? "کاربر"} orders={orders}/>
   )
 }

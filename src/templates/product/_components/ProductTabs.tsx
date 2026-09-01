@@ -27,6 +27,7 @@ type Props = {
       createdAt: true;
       adminReply: true;
       replyedAt: true;
+      status: true;
       user: {
         select: {
           username: true;
@@ -144,8 +145,10 @@ const ProductTabs = ({
                                 score={comment.score}
                                 body={comment.body}
                                 date={comment.createdAt}
-                                username={comment.user.username}
-                                userImage={comment.user.image}
+                                username={comment.user.username ?? "کاربر"}
+                                userImage={
+                                  comment.user.image ?? "/images/user.png"
+                                }
                               />
                               {comment.adminReply && (
                                 <div className="mt-4 mr-6 pr-4 border-r-2 border-primary bg-muted rounded-md p-3">
@@ -156,15 +159,17 @@ const ProductTabs = ({
                                     >
                                       پاسخ فروشگاه
                                     </Badge>
-                                    <span className="text-xs text-muted-foreground">
-                                      {new Date(
-                                        comment.replyedAt,
-                                      ).toLocaleDateString("fa-IR", {
-                                        year: "numeric",
-                                        month: "long",
-                                        day: "numeric",
-                                      })}
-                                    </span>
+                                    {comment.replyedAt && (
+                                      <span className="text-xs text-muted-foreground">
+                                        {new Date(
+                                          comment.replyedAt,
+                                        ).toLocaleDateString("fa-IR", {
+                                          year: "numeric",
+                                          month: "long",
+                                          day: "numeric",
+                                        })}
+                                      </span>
+                                    )}
                                   </div>
                                   <p className="text-sm text-muted-foreground">
                                     {comment.adminReply}

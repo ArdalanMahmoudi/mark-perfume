@@ -4,8 +4,9 @@ import SectionTitle from "./SectionTitle";
 import { Stars } from "lucide-react";
 import Slider from "@/src/components/common/Slider";
 import ProductCard from "@/src/components/common/ProductCard";
+import { ProductWithScoreType } from "@/src/lib/types/product.type";
 
-const NewestProductSection = ({products}) => {
+const NewestProductSection = ({products}:{products:ProductWithScoreType[]}) => {
   return (
     <section className="mt-24">
       <Container>

@@ -10,8 +10,10 @@ import FavorSection from "./_components/FavorSection";
 import NewestProductSection from "./_components/NewestProductSection";
 import ShopIntroductionSection from "./_components/ShopIntroductionSection";
 import LatestBlog from "./_components/LatestBlog";
+import { ProductWithScoreType } from "@/src/lib/types/product.type";
 
-const HomeTemplate = ({ products }) => {
+
+const HomeTemplate = ({ products }:{products:ProductWithScoreType[]}) => {
   return (
     <>
       <HeroSection />

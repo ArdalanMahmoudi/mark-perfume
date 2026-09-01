@@ -1,5 +1,5 @@
 import { prisma } from "@/src/lib/prisma";
-import { DataTable } from "@/src/templates/admin/_components/data-table";
+import { DataTable } from "@/src/components/common/data-table";
 import { userColumns } from "@/src/templates/admin/_components/user/UserColumns";
 import React from "react";
 

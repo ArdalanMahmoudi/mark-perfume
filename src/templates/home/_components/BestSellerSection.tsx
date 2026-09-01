@@ -5,8 +5,9 @@ import SectionTitle from "./SectionTitle";
 import { CheckCheck } from "lucide-react";
 import ProductCard from "@/src/components/common/ProductCard";
 import Slider from "@/src/components/common/Slider";
+import { ProductWithScoreType } from "@/src/lib/types/product.type";
 
-const BestSellerSection = ({products}) => {
+const BestSellerSection = ({products}:{products:ProductWithScoreType[]}) => {
   return (
     <section className="mt-24">
       <Container>

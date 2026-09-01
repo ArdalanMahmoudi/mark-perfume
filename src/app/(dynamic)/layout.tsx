@@ -10,7 +10,7 @@ async function MainLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Header user={session} />
-      <main className="mt-16 lg:mt-40">{children}</main>
+      <main className="mt-16 lg:mt-40 overflow-x-hidden">{children}</main>
       <Footer />
     </>
   );

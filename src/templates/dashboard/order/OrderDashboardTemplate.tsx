@@ -1,10 +1,11 @@
 "use client";
 import React from "react";
 import { PaginationDemo } from "@/src/components/common/Pagination";
-import { DataTable } from "@/src/templates/dashboard/_components/data-table";
 import { orderColumns } from "./orderColumns";
+import { DataTable } from "@/src/components/common/data-table";
+import { OrderColumnsType } from "@/src/lib/types/orders.type";
 
-const OrderDashboardTemplate = ({ orders }) => {
+const OrderDashboardTemplate = ({ orders }:{orders:OrderColumnsType[]}) => {
   return (
     <div className="bg-secondary-layout">
       {/* search */}

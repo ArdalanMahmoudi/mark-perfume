@@ -1,15 +1,12 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { ProductType } from "../lib/types/product.type";
+import { ProductType, WishCardType } from "../lib/types/product.type";
 
-type WishCard = Pick<
-  ProductType,
-  "id" | "thumbnail" | "name" | "price" | "discount"
->;
+
 
 interface WishlistState {
-  wishList: WishCard[] ;
-  addToWishList: (product: WishCard) => void;
+  wishList: WishCardType[] ;
+  addToWishList: (product: WishCardType) => void;
   removeFromWishList: (productId: string) => void;
 }
 export const useWishlistStore = create<WishlistState>()(

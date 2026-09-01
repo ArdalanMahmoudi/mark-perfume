@@ -3,7 +3,7 @@ import { FileWarningIcon, X } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
-const FailVerifyTemplate = ({refId, failAt}) => {
+const FailVerifyTemplate = ({refId, failAt}:{refId:string, failAt:Date }) => {
   return (
     <section>
       {/* fail-payment-template */}
@@ -36,7 +36,7 @@ const FailVerifyTemplate = ({refId, failAt}) => {
             {/* item-2 */}
             <div className="border border-grey220 bg-white rounded-sm flex flex-col gap-2.5 items-center p-5">
               <p className="text-sm text-grey100 font-bold"> زمان وقوع خطا</p>
-              <p className="text-primary font-bold">{failAt.toLocaleDateString("fa-IR",{year:"numeric", month:"long", day:"numeric"})}</p>
+              <p className="text-primary font-bold">{(failAt).toLocaleDateString("fa-IR",{year:"numeric", month:"long", day:"numeric"})}</p>
             </div>
           </div>
           {/*  Warning Layout  */}

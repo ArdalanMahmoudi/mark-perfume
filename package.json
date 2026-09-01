@@ -4,6 +4,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test": "vitest",
+    "test:run": "vitest run",
     "lint": "eslint ."
   },
   "dependencies": {
@@ -61,6 +63,9 @@
     "@types/node": "^20.14.10",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "typescript": "^5.5.3"
+    "@vitejs/plugin-react": "^4.7.0",
+    "typescript": "^5.5.3",
+    "vite-tsconfig-paths": "^6.1.1",
+    "vitest": "^4.1.11"
   }
 }

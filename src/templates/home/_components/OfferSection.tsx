@@ -5,9 +5,9 @@ import { Flame } from "lucide-react";
 import Image from "next/image";
 import Slider from "@/src/components/common/Slider";
 import ProductCard from "@/src/components/common/ProductCard";
-import { ProductType } from "@/src/lib/types/product.type";
+import { ProductType, ProductWithScoreType } from "@/src/lib/types/product.type";
 
-const OfferSection = ({products}) => {
+const OfferSection = ({products}:{products:ProductWithScoreType[]}) => {
   return (
     <section>
       <Container>

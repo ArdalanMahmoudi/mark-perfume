@@ -56,6 +56,7 @@ export async function getCommentsMore(productId: string, cursor?: string) {
       createdAt: true,
       adminReply: true,
       replyedAt: true,
+      status:true,
       user: {
         select: { username: true, image: true },
       },
