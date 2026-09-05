@@ -8,6 +8,13 @@ module.exports = {
       },
     ];
   },
-  devIndicators:false,
-
+  devIndicators: false,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "picsum.photos",
+      },
+    ],
+  },
 };
