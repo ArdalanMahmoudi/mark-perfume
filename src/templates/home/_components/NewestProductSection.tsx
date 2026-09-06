@@ -18,6 +18,7 @@ const NewestProductSection = ({products}:{products:ProductWithScoreType[]}) => {
           <Slider
             autoplay
             loop
+            navigation={true}
             slidesToShow={{ default: 1, sm: 1, md: 2, lg: 4 }}
             slides={products.map((product) => (
               <ProductCard key={product.id} product={product}/>

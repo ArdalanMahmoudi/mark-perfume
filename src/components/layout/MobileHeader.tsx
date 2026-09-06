@@ -57,7 +57,7 @@ export function MobileHeader({ user }:MobileHeaderPropsType) {
                   </Link>
                 </>
               ) : (
-                <span className="text-lg font-bold">ورود | ثبت نام</span>
+                <Link href={"/login"} className="text-lg font-bold">ورود | ثبت نام</Link>
               )}
             </div>
             {/* ------- */}

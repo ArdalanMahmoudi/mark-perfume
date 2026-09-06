@@ -11,7 +11,7 @@ const LatestBlog = () => {
       <Container>
         <SectionTitle title="آخرین اخبار و  آموزش ها" icon={<FileText />} />
           <Slider
-
+navigation={true}
             loop
             slidesToShow={{ default: 1, sm: 1, md: 2, lg: 4 }}
             slides={Array.from({ length: 5 }).map((p) => (

@@ -1,13 +1,18 @@
 "use client";
 import Container from "@/src/components/common/Container";
 import SectionTitle from "./SectionTitle";
-import { Flame } from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon, Flame } from "lucide-react";
 import Image from "next/image";
 import Slider from "@/src/components/common/Slider";
 import ProductCard from "@/src/components/common/ProductCard";
 import { ProductType, ProductWithScoreType } from "@/src/lib/types/product.type";
+import CountdownTimer from "@/src/components/common/CountDownTimer";
+
+
+
 
 const OfferSection = ({products}:{products:ProductWithScoreType[]}) => {
+  
   return (
     <section>
       <Container>
@@ -19,26 +24,7 @@ const OfferSection = ({products}:{products:ProductWithScoreType[]}) => {
               <div className="rounded-lg h-full rounded-tl-[12rem] border border-grey220 bg-secondary p-5 flex flex-col gap-2.5 justify-center items-center">
                 <p className="mt-5 font-bold leading-8">زمان را از دست ندهید</p>
                 {/* timer */}
-                <div className="flex items-center justify-center gap-2.5">
-                  <div className="flex flex-col items-center gap-2.5 text-xs">
-                    <span className="size-10 rounded-md flex justify-center items-center bg-primary font-bold text-white">
-                      ۴۷
-                    </span>
-                    دقیقه
-                  </div>
-                  <div className="flex flex-col items-center gap-2.5 text-xs">
-                    <span className="size-10 rounded-md flex justify-center items-center bg-primary font-bold text-white">
-                      ۱۴
-                    </span>
-                    ساعت
-                  </div>
-                  <div className="flex flex-col items-center gap-2.5 text-xs">
-                    <span className="size-10 rounded-md flex justify-center items-center bg-primary font-bold text-white">
-                      ۲
-                    </span>
-                    روز
-                  </div>
-                </div>
+                <CountdownTimer endDate={new Date(Date.now() + 2 * 24 * 60 * 60 * 1000)}/>
                 {/* img */}
                 <Image
                   src={"/images/special-offer.png"}
@@ -54,6 +40,7 @@ const OfferSection = ({products}:{products:ProductWithScoreType[]}) => {
               <Slider
                 loop
                 autoplay
+                navigation={true}
                 slidesToShow={{ default: 1, sm: 1, md: 2, lg: 3 }}
                 slides={products.map((product) => (
                   <ProductCard key={product.id}  product={product}/>

@@ -282,6 +282,7 @@ const ProductTemplate = ({
             <Slider
               autoplay
               loop
+              navigation={true}
               slidesToShow={{ default: 1, sm: 1, md: 2, lg: 4 }}
               slides={Array.from({ length: 5 }).map((_, idx) => (
                 <ProductCard key={idx} product={product} />

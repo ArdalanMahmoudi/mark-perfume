@@ -3,12 +3,17 @@ import Container from "@/src/components/common/Container";
 import HeroItem from "./HeroItem";
 import Image from "next/image";
 import Slider from "@/src/components/common/Slider";
+import {
+  ChevronLeft,
+  ChevronRightCircle,
+  ChevronRightIcon,
+} from "lucide-react";
 
-const heroImage= [
-  {id:1, src:"/images/slider1.png"},
-  {id:2, src:"/images/slider2.png"},
-  {id:3, src:"/images/slider3.png"},
-]
+const heroImage = [
+  { id: 1, src: "/images/slider1.png" },
+  { id: 2, src: "/images/slider2.png" },
+  { id: 3, src: "/images/slider3.png" },
+];
 const HeroSection = () => {
   return (
     <section className="pt-8">
@@ -49,9 +54,10 @@ const HeroSection = () => {
           {/* left */}
           <div className="col-span-3 lg:col-span-1 lg:order-2 order-1">
             <Slider
+              navigation={true}
               slides={heroImage.map((i) => (
                 <Image
-                key={i.id}
+                  key={i.id}
                   src={i.src}
                   width={600}
                   height={600}
@@ -61,9 +67,7 @@ const HeroSection = () => {
               slidesToShow={1}
               autoplay
               loop
-            >
-             
-            </Slider>
+            ></Slider>
           </div>
         </div>
       </Container>

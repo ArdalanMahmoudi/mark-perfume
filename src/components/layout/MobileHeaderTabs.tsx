@@ -37,102 +37,124 @@ const MobileHeaderTabs = () => {
       </TabsList>
       <TabsContent value="pages">
         <div className="flex flex-col gap-8 text-sm py-4">
-          <ActiveLink
-            href={"/"}
-            className="flex items-center w-full gap-1 cursor-pointer hover:text-primary transition-colors duration-300"
-            activeClassName="text-primary"
-          >
-            <Home className="size-4" />
-            <span>خانه</span>
-          </ActiveLink>
+          <DrawerClose asChild>
+            <ActiveLink
+              href={"/"}
+              className="flex items-center w-full gap-1 cursor-pointer hover:text-primary transition-colors duration-300"
+              activeClassName="text-primary"
+            >
+              <Home className="size-4" />
+              <span>خانه</span>
+            </ActiveLink>
+          </DrawerClose>
 
-          <ActiveLink
-            href={"/shop"}
-            className="flex items-center w-full gap-1 cursor-pointer hover:text-primary transition-colors duration-300"
-            activeClassName="text-primary"
-          >
-            <ShoppingCart className="size-4" />
-            <span>فروشگاه</span>
-          </ActiveLink>
+          <DrawerClose asChild>
+            <ActiveLink
+              href={"/shop"}
+              className="flex items-center w-full gap-1 cursor-pointer hover:text-primary transition-colors duration-300"
+              activeClassName="text-primary"
+            >
+              <ShoppingCart className="size-4" />
+              <span>فروشگاه</span>
+            </ActiveLink>
+          </DrawerClose>
 
-          <ActiveLink
-            href={"/blogs"}
-            className="flex items-center w-full gap-1 cursor-pointer hover:text-primary transition-colors duration-300"
-            activeClassName="text-primary"
-          >
-            <FileText className="size-4" />
-            <span>مقالات</span>
-          </ActiveLink>
+          <DrawerClose asChild>
+            <ActiveLink
+              href={"/blogs"}
+              className="flex items-center w-full gap-1 cursor-pointer hover:text-primary transition-colors duration-300"
+              activeClassName="text-primary"
+            >
+              <FileText className="size-4" />
+              <span>مقالات</span>
+            </ActiveLink>
+          </DrawerClose>
 
-          <ActiveLink
-            href={"/rules"}
-            className="flex items-center w-full gap-1 cursor-pointer hover:text-primary transition-colors duration-300"
-            activeClassName="text-primary"
-          >
-            <BookText className="size-4" />
-            <span>قوانین و شرایط خرید</span>
-          </ActiveLink>
+          <DrawerClose asChild>
+            <ActiveLink
+              href={"/rules"}
+              className="flex items-center w-full gap-1 cursor-pointer hover:text-primary transition-colors duration-300"
+              activeClassName="text-primary"
+            >
+              <BookText className="size-4" />
+              <span>قوانین و شرایط خرید</span>
+            </ActiveLink>
+          </DrawerClose>
 
-          <ActiveLink
-            href={"/contactus"}
-            className="flex items-center w-full gap-1 cursor-pointer hover:text-primary transition-colors duration-300"
-            activeClassName="text-primary"
-          >
-            <Phone className="size-4" />
-            <span>تماس با ما</span>
-          </ActiveLink>
+          <DrawerClose asChild>
+            <ActiveLink
+              href={"/contactus"}
+              className="flex items-center w-full gap-1 cursor-pointer hover:text-primary transition-colors duration-300"
+              activeClassName="text-primary"
+            >
+              <Phone className="size-4" />
+              <span>تماس با ما</span>
+            </ActiveLink>
+          </DrawerClose>
 
-          <ActiveLink
-            href={"/aboutus"}
-            className="flex items-center w-full gap-1 cursor-pointer hover:text-primary transition-colors duration-300"
-            activeClassName="text-primary"
-          >
-            <CircleQuestionMark className="size-4" />
-            <span>درباره ما</span>
-          </ActiveLink>
+          <DrawerClose asChild>
+            <ActiveLink
+              href={"/aboutus"}
+              className="flex items-center w-full gap-1 cursor-pointer hover:text-primary transition-colors duration-300"
+              activeClassName="text-primary"
+            >
+              <CircleQuestionMark className="size-4" />
+              <span>درباره ما</span>
+            </ActiveLink>
+          </DrawerClose>
         </div>
       </TabsContent>
       <TabsContent value="category">
         <div className="flex flex-col gap-8 text-sm py-4">
-          <Link
-            href={"/shop"}
-            className="flex items-center w-full justify-between"
-          >
-            <span> گلی(Floral)</span>
-            <ChevronLeft size={18} />
-          </Link>
+          <DrawerClose asChild>
+            <Link
+              href={"/shop"}
+              className="flex items-center w-full justify-between"
+            >
+              <span> گلی(Floral)</span>
+              <ChevronLeft size={18} />
+            </Link>
+          </DrawerClose>
 
-          <Link
-            href={"/shop"}
-            className="flex items-center w-full justify-between"
-          >
-            <span> چوبی (Woody)</span>
-            <ChevronLeft size={18} />
-          </Link>
+          <DrawerClose asChild>
+            <Link
+              href={"/shop"}
+              className="flex items-center w-full justify-between"
+            >
+              <span> چوبی (Woody)</span>
+              <ChevronLeft size={18} />
+            </Link>
+          </DrawerClose>
 
-          <Link
-            href={"/shop"}
-            className="flex items-center w-full justify-between"
-          >
-            <span> شرقی (Oriental/Ambery)</span>
-            <ChevronLeft size={18} />
-          </Link>
+          <DrawerClose asChild>
+            <Link
+              href={"/shop"}
+              className="flex items-center w-full justify-between"
+            >
+              <span> شرقی (Oriental/Ambery)</span>
+              <ChevronLeft size={18} />
+            </Link>
+          </DrawerClose>
 
-          <Link
-            href={"/shop"}
-            className="flex items-center w-full justify-between"
-          >
-            <span> تازه (Fresh)</span>
-            <ChevronLeft size={18} />
-          </Link>
+          <DrawerClose asChild>
+            <Link
+              href={"/shop"}
+              className="flex items-center w-full justify-between"
+            >
+              <span> تازه (Fresh)</span>
+              <ChevronLeft size={18} />
+            </Link>
+          </DrawerClose>
 
-          <Link
-            href={"/shop"}
-            className="flex items-center w-full justify-between"
-          >
-            <span> سرخسی (Fougere)</span>
-            <ChevronLeft size={18} />
-          </Link>
+          <DrawerClose asChild>
+            <Link
+              href={"/shop"}
+              className="flex items-center w-full justify-between"
+            >
+              <span> سرخسی (Fougere)</span>
+              <ChevronLeft size={18} />
+            </Link>
+          </DrawerClose>
         </div>
       </TabsContent>
     </Tabs>

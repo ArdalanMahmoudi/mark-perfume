@@ -3,6 +3,7 @@
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { useCallback } from "react";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
 type Responsive = {
   default: number;
@@ -17,8 +18,6 @@ type Props = {
   loop?: boolean;
   slidesToShow?: number | Responsive;
   gap?: number;
-  scrollPrevIcon?: React.ReactNode;
-  scrollNextIcon?: React.ReactNode;
   navigation?: Boolean;
 };
 
@@ -28,8 +27,6 @@ export default function Slider({
   loop = false,
   slidesToShow = 1,
   gap = 16,
-  scrollNextIcon,
-  scrollPrevIcon,
   navigation = false,
 }: Props) {
   const plugins = autoplay
@@ -68,7 +65,7 @@ export default function Slider({
   };
 
   return (
-    <div className="relative" style={getSlideVars()}>
+    <div className="relative group" style={getSlideVars()}>
       <div className="overflow-hidden py-1" ref={emblaRef}>
         <div className="flex" style={{ marginRight: `-${gap}px` }}>
           {slides.map((slide, i) => (
@@ -91,17 +88,53 @@ export default function Slider({
       </div>
       {navigation && (
         <>
+          {/* Prev-Slide */}
           <button
+            type="button"
             onClick={scrollPrev}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10"
+            aria-label="Next slide"
+            className="
+              absolute top-1/2 -translate-y-1/2 right-2 z-10
+              flex size-10 items-center justify-center
+              rounded-full
+              border border-white/30
+              bg-black/40
+              text-white
+              shadow-lg
+              backdrop-blur-md
+              opacity-0 group-hover:opacity-100
+              transition-all duration-300
+              hover:bg-white
+              hover:text-black
+              hover:scale-105
+              active:scale-90
+            "
           >
-            {scrollPrevIcon ? scrollPrevIcon : "→"}
+            <ChevronRightIcon className="size-5" strokeWidth={1.8} />
           </button>
+          {/* Next-Slide */}
           <button
             onClick={scrollNext}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10"
+            type="button"
+            aria-label="Previous slide"
+            className="
+              absolute top-1/2 -translate-y-1/2 left-2 z-10
+              flex size-10 items-center justify-center
+              rounded-full
+              border border-white/30
+              bg-black/40
+              text-white
+              shadow-lg
+              backdrop-blur-md
+              opacity-0 group-hover:opacity-100
+              transition-all duration-300
+              hover:bg-white
+              hover:text-black
+              hover:scale-105
+              active:scale-90
+            "
           >
-            {scrollNextIcon ? scrollNextIcon : "←"}
+            <ChevronLeftIcon className="size-5" strokeWidth={1.8} />
           </button>
         </>
       )}
