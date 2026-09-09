@@ -171,7 +171,7 @@ const RegisterTemplate = () => {
                   disabled={loading ? true : false}
                   className="py-1 px-6 transition-all duration-200 bg-primary rounded-xs cursor-pointer  border border-grey220 text-white hover:bg-white hover:text-primary"
                 >
-                 {loading ? <Loader size={16}/> : 'ثبت نام'} 
+                 {loading ? "درحال ثبت نام..." : 'ثبت نام'} 
                 </button>
               </form>
               <p className="flex items-center mt-4 text-sm lg:text-base gap-1">

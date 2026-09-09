@@ -157,7 +157,7 @@ const LoginTemplate = () => {
                 disabled={loading ? true : false}
                 className="py-1 px-6 w-full lg:w-fit transition-all duration-200 bg-primary rounded-xs cursor-pointer  border border-grey220 text-white hover:bg-white hover:text-primary"
               >
-                {loading ? <Loader2Icon className="animate-spin" /> : "ورود"}
+                {loading ? "درحال ورود به حساب..." : "ورود"}
               </button>
             </form>
             <p className="flex items-center mt-4 text-sm lg:text-base">

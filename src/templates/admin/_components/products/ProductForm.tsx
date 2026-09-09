@@ -1,6 +1,6 @@
 "use client";
 import { InputGroupInlineStart } from "@/src/components/common/InputGroup";
-import { CloudUploadIcon, Plus, TrashIcon } from "lucide-react";
+import { Loader2, Plus, TrashIcon } from "lucide-react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import ThumbnailUploader from "../ThumbnailUploader";
 import GalleryUploader from "../GalleryUploader";
@@ -49,7 +49,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
     watch,
     reset,
     getValues,
-    formState: { errors, isLoading },
+    formState: { errors, isSubmitting },
   } = useForm<UpdateProductFormValues>({
     resolver: zodResolver(
       mode === "create" ? createProductSchema : updateProductSchema,
@@ -110,12 +110,24 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
 
     try {
       if (mode === "create") {
-        await createProductAction(formData);
-        toast.success("محصول ایجاد شد");
+        const result = await createProductAction(formData);
+
+        if (!result.success) {
+          toast.error(result.message ?? "ایجاد محصول انجام نشد");
+          return;
+        }
+
+        toast.success(result.message ?? "محصول ایجاد شد");
         reset();
       } else if (product?.id) {
-        await updateProductAction(product?.id, formData);
-        toast.success("تغییرات محصول اعمال شد");
+        const result = await updateProductAction(product.id, formData);
+
+        if (!result.success) {
+          toast.error(result.message ?? "ویرایش محصول انجام نشد");
+          return;
+        }
+
+        toast.success(result.message ?? "تغییرات محصول اعمال شد");
         router.push("/admin/products");
       }
     } catch {
@@ -299,10 +311,17 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
       {/* ------------------------Button Submit------------------------ */}
       <button
         type="submit"
-        disabled={isLoading ? true : false}
-        className="bg-black text-white px-6 py-2 rounded-sm  cursor-pointer"
+        disabled={isSubmitting}
+        className="inline-flex items-center justify-center gap-2 rounded-sm bg-black px-6 py-2 text-white cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {mode === "create" ? " ثبت محصول" : "ثبت تغییرات"}
+        {isSubmitting && <Loader2 className="size-4 animate-spin" />}
+        {isSubmitting
+          ? mode === "create"
+            ? "در حال ثبت..."
+            : "در حال ذخیره..."
+          : mode === "create"
+            ? "ثبت محصول"
+            : "ثبت تغییرات"}
       </button>
     </form>
   );

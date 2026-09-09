@@ -4,7 +4,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -15,9 +14,11 @@ import { useToast } from "@/src/context/toast-context";
 import { replyCommentAction } from "@/src/lib/actions/comment.action";
 import { CommentColumnsType, CommentType } from "@/src/lib/types/comment.type";
 import React, { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 const CommentReplyForm = ({ comment }: { comment: Pick<CommentColumnsType,"adminReply" | "body" | "id"> }) => {
   const [reply, setReply] = useState(comment.adminReply ?? "");
+  const [isPending, setIsPending] = useState(false);
   const toast = useToast();
   
   const handleReplySubmit = async (commentId:string) => {
@@ -53,8 +54,13 @@ const CommentReplyForm = ({ comment }: { comment: Pick<CommentColumnsType,"admin
 
         <DialogFooter>
           <DialogClose asChild>
-            <Button onClick={() => handleReplySubmit(comment.id)}>
-              ارسال پاسخ
+            <Button
+              type="button"
+              disabled={isPending}
+              onClick={() => handleReplySubmit(comment.id)}
+            >
+              {isPending && <Loader2 className="size-4 animate-spin" />}
+              {isPending ? "در حال ارسال..." : "ارسال پاسخ"}
             </Button>
           </DialogClose>
         </DialogFooter>

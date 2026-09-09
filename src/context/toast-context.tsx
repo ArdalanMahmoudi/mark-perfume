@@ -19,7 +19,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [toasts, setToasts] = useState<ToastType[]>([]);
 
   function addToast(toast: ToastType) {
-    setToasts((prevToast) => [...prevToast,toast].slice(-3));
+    setToasts((prevToast) => [...prevToast,toast].slice(-1));
 
     setTimeout(() => {
       startLeaving(toast.id);

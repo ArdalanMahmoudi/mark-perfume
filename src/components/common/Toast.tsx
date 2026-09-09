@@ -20,7 +20,7 @@ const Toast = ({ id, message, status, isLeaving, removeToast }: ToastType) => {
     <>
       <div
         onAnimationEnd={handleAnimationEnd}
-        className={`${isLeaving ? "animate-toast-out" : "animate-toast-in"} max-w-87 flex items-center my-2 py-2 px-2.5 shadow pointer-events-auto rounded-lg text-[#363636] z-999   ${(status === "success" && "bg-success100") || (status === "error" && "bg-error100") || (status === "warning" && "bg-warning100") || (status === "info" && "bg-blue-100")}`}
+        className={`${isLeaving ? "animate-toast-out" : "animate-toast-in"} max-w-87 w-41.5 h-11 flex items-center my-2 py-2 px-2.5 shadow-lg shadow-black/50 pointer-events-auto rounded-lg text-[#363636] z-999   ${(status === "success" && "bg-success100") || (status === "error" && "bg-error100") || (status === "warning" && "bg-warning100") || (status === "info" && "bg-blue-100")}`}
       >
         {/* message */}
         <p className="text-inherit my-1 mx-2.5 flex justify-center text-xs lg:text-sm">
