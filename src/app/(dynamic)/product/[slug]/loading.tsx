@@ -1,27 +1,18 @@
 const ProductDetailSkeleton = () => {
   return (
-    <div dir="rtl" className="animate-pulse">
+    <div className="animate-pulse">
       {/* Breadcrumb */}
       <div className="h-4 w-64 bg-gray-200 rounded mb-6" />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Right column - Info box (shipping, guarantee, etc) */}
-        <div className="order-2 lg:order-1 border border-grey220 rounded-lg p-5 flex flex-col gap-5 h-fit">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="flex items-center gap-2">
-              <div className="size-5 bg-gray-200 rounded-full shrink-0" />
-              <div className="h-3 w-32 bg-gray-200 rounded" />
-            </div>
-          ))}
-
-          {/* Price */}
-          <div className="flex flex-col gap-2 mt-2">
-            <div className="h-3 w-20 bg-gray-200 rounded" />
-            <div className="h-5 w-28 bg-gray-200 rounded" />
+        {/* Right column - Product image + gallery thumbnails */}
+        <div className="order-1 lg:order-3 flex flex-col gap-3">
+          <div className="w-full aspect-square bg-gray-200 rounded-lg" />
+          <div className="grid grid-cols-4 gap-2">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="aspect-square bg-gray-200 rounded-md" />
+            ))}
           </div>
-
-          {/* Add to cart button */}
-          <div className="h-10 w-full bg-gray-200 rounded-md mt-2" />
         </div>
 
         {/* Middle column - Title, meta, description */}
@@ -51,17 +42,23 @@ const ProductDetailSkeleton = () => {
           </div>
         </div>
 
-        {/* Left column - Product image + gallery thumbnails */}
-        <div className="order-1 lg:order-3 flex flex-col gap-3">
-          <div className="w-full aspect-square bg-gray-200 rounded-lg" />
-          <div className="grid grid-cols-4 gap-2">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <div
-                key={i}
-                className="aspect-square bg-gray-200 rounded-md"
-              />
-            ))}
+        {/* Left column - Info box (shipping, guarantee, etc) */}
+        <div className="order-2 lg:order-1 border border-grey220 rounded-lg p-5 flex flex-col gap-5 h-fit">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="flex items-center gap-2">
+              <div className="size-5 bg-gray-200 rounded-full shrink-0" />
+              <div className="h-3 w-32 bg-gray-200 rounded" />
+            </div>
+          ))}
+
+          {/* Price */}
+          <div className="flex flex-col gap-2 mt-2">
+            <div className="h-3 w-20 bg-gray-200 rounded" />
+            <div className="h-5 w-28 bg-gray-200 rounded" />
           </div>
+
+          {/* Add to cart button */}
+          <div className="h-10 w-full bg-gray-200 rounded-md mt-2" />
         </div>
       </div>
     </div>

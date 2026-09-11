@@ -12,52 +12,78 @@ import slugify from "slugify";
 export const createProductAction = async (formData: FormData) => {
   try {
     await requireAdmin();
-    const rawDatas = Object.fromEntries(formData.entries());
-    const specification = JSON.parse(formData.get("specification") as string);
-    const thumbnail = formData.get("thumbnail") as File;
-    const gallery = formData.getAll("gallery") as File[];
 
-    const data = {
-      ...rawDatas,
+    const thumbnail = formData.get("thumbnail");
+    const gallery = formData.getAll("gallery");
+
+    const specificationRaw = formData.get("specification");
+
+    if (typeof specificationRaw !== "string") {
+      return {
+        success: false,
+        message: "ویژگی‌های محصول نامعتبر است",
+      };
+    }
+
+    const specification = JSON.parse(specificationRaw);
+
+    const rawData = {
+      name: formData.get("name"),
+      categoryId: formData.get("categoryId"),
+      price: Number(formData.get("price")),
+      discount: Number(formData.get("discount") ?? 0),
+      description: formData.get("description"),
+      details: formData.get("details"),
+      stock: Number(formData.get("stock")),
+      volume: Number(formData.get("volume") ?? 0),
       specification,
       thumbnail,
       gallery,
     };
 
-    const result = createProductSchema.safeParse(data);
+    const result = createProductSchema.safeParse(rawData);
+
     if (!result.success) {
+      console.error(
+        "CREATE PRODUCT VALIDATION ERROR:",
+        result.error.flatten(),
+      );
+
       return {
         success: false,
+        message: "اطلاعات وارد شده صحیح نیست",
         errors: result.error.flatten().fieldErrors,
       };
     }
+
     const product = result.data;
-    // create slug unique
+
     const baseSlug = slugify(product.name, {
       lower: true,
       strict: true,
       trim: true,
     });
+
     let slug = baseSlug;
     let counter = 1;
 
     while (
       await prisma.product.findUnique({
-        where: {
-          slug,
-        },
+        where: { slug },
       })
     ) {
       slug = `${baseSlug}-${counter}`;
       counter++;
     }
-    //
-    let tempFiles: string[] = [];
+
+    const tempFiles: string[] = [];
 
     try {
-      const thumbnailUrl = await uploadFile(thumbnail, slug);
-      const galleryUrl = await Promise.all(
-        gallery.map(async (file) => {
+      const thumbnailUrl = await uploadFile(product.thumbnail, slug);
+      tempFiles.push(thumbnailUrl);
+
+      const galleryUrls = await Promise.all(
+        product.gallery.map(async (file) => {
           const url = await uploadFile(file, slug);
           tempFiles.push(url);
           return url;
@@ -66,24 +92,48 @@ export const createProductAction = async (formData: FormData) => {
 
       await prisma.product.create({
         data: {
-          ...product,
+          name: product.name,
           slug,
-          volume:product.volume ?? 0,
+          categoryId: product.categoryId,
+          price: product.price,
+          discount: product.discount,
+          description: product.description,
+          details: product.details,
+          specification: product.specification,
+          stock: product.stock,
+          volume: product.volume ?? 0,
+
           thumbnail: thumbnailUrl,
+
           gallery: {
-            create: galleryUrl.map((url) => ({
+            create: galleryUrls.map((url) => ({
               url,
             })),
           },
         },
       });
-      return { success: true, message: "محصول با موفقیت ایجاد شد" };
+
+      return {
+        success: true,
+        message: "محصول با موفقیت ایجاد شد",
+      };
     } catch (err) {
+      console.error("CREATE PRODUCT ERROR:", err);
+
       await deleteFile(tempFiles);
-      return { success: false, message: "خطا در ثبت محصول مجدد امتحان کنید" };
+
+      return {
+        success: false,
+        message: "خطا در ثبت محصول، مجدد امتحان کنید",
+      };
     }
-  } catch {
-    return { succes: false, message: "مشکلی پیش آمد مجدد امتحان کنید" };
+  } catch (err) {
+    console.error("CREATE PRODUCT ACTION ERROR:", err);
+
+    return {
+      success: false,
+      message: "مشکلی پیش آمد، مجدد امتحان کنید",
+    };
   }
 };
 
@@ -241,7 +291,7 @@ export const updateProductAction = async (
         },
       },
     });
-    return { success: true, message: "محصول با موفقیت ایجاد شد" };
+    return { success: true, message: "تغییرات محصول انجام شد" };
   } catch (err) {
     await deleteFile(tempFiles);
     return { success: false, message: "خطا در ویرایش محصول مجدد امتحان کنید" };
