@@ -6,7 +6,7 @@ const ProductDetailSkeleton = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Right column - Product image + gallery thumbnails */}
-        <div className="order-1 lg:order-3 flex flex-col gap-3">
+        <div className="order-1 lg:order-1 flex flex-col gap-3">
           <div className="w-full aspect-square bg-gray-200 rounded-lg" />
           <div className="grid grid-cols-4 gap-2">
             {Array.from({ length: 4 }).map((_, i) => (
@@ -43,7 +43,7 @@ const ProductDetailSkeleton = () => {
         </div>
 
         {/* Left column - Info box (shipping, guarantee, etc) */}
-        <div className="order-2 lg:order-1 border border-grey220 rounded-lg p-5 flex flex-col gap-5 h-fit">
+        <div className="order-2 lg:order-3 border border-grey220 rounded-lg p-5 flex flex-col gap-5 h-fit">
           {Array.from({ length: 6 }).map((_, i) => (
             <div key={i} className="flex items-center gap-2">
               <div className="size-5 bg-gray-200 rounded-full shrink-0" />
