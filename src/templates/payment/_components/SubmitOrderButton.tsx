@@ -20,9 +20,10 @@ export function SubmitOrderButton() {
     try {
       const order = await createOrder(orderInput, "پیرانشهر");
       await initialPayment(order.id);
-    } catch {
+    } catch (err){
       setIsPending(false);
-      throw new Error("Error Payment");
+      console.log(err);
+      
     }
 
     
