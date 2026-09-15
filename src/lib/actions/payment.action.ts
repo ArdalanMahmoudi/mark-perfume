@@ -6,6 +6,7 @@ import { prisma } from "../prisma"
 const ZARINPAL_MERCHANT_ID = process.env.ZARINPAL_MERCHANT_ID!;
 const ZARINPAL_REQUEST_URL = "https://sandbox.zarinpal.com/pg/v4/payment/request.json";
 const ZARINPAL_STARTPAY_URL = "https://sandbox.zarinpal.com/pg/StartPay"
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
 
 export async function initialPayment(orderId:string) {
     const order = await prisma.order.findUnique({
@@ -21,7 +22,7 @@ export async function initialPayment(orderId:string) {
         body:JSON.stringify({
             merchant_id:ZARINPAL_MERCHANT_ID,
             amount,
-            callback_url: `${process.env.NEXT_PUBLIC_BASE_URL}/verify?orderId=${order.id}`,
+            callback_url: `${baseUrl}/verify?orderId=${order.id}`,
             description:`پرداخت سفارش ${order.id}`
         })
     })
