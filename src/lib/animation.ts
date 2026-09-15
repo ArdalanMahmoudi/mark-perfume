@@ -1,4 +1,6 @@
-export const containerVariants = {
+import { Variants } from "framer-motion";
+
+export const containerVariants:Variants = {
   hidden: {},
   visible: {
     transition: {
@@ -8,7 +10,7 @@ export const containerVariants = {
   },
 };
 
-export const itemVariants = {
+export const itemVariants:Variants = {
   hidden: { opacity: 0, y: 24, scale: 0.95 },
   visible: {
     opacity: 1,
@@ -18,7 +20,7 @@ export const itemVariants = {
   },
 };
 
-export const itemVariantsRTL = {
+export const itemVariantsRTL:Variants = {
   hidden: { opacity: 0, x: 24, scale: 0.93 },
   visible: {
     opacity: 1,
@@ -28,7 +30,7 @@ export const itemVariantsRTL = {
   },
 };
 
-export const fadeInVariants = {
+export const fadeInVariants:Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: {
     opacity: 1,
