@@ -3,8 +3,10 @@ import { Handshake } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import FavorItem from "./FavorItem";
+import { useParallax } from "@/src/hooks/useParallax";
 
 const FavorSection = () => {
+  const {ref, y} = useParallax()
   return (
     <section className="mt-32 mb-20 ">
       <Container>

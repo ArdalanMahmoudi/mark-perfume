@@ -28,6 +28,7 @@
     "dotenv": "^17.4.2",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
+    "framer-motion": "^13.3.0",
     "isomorphic-dompurify": "^3.19.0",
     "jose": "^6.2.3",
     "lodash.debounce": "^4.0.8",

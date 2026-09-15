@@ -4,7 +4,8 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { useCallback } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-
+import { motion } from "framer-motion";
+import { containerVariants, itemVariantsRTL } from "@/src/lib/animation";
 type Responsive = {
   default: number;
   sm?: number;
@@ -66,13 +67,30 @@ export default function Slider({
 
   return (
     <div className="relative group" style={getSlideVars()}>
-      <div className="overflow-hidden py-1" ref={emblaRef}>
-        <div className="flex" style={{ marginRight: `-${gap}px` }}>
+      <div className="overflow-hidden p-1" ref={emblaRef}>
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          className="flex p-2"
+          style={{ marginRight: `-${gap}px` }}
+        >
           {slides.map((slide, i) => (
-            <div
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              variants={itemVariantsRTL}
+              whileHover={{scale:1.02, y:-4}}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
               key={i}
               className="
               block relative
+              hover:shadow-lg
+              hover:shadow-black/5
+              transition-shadow
+              duration-300
                 flex-[0_0_calc(100%/var(--slides-default))]
                 sm:flex-[0_0_calc(100%/var(--slides-sm,var(--slides-default)))]
                 md:flex-[0_0_calc(100%/var(--slides-md,var(--slides-sm,var(--slides-default))))]
@@ -82,9 +100,9 @@ export default function Slider({
               style={{ paddingRight: `${gap}px` }}
             >
               {slide}
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
       {navigation && (
         <>

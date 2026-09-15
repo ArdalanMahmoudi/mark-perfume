@@ -1,10 +1,9 @@
 "use client";
 import Container from "@/src/components/common/Container";
 import SectionTitle from "./SectionTitle";
-import {LayoutGrid } from "lucide-react";
+import { LayoutGrid } from "lucide-react";
 import CategoryItem from "./CategoryItem";
 import Slider from "@/src/components/common/Slider";
-
 
 const categoryItems = [
   {
@@ -39,9 +38,9 @@ const CategorySection = () => {
         />
         <div className=" mt-5">
           <Slider
-          autoplay
-          loop
-          slidesToShow={{default:1, sm:2, md:3, lg:4}}
+            autoplay
+            loop
+            slidesToShow={{ default: 1, sm: 2, md: 3, lg: 4 }}
             slides={categoryItems.map((item) => (
               <CategoryItem
                 thumbnail={item.thumbnail}
