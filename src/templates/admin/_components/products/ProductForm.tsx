@@ -1,4 +1,3 @@
-
 "use client";
 
 import React from "react";
@@ -47,11 +46,7 @@ type ProductFormProps = {
   mode: "create" | "edit";
 };
 
-const ProductForm = ({
-  categories,
-  product,
-  mode,
-}: ProductFormProps) => {
+const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
   const router = useRouter();
   const toast = useToast();
 
@@ -67,7 +62,6 @@ const ProductForm = ({
         }[])
       : [{ key: "", value: "" }];
 
-  
   const {
     control,
     register,
@@ -78,9 +72,7 @@ const ProductForm = ({
     reset,
     formState: { errors, isSubmitting },
   } = useForm<UpdateProductFormValues>({
-    resolver: zodResolver(
-      isEdit ? updateProductSchema : createProductSchema,
-    ),
+    resolver: zodResolver(isEdit ? updateProductSchema : createProductSchema),
     defaultValues: {
       name: product?.name ?? "",
       categoryId: product?.categoryId ?? "",
@@ -98,8 +90,7 @@ const ProductForm = ({
 
       thumbnail: product?.thumbnail ?? undefined,
 
-      gallery:
-        product?.gallery?.map((item) => item.url) ?? [],
+      gallery: product?.gallery?.map((item) => item.url) ?? [],
     },
   });
 
@@ -114,9 +105,7 @@ const ProductForm = ({
   // Submit
   // ------------------------------------------
 
-  const onSubmit = async (
-    data: UpdateProductFormValues,
-  ) => {
+  const onSubmit = async (data: UpdateProductFormValues) => {
     const formData = new FormData();
 
     /*
@@ -127,40 +116,19 @@ const ProductForm = ({
 
     formData.append("name", data.name);
 
-    formData.append(
-      "categoryId",
-      data.categoryId,
-    );
+    formData.append("categoryId", data.categoryId);
 
-    formData.append(
-      "price",
-      String(data.price),
-    );
+    formData.append("price", String(data.price));
 
-    formData.append(
-      "discount",
-      String(data.discount),
-    );
+    formData.append("discount", String(data.discount));
 
-    formData.append(
-      "stock",
-      String(data.stock),
-    );
+    formData.append("stock", String(data.stock));
 
-    formData.append(
-      "volume",
-      String(data.volume ?? 0),
-    );
+    formData.append("volume", String(data.volume ?? 0));
 
-    formData.append(
-      "description",
-      data.description,
-    );
+    formData.append("description", data.description);
 
-    formData.append(
-      "details",
-      data.details ?? "",
-    );
+    formData.append("details", data.details ?? "");
 
     /*
      * ------------------------------------------
@@ -168,12 +136,7 @@ const ProductForm = ({
      * ------------------------------------------
      */
 
-    formData.append(
-      "specification",
-      JSON.stringify(
-        data.specification ?? [],
-      ),
-    );
+    formData.append("specification", JSON.stringify(data.specification ?? []));
 
     /*
      * ------------------------------------------
@@ -189,10 +152,9 @@ const ProductForm = ({
      */
 
     if (data.thumbnail instanceof File) {
-      formData.append(
-        "thumbnail",
-        data.thumbnail,
-      );
+      formData.append("thumbnail", data.thumbnail);
+    } else if (typeof data.thumbnail === "string") {
+      formData.append("thumbnail", data.thumbnail);
     }
 
     /*
@@ -207,11 +169,12 @@ const ProductForm = ({
      * ------------------------------------------
      */
 
-
     if (Array.isArray(data.gallery)) {
       data.gallery.forEach((file) => {
         if (file instanceof File) {
           formData.append("gallery", file);
+        }else if (typeof file === "string"){
+          formData.append("gallery",file)
         }
       });
     }
@@ -224,27 +187,17 @@ const ProductForm = ({
 
     try {
       if (mode === "create") {
-        const result =
-          await createProductAction(formData);
+        const result = await createProductAction(formData);
 
         if (!result.success) {
-          console.error(
-            "CREATE PRODUCT ERROR:",
-            result,
-          );
+          console.error("CREATE PRODUCT ERROR:", result);
 
-          toast.error(
-            result.message ??
-              "ایجاد محصول انجام نشد",
-          );
+          toast.error(result.message ?? "ایجاد محصول انجام نشد");
 
           return;
         }
 
-        toast.success(
-          result.message ??
-            "محصول با موفقیت ایجاد شد",
-        );
+        toast.success(result.message ?? "محصول با موفقیت ایجاد شد");
 
         reset({
           name: "",
@@ -275,47 +228,27 @@ const ProductForm = ({
        */
 
       if (!product?.id) {
-        toast.error(
-          "شناسه محصول پیدا نشد",
-        );
+        toast.error("شناسه محصول پیدا نشد");
         return;
       }
 
-      const result =
-        await updateProductAction(
-          product.id,
-          formData,
-        );
+      const result = await updateProductAction(product.id, formData);
 
       if (!result.success) {
-        console.error(
-          "UPDATE PRODUCT ERROR:",
-          result,
-        );
+        console.error("UPDATE PRODUCT ERROR:", result);
 
-        toast.error(
-          result.message ??
-            "ویرایش محصول انجام نشد",
-        );
+        toast.error(result.message ?? "ویرایش محصول انجام نشد");
 
         return;
       }
 
-      toast.success(
-        result.message ??
-          "تغییرات محصول با موفقیت ذخیره شد",
-      );
+      toast.success(result.message ?? "تغییرات محصول با موفقیت ذخیره شد");
 
       router.push("/admin/products");
     } catch (error) {
-      console.error(
-        "PRODUCT FORM ERROR:",
-        error,
-      );
+      console.error("PRODUCT FORM ERROR:", error);
 
-      toast.error(
-        "مشکلی پیش آمد، دوباره امتحان کنید",
-      );
+      toast.error("مشکلی پیش آمد، دوباره امتحان کنید");
     }
   };
 
@@ -330,9 +263,7 @@ const ProductForm = ({
       ====================================== */}
 
       <section className="my-8">
-        <h2 className="mb-5 text-right text-lg font-semibold">
-          اطلاعات محصول
-        </h2>
+        <h2 className="mb-5 text-right text-lg font-semibold">اطلاعات محصول</h2>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {/* Name */}
@@ -348,10 +279,7 @@ const ProductForm = ({
           {/* Category */}
 
           <div className="flex flex-col gap-2 text-right">
-            <label
-              htmlFor="categoryId"
-              className="text-base"
-            >
+            <label htmlFor="categoryId" className="text-base">
               دسته‌بندی
             </label>
 
@@ -369,15 +297,10 @@ const ProductForm = ({
                 outline-none
               "
             >
-              <option value="">
-                انتخاب دسته‌بندی...
-              </option>
+              <option value="">انتخاب دسته‌بندی...</option>
 
               {categories.map((category) => (
-                <option
-                  key={category.id}
-                  value={category.id}
-                >
+                <option key={category.id} value={category.id}>
                   {category.name}
                 </option>
               ))}
@@ -397,9 +320,7 @@ const ProductForm = ({
       ====================================== */}
 
       <section className="my-8">
-        <h2 className="mb-5 text-right text-lg font-semibold">
-          قیمت و موجودی
-        </h2>
+        <h2 className="mb-5 text-right text-lg font-semibold">قیمت و موجودی</h2>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {/* Price */}
@@ -417,10 +338,7 @@ const ProductForm = ({
 
             {Number(price) > 0 && (
               <p className="text-start text-sm text-muted-foreground">
-                {numberToPersianWords(
-                  Number(price),
-                )}{" "}
-                تومان
+                {numberToPersianWords(Number(price))} تومان
               </p>
             )}
           </div>
@@ -470,9 +388,7 @@ const ProductForm = ({
       ====================================== */}
 
       <section className="my-12">
-        <h2 className="mb-5 text-right text-lg font-semibold">
-          توضیحات
-        </h2>
+        <h2 className="mb-5 text-right text-lg font-semibold">توضیحات</h2>
 
         <div className="flex flex-col gap-8">
           {/* Short description */}
@@ -483,17 +399,13 @@ const ProductForm = ({
             {...register("description")}
             classNameLabel="text-base"
             classNameInput="min-h-40"
-            caption={
-              errors.description?.message
-            }
+            caption={errors.description?.message}
           />
 
           {/* Details */}
 
           <div className="flex flex-col gap-2 text-start">
-            <label className="text-base">
-              توضیحات تکمیلی
-            </label>
+            <label className="text-base">توضیحات تکمیلی</label>
 
             <Controller
               name="details"
@@ -507,9 +419,7 @@ const ProductForm = ({
             />
 
             {errors.details?.message && (
-              <p className="text-sm text-error500">
-                {errors.details.message}
-              </p>
+              <p className="text-sm text-error500">{errors.details.message}</p>
             )}
           </div>
         </div>
@@ -521,9 +431,7 @@ const ProductForm = ({
 
       <section className="my-10 text-right">
         <div className="mb-5 flex items-center justify-between">
-          <h2 className="text-lg font-semibold">
-            ویژگی‌های محصول
-          </h2>
+          <h2 className="text-lg font-semibold">ویژگی‌های محصول</h2>
 
           <button
             type="button"
@@ -577,28 +485,16 @@ const ProductForm = ({
             >
               <InputGroupInlineStart
                 element="input"
-                {...register(
-                  `specification.${index}.key`,
-                )}
+                {...register(`specification.${index}.key`)}
                 classNameField="h-9"
-                caption={
-                  errors.specification?.[
-                    index
-                  ]?.key?.message
-                }
+                caption={errors.specification?.[index]?.key?.message}
               />
 
               <InputGroupInlineStart
                 element="input"
-                {...register(
-                  `specification.${index}.value`,
-                )}
+                {...register(`specification.${index}.value`)}
                 classNameField="h-9"
-                caption={
-                  errors.specification?.[
-                    index
-                  ]?.value?.message
-                }
+                caption={errors.specification?.[index]?.value?.message}
               />
 
               <button
@@ -639,17 +535,13 @@ const ProductForm = ({
       ====================================== */}
 
       <section className="my-12">
-        <h2 className="mb-5 text-right text-lg font-semibold">
-          تصاویر محصول
-        </h2>
+        <h2 className="mb-5 text-right text-lg font-semibold">تصاویر محصول</h2>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {/* Thumbnail */}
 
           <div className="flex flex-col gap-3">
-            <span className="text-right">
-              تصویر اصلی محصول
-            </span>
+            <span className="text-right">تصویر اصلی محصول</span>
 
             <ThumbnailUploader
               name="thumbnail"
@@ -667,9 +559,7 @@ const ProductForm = ({
           {/* Gallery */}
 
           <div className="flex flex-col gap-3">
-            <span className="text-right">
-              گالری تصاویر محصول
-            </span>
+            <span className="text-right">گالری تصاویر محصول</span>
 
             <GalleryUploader
               name="gallery"
@@ -715,9 +605,7 @@ const ProductForm = ({
             disabled:opacity-60
           "
         >
-          {isSubmitting && (
-            <Loader2 className="size-4 animate-spin" />
-          )}
+          {isSubmitting && <Loader2 className="size-4 animate-spin" />}
 
           {isSubmitting
             ? isEdit
@@ -733,4 +621,3 @@ const ProductForm = ({
 };
 
 export default ProductForm;
-

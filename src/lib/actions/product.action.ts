@@ -293,6 +293,7 @@ export const updateProductAction = async (
     });
     return { success: true, message: "تغییرات محصول انجام شد" };
   } catch (err) {
+    console.log("Update Product Upload Err", err)
     await deleteFile(tempFiles);
     return { success: false, message: "خطا در ویرایش محصول مجدد امتحان کنید" };
   }

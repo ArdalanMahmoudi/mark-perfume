@@ -1,8 +1,11 @@
 import Container from "@/src/components/common/Container";
+import { useParallax } from "@/src/hooks/useParallax";
 import Image from "next/image";
 import React from "react";
+import { motion } from "framer-motion";
 
 const ShopIntroductionSection = () => {
+
   return (
     <section className="mt-24 lg:mt-48">
       <Container>
@@ -16,13 +19,15 @@ const ShopIntroductionSection = () => {
           </div>
 
           <div className="basis-62 relative flex items-center">
-            <Image
-            className="lg:absolute w-full max-w-62.5 lg:max-w-none"
-              width={575}
-              height={755}
-              src={"/images/shop-introduction.png"}
-              alt="shop-introduction img"
-            />
+
+              <Image
+                className="lg:absolute w-full max-w-62.5 lg:max-w-none"
+                width={575}
+                height={755}
+                src={"/images/shop-introduction.png"}
+                alt="shop-introduction img"
+              />
+
           </div>
 
           <div className="flex-1">
