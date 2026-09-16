@@ -1,15 +1,11 @@
 import { randomUUID } from "crypto";
 import { supabase } from "./supabase";
 
-
 const BUCKET = "products";
 
-export async function uploadFile(
-  file: File,
-  folder = "products",
-) {
+export async function uploadFile(file: File, folder = "products") {
   const extension = file.name.split(".").pop();
-  const safeFolder = folder.replace(/[^a-zA-Z0-9-_]/g, "") || "misc"
+  const safeFolder = folder.replace(/[^a-zA-Z0-9-_]/g, "") || "misc";
   const fileName = `${safeFolder}/${randomUUID()}.${extension}`;
 
   const buffer = Buffer.from(await file.arrayBuffer());
@@ -28,9 +24,7 @@ export async function uploadFile(
 
   const {
     data: { publicUrl },
-  } = supabase.storage
-    .from(BUCKET)
-    .getPublicUrl(fileName);
+  } = supabase.storage.from(BUCKET).getPublicUrl(fileName);
 
   return publicUrl;
 }
@@ -43,11 +37,8 @@ export async function deleteFile(files: string[]) {
       try {
         const parsedUrl = new URL(url);
         const marker = `/storage/v1/object/public/${BUCKET}/`;
-
         const index = parsedUrl.pathname.indexOf(marker);
-
         if (index === -1) return null;
-
         return parsedUrl.pathname.slice(index + marker.length);
       } catch {
         return null;
@@ -57,9 +48,7 @@ export async function deleteFile(files: string[]) {
 
   if (!paths.length) return;
 
-  const { error } = await supabase.storage
-    .from(BUCKET)
-    .remove(paths);
+  const { error } = await supabase.storage.from(BUCKET).remove(paths);
 
   if (error) {
     console.error("SUPABASE DELETE ERROR:", error);
