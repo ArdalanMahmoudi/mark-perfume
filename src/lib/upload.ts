@@ -9,7 +9,8 @@ export async function uploadFile(
   folder = "products",
 ) {
   const extension = file.name.split(".").pop();
-  const fileName = `${folder}/${randomUUID()}.${extension}`;
+  const safeFolder = folder.replace(/[^a-zA-Z0-9-_]/g, "") || "misc"
+  const fileName = `${safeFolder}/${randomUUID()}.${extension}`;
 
   const buffer = Buffer.from(await file.arrayBuffer());
 
