@@ -1,9 +1,9 @@
 import { randomUUID } from "crypto";
 import { supabase } from "./supabase";
 
-const BUCKET = "products";
+const BUCKET = "product";
 
-export async function uploadFile(file: File, folder = "products") {
+export async function uploadFile(file: File, folder = "product") {
   const extension = file.name.split(".").pop();
   const safeFolder = folder.replace(/[^a-zA-Z0-9-_]/g, "") || "misc";
   const fileName = `${safeFolder}/${randomUUID()}.${extension}`;
