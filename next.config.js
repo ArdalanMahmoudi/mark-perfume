@@ -9,6 +9,11 @@ module.exports = {
     ];
   },
   devIndicators: false,
+  experimental:{
+    serverActions:{
+      bodySizeLimit:"10mb"
+    }
+  },
   images: {
     remotePatterns: [
       {
