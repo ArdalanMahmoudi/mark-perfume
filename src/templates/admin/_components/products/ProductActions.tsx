@@ -38,7 +38,7 @@ const ProductActions = ({
     try {
       const product = await deleteProductAction(productId);
 
-      if (product.success === true || product.success === "true") {
+      if (product.success) {
         toast.success("محصول مورد نظر حذف شد");
         router.refresh();
       } else {
