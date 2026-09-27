@@ -1,8 +1,5 @@
 import Container from "@/src/components/common/Container";
-import { useParallax } from "@/src/hooks/useParallax";
 import Image from "next/image";
-import React from "react";
-import { motion } from "framer-motion";
 
 const ShopIntroductionSection = () => {
 
