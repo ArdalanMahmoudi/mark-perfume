@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify } from "jose";
 import { Role } from "./generated/prisma/enums";
 
-
 type SessionPayload = {
   id: string;
   role: Role;
@@ -34,10 +33,8 @@ export async function middleware(req: NextRequest) {
   const session = cookie ? await verifySessionEdge(cookie) : null;
   if ((isAdminRoute || isProtectRoute) && !session) {
     const res = NextResponse.redirect(new URL("/login", req.url));
-    if (cookie) {
-      res.cookies.delete("session");
-      return res;
-    }
+    res.cookies.delete("session");
+    return res;
   }
   if (isAdminRoute && session && session.role !== "ADMIN") {
     return NextResponse.redirect(new URL("/", req.url));
@@ -49,10 +46,5 @@ export async function middleware(req: NextRequest) {
   return NextResponse.next();
 }
 export const config = {
-  matcher: [
-    "/dashboard/:path*",
-    "/admin/:path*",
-    "/login",
-    "/register"
-  ],
+  matcher: ["/dashboard/:path*", "/admin/:path*", "/login", "/register"],
 };

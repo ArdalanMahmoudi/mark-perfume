@@ -15,11 +15,13 @@ module.exports = {
     }
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "picsum.photos",
-      },
-    ],
-  },
+  remotePatterns: [
+    { protocol: "https", hostname: "picsum.photos" },
+    {
+      protocol: "https",
+      hostname: "ppyaferjwcwfwifimetm.supabase.co",
+      pathname: "/storage/v1/object/public/**",
+    },
+  ],
+},
 };
