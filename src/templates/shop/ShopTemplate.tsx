@@ -11,7 +11,7 @@ import { usePagination } from "@/src/hooks/usePagination";
 
 
 const ShopTemplate = ({categories, products}:{categories:CategoryType[], products:ProductWithScoreType[]}) => {
-  const {showProducts} = usePagination(products)
+  const {showProducts} = usePagination({products})
   const links = [
     { href: "/", label: "خانه" },
     { href: "/shop", label: "فروشگاه" },

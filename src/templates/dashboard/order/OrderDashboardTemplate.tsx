@@ -35,7 +35,7 @@ const OrderDashboardTemplate = ({ orders }:{orders:OrderColumnsType[]}) => {
         <DataTable columns={orderColumns} data={orders} />
       </div>
       {/* pagination */}
-      <PaginationDemo />
+      {/* <PaginationDemo /> */}
     </div>
   );
 };
