@@ -16,8 +16,6 @@ const ShopTemplate = ({categories, products}:{categories:CategoryType[], product
     { href: "/", label: "خانه" },
     { href: "/shop", label: "فروشگاه" },
   ];
-  console.log(showProducts);
-  
 
   return (
     <>
@@ -75,7 +73,7 @@ const ShopTemplate = ({categories, products}:{categories:CategoryType[], product
                 {/* Products */}
                 <div className="mt-5 grid grid-cols-1 lg:grid-cols-3 gap-8">
                   {
-                    products.map(product => (
+                    showProducts.map(product => (
                       <ProductCard key={product.id} product={product} className="hover:scale-105 transition-all duration-300 ease-in-out" />
                     ))
                   }
