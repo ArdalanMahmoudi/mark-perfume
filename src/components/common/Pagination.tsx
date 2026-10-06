@@ -7,15 +7,18 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/src/components/ui/pagination"
+import { usePagination } from "@/src/hooks/usePagination"
+import { ProductWithScoreType } from "@/src/lib/types/product.type"
 
-export function PaginationDemo() {
+export function PaginationDemo({products}:{products:ProductWithScoreType[]}) {
+  const {nextPage, prevPage} = usePagination({products})
   return (
     <Pagination className="mt-8">
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious  href="#" text="قبلی"/>
+          <PaginationPrevious onClick={prevPage} href="#" text="قبلی"/>
         </PaginationItem>
-        <PaginationItem>
+        {/* <PaginationItem>
           <PaginationLink href="#">1</PaginationLink>
         </PaginationItem>
         <PaginationItem>
@@ -28,9 +31,9 @@ export function PaginationDemo() {
         </PaginationItem>
         <PaginationItem>
           <PaginationEllipsis />
-        </PaginationItem>
+        </PaginationItem> */}
         <PaginationItem>
-          <PaginationNext href="#" text="بعدی"/>
+          <PaginationNext onClick={nextPage} href="#" text="بعدی"/>
         </PaginationItem>
       </PaginationContent>
     </Pagination>

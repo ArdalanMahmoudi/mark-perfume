@@ -7,15 +7,17 @@ import { PaginationDemo } from "@/src/components/common/Pagination";
 import { MobileFilter } from "./_components/MobileFilter";
 import { CategoryType } from "@/src/lib/types/categories.type";
 import { ProductWithScoreType } from "@/src/lib/types/product.type";
+import { usePagination } from "@/src/hooks/usePagination";
 
 
 const ShopTemplate = ({categories, products}:{categories:CategoryType[], products:ProductWithScoreType[]}) => {
-  
-
+  const {showProducts} = usePagination(products)
   const links = [
     { href: "/", label: "خانه" },
     { href: "/shop", label: "فروشگاه" },
   ];
+  console.log(showProducts);
+  
 
   return (
     <>
@@ -78,7 +80,7 @@ const ShopTemplate = ({categories, products}:{categories:CategoryType[], product
                     ))
                   }
                 </div>
-                <PaginationDemo />
+                <PaginationDemo products={products}/>
               </div>
             </div>
           </Container>
