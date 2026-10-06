@@ -35,5 +35,6 @@ export function usePagination({
     prevPage,
     nextPage,
     showProducts,
+    currentPage
   };
 }

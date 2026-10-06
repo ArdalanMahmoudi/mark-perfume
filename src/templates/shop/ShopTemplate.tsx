@@ -7,11 +7,12 @@ import { PaginationDemo } from "@/src/components/common/Pagination";
 import { MobileFilter } from "./_components/MobileFilter";
 import { CategoryType } from "@/src/lib/types/categories.type";
 import { ProductWithScoreType } from "@/src/lib/types/product.type";
-import { usePagination } from "@/src/hooks/usePagination";
+import ProductList from "./_components/ProductList";
+
 
 
 const ShopTemplate = ({categories, products}:{categories:CategoryType[], products:ProductWithScoreType[]}) => {
-  const {showProducts} = usePagination({products})
+
   const links = [
     { href: "/", label: "خانه" },
     { href: "/shop", label: "فروشگاه" },
@@ -71,14 +72,7 @@ const ShopTemplate = ({categories, products}:{categories:CategoryType[], product
                   </div>
                 </div>
                 {/* Products */}
-                <div className="mt-5 grid grid-cols-1 lg:grid-cols-3 gap-8">
-                  {
-                    showProducts.map(product => (
-                      <ProductCard key={product.id} product={product} className="hover:scale-105 transition-all duration-300 ease-in-out" />
-                    ))
-                  }
-                </div>
-                <PaginationDemo products={products}/>
+                <ProductList products={products}/>
               </div>
             </div>
           </Container>
