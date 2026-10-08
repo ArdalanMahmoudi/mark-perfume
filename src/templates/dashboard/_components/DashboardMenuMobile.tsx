@@ -96,7 +96,7 @@ const DashboardMenuMobile = ({ userName, userImage }:{ userName:string, userImag
       <DrawerTrigger asChild>
         <Button
           variant="outline"
-          className="bg-white border lg:hidden border-primary text-black flex gap-1 items-center justify-center fixed bottom-5 left-5 w-12 h-12 z-10  cursor-pointer rounded-full shadow  shadow-grey220"
+          className="bg-white border lg:hidden border-primary text-black flex gap-1 items-center justify-center fixed bottom-5 left-5 w-12 h-12 z-10  cursor-pointer rounded-full shadow-lg  shadow-grey220"
         >
           <CircleGauge className="size-5 text-primary" />
         </Button>
