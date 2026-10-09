@@ -4,6 +4,7 @@ import { prisma } from "./prisma";
 import { jwtVerify, SignJWT } from "jose";
 import { getCurrentUser } from "./queries/user.queries";
 import { Role } from "../generated/prisma/enums";
+import { redirect } from "next/navigation";
 
 
 type SessionPayload = {
@@ -53,10 +54,18 @@ export async function deleteSession () {
     cookieStore.delete('session')
 }
 
-export async function requireAdmin ()  {
+export async function requireAdminView() {
   const user = await getCurrentUser();
-  if (!user || user.role !== Role.ADMIN) {
-    throw new Error("Unauthorized");
+  if (!user || (user.role !== "ADMIN" && user.role !== "VIEWER")) {
+    redirect("/");
   }
   return user;
-};
+}
+
+export async function requireAdmin() {
+  const user = await getCurrentUser();
+  if (!user || user.role !== "ADMIN") {
+    throw new Error("Forbidden");
+  }
+  return user;
+}

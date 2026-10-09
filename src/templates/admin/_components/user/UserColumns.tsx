@@ -1,12 +1,10 @@
 "use client";
 import { UserColumnsType} from "@/src/lib/types/user.type";
 import { ColumnDef } from "@tanstack/react-table";
-import React from "react";
-
 import { Role } from "@/src/generated/prisma/enums";
 import { UsersActions } from "./UsersActions";
 
-export const userColumns: ColumnDef<UserColumnsType>[] = [
+export const userColumns: ColumnDef<UserColumnsType & { canBan: boolean }>[]= [
   {
     accessorKey: "username",
     header: "نام کاربر",
@@ -43,10 +41,11 @@ export const userColumns: ColumnDef<UserColumnsType>[] = [
     },
   },
   {
+    
     id: "action",
     header: "عملیات",
     cell: ({ row }) => (
-      <UsersActions user={row.original}/>
+      <UsersActions user={row.original} />
     ),
   },
 ];

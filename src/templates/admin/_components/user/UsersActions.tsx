@@ -1,7 +1,6 @@
 "use client";
 
 import { BanIcon, Eye, MoreHorizontal } from "lucide-react";
-
 import { Button } from "@/src/components/ui/button";
 import {
   DropdownMenu,
@@ -15,18 +14,22 @@ import { useToast } from "@/src/context/toast-context";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import Swal from "sweetalert2";
-import { Prisma } from "@/src/generated/prisma/client";
+import { Prisma, Role } from "@/src/generated/prisma/client";
 
 type UsersActionsProps = Prisma.UserGetPayload<{
   select: {
     id: true;
     isBanned: true;
+    role:true
   };
-}>;
+}> & {canBan:boolean};
 export function UsersActions({ user }: { user: UsersActionsProps }) {
   const toast = useToast();
   const [isPending, setIsPending] = useState(false);
+
+
   const banUserHandler = async (userId: string) => {
+    
     Swal.fire({
       title: `آیا از ${user.isBanned ? "رفع مسدودیت" : "مسدود کردن"} کاربر مطمئنید؟`,
       icon: "question",
@@ -69,7 +72,7 @@ export function UsersActions({ user }: { user: UsersActionsProps }) {
         </DropdownMenuItem>
         <DropdownMenuItem
           variant="destructive"
-          disabled={isPending}
+          disabled={isPending || !user.canBan}
           onClick={() => banUserHandler(user.id)}
         >
           {isPending ? <Loader2 size={16} className="animate-spin" /> : <BanIcon size={16} />}
