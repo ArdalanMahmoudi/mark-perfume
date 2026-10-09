@@ -8,18 +8,32 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import Swal from "sweetalert2";
+import { Role } from "@/src/generated/prisma/enums";
 
 type ClientErrors = {
   email?: string;
   password?: string;
 };
 
+const DEMO_ACCOUNTS = [
+  {
+    label: "ورود با حساب دمو کاربر",
+    email: "demo-user@markperfume.ir",
+    password: "Demo123456",
+  },
+  {
+    label: "ورود با حساب دمو ادمین (فقط مشاهده)",
+    email: "demo-admin@markperfume.ir",
+    password: "Demo123456",
+  },
+];
+
 const LoginTemplate = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const router = useRouter();
-  
+
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -29,14 +43,18 @@ const LoginTemplate = () => {
     password: "",
   });
   // --------------Handle-Change-----------
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   // ------------Handle-Submit------------
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const fields = loginSchema.safeParse(values);
+  const submitLogin = async (credentials: {
+    email: string;
+    password: string;
+  }) => {
+    const fields = loginSchema.safeParse(credentials);
     if (!fields.success) {
       const fieldsError = fields.error.flatten().fieldErrors;
       setClientError({
@@ -50,17 +68,16 @@ const LoginTemplate = () => {
     try {
       const res = await fetch("/api/auth/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(credentials),
       });
       const data = await res.json();
       switch (res.status) {
         case 200:
           toast.success(data.message);
           setValues({ email: "", password: "" });
-          router.push("/");
+          const isAdmin = data.role === Role.ADMIN || data.role === Role.VIEWER;
+          router.push(isAdmin ? "/admin" : "/dashboard")
           break;
         case 409:
           toast.error(data.message);
@@ -73,11 +90,7 @@ const LoginTemplate = () => {
           toast.error(data.message);
           break;
         case 403:
-          Swal.fire({
-            title: data.message,
-            timer: 3000,
-            icon: "error",
-          });
+          Swal.fire({ title: data.message, timer: 3000, icon: "error" });
           router.push("/");
           break;
         case 500:
@@ -90,6 +103,12 @@ const LoginTemplate = () => {
       setLoading(false);
     }
   };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    submitLogin(values);
+  };
+  // -------------------------------------
 
   return (
     <section>
@@ -160,6 +179,27 @@ const LoginTemplate = () => {
                 {loading ? "درحال ورود به حساب..." : "ورود"}
               </button>
             </form>
+            <div className="mt-5 flex flex-col gap-2 border-t border-grey220 pt-4">
+              <p className="text-center text-xs text-muted-foreground">
+                برای مشاهده‌ ی سریع پروژه:
+              </p>
+              {DEMO_ACCOUNTS.map((account) => (
+                <button
+                  key={account.email}
+                  type="button"
+                  disabled={loading}
+                  onClick={() =>
+                    submitLogin({
+                      email: account.email,
+                      password: account.password,
+                    })
+                  }
+                  className="w-full cursor-pointer rounded-xs border border-primary py-1.5 text-sm text-primary transition-all duration-200 hover:bg-primary hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {account.label}
+                </button>
+              ))}
+            </div>
             <p className="flex items-center mt-4 text-sm lg:text-base">
               حساب کاربری ندارید؟{" "}
               <Link
