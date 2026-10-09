@@ -55,6 +55,7 @@ export async function POST(req: Request) {
       {
         message: "ورود به حساب موفق بود",
         success: true,
+        role: user.role
       },
       { status: 200 },
     );
