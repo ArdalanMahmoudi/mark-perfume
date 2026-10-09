@@ -16,7 +16,7 @@ const Page = async () => {
     <div className="flex flex-col gap-4 py-2 md:gap-6">
       <h2 className="text-xl">کاربران</h2>
       <div className="container mx-auto py-4">
-        <DataTable columns={rows} data={users} />
+        <DataTable columns={userColumns} data={rows} />
       </div>
     </div>
   );
