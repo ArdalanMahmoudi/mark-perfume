@@ -20,7 +20,7 @@ async function verifySessionEdge(token: string) {
 
 const protectedRoutes = ["/dashboard"];
 const adminRoutes = ["/admin"];
-const authRoutes = ["/login", "register"];
+const authRoutes = ["/login", "/register"];
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const cookie = req.cookies.get("session")?.value;
@@ -36,7 +36,7 @@ export async function middleware(req: NextRequest) {
     res.cookies.delete("session");
     return res;
   }
-  if (isAdminRoute && session && session.role !== "ADMIN") {
+  if (isAdminRoute && session && session.role !== Role.ADMIN && session.role !== Role.VIEWER) {
     return NextResponse.redirect(new URL("/", req.url));
   }
   if (isAuthRoute && session) {
