@@ -21,7 +21,7 @@ async function main() {
     create: { username: "ادمین دمو", email: "demo-admin@markperfume.ir", password, role: "VIEWER" },
   });
 
-  console.log("done");
+
 }
 
 main().finally(() => prisma.$disconnect());

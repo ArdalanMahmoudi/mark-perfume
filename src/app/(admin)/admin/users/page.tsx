@@ -8,7 +8,7 @@ import { Role } from "@/src/generated/prisma/enums";
 const Page = async () => {
   const users = await prisma.user.findMany();
   const currentUser = await getCurrentUser()
-  const rows = users.map((u) => ({
+  const rows = await users.map((u) => ({
     ...u,
     canBan:currentUser?.role === Role.ADMIN && u.role !== Role.ADMIN,
   }))

@@ -4,17 +4,8 @@ import Container from "../common/Container";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  Bell,
-  BookText,
   ChevronLeft,
-  CircleQuestionMark,
-  FileText,
-  Home,
   LogOut,
-  Phone,
-  Search,
-  ShoppingCart,
-  User,
   UserIcon,
   UserStar,
 } from "lucide-react";
@@ -26,7 +17,8 @@ import Swal from "sweetalert2";
 import { UserType } from "@/src/lib/types/user.type";
 import { SearchBox } from "./SearchBox";
 import NavBottomHeader from "./NavBottomHeader";
-import { Prisma } from "@/src/generated/prisma/client";
+import { Role } from "@/src/generated/prisma/enums";
+
 
 type HeaderPropsType = {
   user: Pick<UserType, "username" | "role" | "image" | "email"> | null
@@ -116,7 +108,7 @@ const Header = ({ user }: HeaderPropsType) => {
             {/* Buttons */}
             <div className="flex gap-2">
               {user ? (
-                user.role === "ADMIN" ? (
+                user.role === Role.ADMIN || user.role === Role.VIEWER ? (
                   <div className="relative group hidden lg:block">
                     <Link
                       href={"/admin"}
