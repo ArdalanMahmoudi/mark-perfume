@@ -77,7 +77,7 @@ const LoginTemplate = () => {
           toast.success(data.message);
           setValues({ email: "", password: "" });
           const isAdmin = data.role === Role.ADMIN || data.role === Role.VIEWER;
-          router.push(isAdmin ? "/admin" : "/dashboard")
+          router.push(isAdmin ? "/admin" : "/dashboard") 
           break;
         case 409:
           toast.error(data.message);

@@ -1,4 +1,5 @@
 import { getCurrentUser } from "@/src/lib/queries/user.queries";
+import { requireAdminView } from "@/src/lib/session";
 import { Sidebar } from "@/src/templates/admin/_components/Sidebar";
 import { Topbar } from "@/src/templates/admin/_components/Topbar";
 import { redirect } from "next/navigation";
@@ -8,13 +9,9 @@ export default async function AdminPanelLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const user = await getCurrentUser();
-  if (!user) {
-    redirect("/login")
-  }
-  if (user?.role !== "ADMIN") {
-    redirect("/")
-  }
+  
+  const user = await requireAdminView()
+
   return (
     <div className="flex min-h-screen  text-black">
       {/* --------desktop -------- */}
