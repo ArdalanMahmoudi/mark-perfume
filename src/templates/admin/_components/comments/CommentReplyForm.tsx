@@ -15,11 +15,13 @@ import { replyCommentAction } from "@/src/lib/actions/comment.action";
 import { CommentColumnsType, CommentType } from "@/src/lib/types/comment.type";
 import React, { useState } from "react";
 import { Loader2 } from "lucide-react";
+import { useIsViewer } from "@/src/context/admin-role-context";
 
 const CommentReplyForm = ({ comment }: { comment: Pick<CommentColumnsType,"adminReply" | "body" | "id"> }) => {
   const [reply, setReply] = useState(comment.adminReply ?? "");
   const [isPending, setIsPending] = useState(false);
   const toast = useToast();
+  const isViewer = useIsViewer()
   
   const handleReplySubmit = async (commentId:string) => {
     const replyedComment = await replyCommentAction(commentId, reply);
@@ -56,7 +58,7 @@ const CommentReplyForm = ({ comment }: { comment: Pick<CommentColumnsType,"admin
           <DialogClose asChild>
             <Button
               type="button"
-              disabled={isPending}
+              disabled={isPending || isViewer}
               onClick={() => handleReplySubmit(comment.id)}
             >
               {isPending && <Loader2 className="size-4 animate-spin" />}

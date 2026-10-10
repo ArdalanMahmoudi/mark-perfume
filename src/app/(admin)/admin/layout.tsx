@@ -1,3 +1,4 @@
+import { AdminRoleProvider } from "@/src/context/admin-role-context";
 import { getCurrentUser } from "@/src/lib/queries/user.queries";
 import { requireAdminView } from "@/src/lib/session";
 import { Sidebar } from "@/src/templates/admin/_components/Sidebar";
@@ -13,6 +14,8 @@ export default async function AdminPanelLayout({
   const user = await requireAdminView()
 
   return (
+    <AdminRoleProvider role={user.role}>
+
     <div className="flex min-h-screen  text-black">
       {/* --------desktop -------- */}
       <div className="hidden lg:flex lg:w-64">
@@ -24,5 +27,6 @@ export default async function AdminPanelLayout({
         <main className="flex-1 p-4 overflow-y-auto bg-gray-50">{children}</main>
       </div>
     </div>
+    </AdminRoleProvider>
   );
 }

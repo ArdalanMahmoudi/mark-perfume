@@ -14,6 +14,7 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import CommentReplyForm from "./CommentReplyForm";
 import { CommentColumnsType } from "@/src/lib/types/comment.type";
+import { useIsViewer } from "@/src/context/admin-role-context";
 
 const CommentActions = ({
   comment,
@@ -22,6 +23,7 @@ const CommentActions = ({
 }) => {
   const toast = useToast();
   const router = useRouter();
+  const isViewer = useIsViewer()
   const [pendingAction, setPendingAction] = useState<
     "accept" | "reject" | "delete" | null
   >(null);
@@ -83,7 +85,7 @@ const CommentActions = ({
           btn={
             <button
               type="button"
-              disabled={!!pendingAction}
+              disabled={!!pendingAction || isViewer}
               onClick={() =>
                 runAction("accept", "آیا از تایید کامنت مطمئنید؟", "کامنت تایید شد")
               }
@@ -104,7 +106,7 @@ const CommentActions = ({
           btn={
             <button
               type="button"
-              disabled={!!pendingAction}
+              disabled={!!pendingAction || isViewer}
               onClick={() =>
                 runAction("reject", "از رد کامنت مطمئنید؟", "کامنت رد شد")
               }
@@ -125,7 +127,7 @@ const CommentActions = ({
           btn={
             <button
               type="button"
-              disabled={!!pendingAction}
+              disabled={!!pendingAction || isViewer}
               onClick={() =>
                 runAction("delete", "از حذف کامنت مطمئنید؟", "کامنت حذف شد")
               }

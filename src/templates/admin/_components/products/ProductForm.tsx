@@ -27,6 +27,7 @@ import {
 } from "@/src/lib/schemas/product.schema";
 
 import { numberToPersianWords } from "@/src/lib/helper";
+import { useIsViewer } from "@/src/context/admin-role-context";
 
 type ProductFormProps = {
   categories: Prisma.CategoryGetPayload<{
@@ -49,7 +50,7 @@ type ProductFormProps = {
 const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
   const router = useRouter();
   const toast = useToast();
-
+  const isViewer = useIsViewer()
   const isEdit = mode === "edit";
 
   const defaultSpecification =
@@ -584,7 +585,7 @@ const ProductForm = ({ categories, product, mode }: ProductFormProps) => {
       <div className="my-10 flex justify-end border-t pt-6">
         <button
           type="submit"
-          disabled={isSubmitting}
+          disabled={isSubmitting || isViewer}
           className="
             inline-flex
             min-w-36
