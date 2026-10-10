@@ -41,6 +41,26 @@ export const productColumns: ColumnDef<ProductColumnsType>[] = [
     header: "حجم(ml)",
   },
   {
+  id: "status",
+  header: "وضعیت",
+  cell: ({ row }) => {
+    const { isArchived, stock } = row.original;
+    const badge = isArchived
+      ? { label: "آرشیو شده", className: "bg-grey100 text-grey220" }
+      : stock === 0
+        ? { label: "ناموجود", className: "bg-error100 text-error500" }
+        : { label: "فعال", className: "bg-success100 text-success500" };
+
+    return (
+      <div className="flex w-full justify-center">
+        <span className={`w-fit rounded-3xl px-4 py-1 text-xs ${badge.className}`}>
+          {badge.label}
+        </span>
+      </div>
+    );
+  },
+},
+  {
     id: "actions",
     header: "عملیات",
     cell: ({ row }) => (

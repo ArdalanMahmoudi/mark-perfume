@@ -16,6 +16,7 @@ export type ProductColumnsType = Prisma.ProductGetPayload<{
     stock: true;
     volume: true;
     slug: true;
+    isArchived:true
   };
 }>;
 
