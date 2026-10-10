@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { useIsViewer } from "@/src/context/admin-role-context";
 
 const ProductActions = ({
   productId,
@@ -19,6 +20,7 @@ const ProductActions = ({
 }) => {
   const toast = useToast();
   const router = useRouter();
+  const isViewer = useIsViewer()
   const [isDeleting, setIsDeleting] = useState(false);
 
   const onDelete = async (productId: string) => {
@@ -72,7 +74,7 @@ const ProductActions = ({
             <button
               type="button"
               onClick={() => onDelete(productId)}
-              disabled={isDeleting}
+              disabled={isDeleting || isViewer}
               className="flex h-6 w-6 cursor-pointer items-center justify-center disabled:cursor-not-allowed disabled:opacity-50"
               aria-label="حذف محصول"
             >
