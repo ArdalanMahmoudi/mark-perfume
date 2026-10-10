@@ -6,12 +6,21 @@ import { getCurrentUser } from "@/src/lib/queries/user.queries";
 import { Role } from "@/src/generated/prisma/enums";
 
 const Page = async () => {
-  const users = await prisma.user.findMany();
   const currentUser = await getCurrentUser()
-  const rows = await users.map((u) => ({
-    ...u,
-    canBan:currentUser?.role === Role.ADMIN && u.role !== Role.ADMIN,
-  }))
+  const users = await prisma.user.findMany({
+  select: {
+    id: true,
+    username: true,
+    email: true,
+    role: true,
+    isBanned: true,
+    createdAt: true,
+  },
+});
+const rows = users.map((u) => ({
+  ...u,
+  canBan: currentUser?.role === Role.ADMIN && u.role !== Role.ADMIN,
+}));
   return (
     <div className="flex flex-col gap-4 py-2 md:gap-6">
       <h2 className="text-xl">کاربران</h2>
