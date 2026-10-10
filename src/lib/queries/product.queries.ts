@@ -4,10 +4,14 @@ import { ProductType, ProductWithScoreType } from "../types/product.type";
 
 export async function getProductWithScore(): Promise<ProductWithScoreType[]> {
   const products = await prisma.product.findMany({
+    where:{
+      isArchived:false
+    },
     take: 8,
     orderBy: {
       createdAt: "desc",
     },
+
     select: {
       id: true,
       slug: true,
