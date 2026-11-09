@@ -11,6 +11,7 @@ import {
 import { useToast } from "@/src/context/toast-context";
 import {
   CircleGauge,
+  GaugeCircle,
   Heart,
   ListOrdered,
   LogOutIcon,
@@ -22,6 +23,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { QuickAccessButton } from "./QuickAccessButton";
+import { useState } from "react";
 
 const activeLinks = [
   {
@@ -92,45 +94,104 @@ const DashboardMenuMobile = ({ userName, userImage }:{ userName:string, userImag
       }
     });
   };
+  const [open, setOpen] = useState(false);
   return (
-    <Drawer direction={"right"}>
-      <DrawerTrigger asChild>
-        <QuickAccessButton/>
-      </DrawerTrigger>
-      <DrawerContent className="rounded-none! overflow-y-auto gap-4 data-[vaul-drawer-direction=bottom]:max-h-[50vh] w-[90%]! data-[vaul-drawer-direction=top]:max-h-[50vh]  bg-secondary p-5 flex flex-col items-center">
-        <div className="w-full flex justify-center! text-center p-0">
-          <Image
-            className="rounded-full border border-primary size-24"
-            src={userImage}
-            width={100}
-            height={100}
-            alt="profile image"
-          />
-        </div>
-        <p className="text-primary">{userName}</p>
-        {/* Routes */}
-        {activeLinks.map((link) => (
-          <DrawerClose key={link.id} className="w-full" asChild>
-            <ActiveLink
-              href={link.href}
-              className="flex items-center p-2.5 bg-white rounded-sm border border-grey220 w-full gap-1 cursor-pointer hover:text-primary transition-colors duration-300"
-              activeClassName="text-primary"
-            >
-              {link.icon}
-              <span>{link.title}</span>
-            </ActiveLink>
-          </DrawerClose>
-        ))}
+    <Drawer
+  direction="right"
+  open={open}
+  onOpenChange={setOpen}
+>
+  <DrawerTrigger asChild>
+    <button
+      type="button"
+      aria-label="میانبرها"
+      title="میانبرها"
+      className="
+        fixed bottom-6 right-6 z-50
+        size-12 rounded-full
+        bg-primary text-white
+        flex items-center justify-center
+        shadow-lg
+        hover:scale-105 hover:shadow-xl
+        active:scale-95
+        transition-all duration-200
+        cursor-pointer
+      "
+    >
+      <GaugeCircle size={21} strokeWidth={2} />
+    </button>
+  </DrawerTrigger>
 
-        <button
-          onClick={handleLogout}
-          className="flex items-center p-2.5 bg-white text-error500 rounded-sm border border-grey220 w-full gap-1 cursor-pointer hover:bg-error500 hover:text-white transition-colors duration-300"
+  <DrawerContent
+    className="
+      h-full w-[320px]! max-w-[90vw]
+      rounded-none!
+      bg-secondary
+      border-l border-grey220
+      p-5
+      flex flex-col items-center
+      gap-5
+      overflow-y-auto
+    "
+  >
+    <div className="w-full flex justify-center">
+      <Image
+        className="rounded-full border border-primary size-24 object-cover"
+        src={userImage}
+        width={100}
+        height={100}
+        alt="profile image"
+      />
+    </div>
+
+    <p className="text-primary font-semibold">
+      {userName}
+    </p>
+
+    <div className="w-full flex flex-col gap-2">
+      {activeLinks.map((link) => (
+        <DrawerClose
+          key={link.id}
+          asChild
         >
-          <LogOutIcon className="size-4" />
-          <p>خروج از حساب کاربری</p>
-        </button>
-      </DrawerContent>
-    </Drawer>
+          <ActiveLink
+            href={link.href}
+            className="
+              flex items-center gap-2
+              p-3 w-full
+              bg-white rounded-md
+              border border-grey220
+              cursor-pointer
+              hover:text-primary
+              hover:border-primary/30
+              transition-colors duration-200
+            "
+            activeClassName="text-primary border-primary"
+          >
+            {link.icon}
+            <span>{link.title}</span>
+          </ActiveLink>
+        </DrawerClose>
+      ))}
+    </div>
+
+    <button
+      onClick={handleLogout}
+      className="
+        flex items-center gap-2
+        p-3 w-full
+        bg-white text-error500
+        rounded-md border border-grey220
+        cursor-pointer
+        hover:bg-error500 hover:text-white
+        transition-colors duration-200
+      "
+    >
+      <LogOutIcon size={16} />
+      <span>خروج از حساب کاربری</span>
+    </button>
+  </DrawerContent>
+</Drawer>
   );
 };
 
