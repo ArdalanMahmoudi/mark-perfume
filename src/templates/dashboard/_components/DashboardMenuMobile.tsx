@@ -96,9 +96,11 @@ const DashboardMenuMobile = ({ userName, userImage }:{ userName:string, userImag
       <DrawerTrigger asChild>
         <Button
           variant="outline"
-          className="bg-white border lg:hidden border-primary text-black flex gap-1 items-center justify-center fixed bottom-5 left-5 w-12 h-12 z-10  cursor-pointer rounded-full shadow-lg  shadow-grey220"
+          className="bg-white border lg:hidden border-primary text-black flex gap-1 items-center justify-center fixed bottom-5 right-5 w-15 h-15 z-10 cursor-pointer rounded-full shadow-lg"
         >
-          <CircleGauge className="size-5 text-primary" />
+          <span>میانبرها</span>
+          <CircleGauge className="size-5" />
+
         </Button>
       </DrawerTrigger>
       <DrawerContent className="rounded-none! overflow-y-auto gap-4 data-[vaul-drawer-direction=bottom]:max-h-[50vh] w-[90%]! data-[vaul-drawer-direction=top]:max-h-[50vh]  bg-secondary p-5 flex flex-col items-center">
