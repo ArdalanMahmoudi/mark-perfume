@@ -21,6 +21,7 @@ import {
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+import { QuickAccessButton } from "./QuickAccessButton";
 
 const activeLinks = [
   {
@@ -94,14 +95,7 @@ const DashboardMenuMobile = ({ userName, userImage }:{ userName:string, userImag
   return (
     <Drawer direction={"right"}>
       <DrawerTrigger asChild>
-        <Button
-          variant="outline"
-          className="bg-white border lg:hidden border-primary text-black flex gap-1 items-center justify-center fixed bottom-5 right-5 w-15 h-15 z-10 cursor-pointer rounded-full shadow-lg"
-        >
-          <span>میانبرها</span>
-          <CircleGauge className="size-5" />
-
-        </Button>
+        <QuickAccessButton/>
       </DrawerTrigger>
       <DrawerContent className="rounded-none! overflow-y-auto gap-4 data-[vaul-drawer-direction=bottom]:max-h-[50vh] w-[90%]! data-[vaul-drawer-direction=top]:max-h-[50vh]  bg-secondary p-5 flex flex-col items-center">
         <div className="w-full flex justify-center! text-center p-0">
