@@ -1,13 +1,17 @@
 "use client";
 import ActiveLink from "@/src/components/common/ActiveLink";
-import { Button } from "@/src/components/ui/button";
 import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerHeader,
   DrawerTrigger,
 } from "@/src/components/ui/drawer";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/src/components/ui/tooltip";
 import { useToast } from "@/src/context/toast-context";
 import {
   CircleGauge,
@@ -102,27 +106,35 @@ const DashboardMenuMobile = ({
   const [open, setOpen] = useState(false);
   return (
     <Drawer direction="right" open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>
-        <button
-          type="button"
-          aria-label="میانبرها"
-          title="میانبرها"
-          className="
-        fixed bottom-6 right-6 z-50
-        size-12 rounded-full
-        bg-primary text-white
-        flex items-center justify-center
-        shadow-lg
-        hover:scale-105 hover:shadow-xl
-        active:scale-95
-        transition-all duration-200
-        cursor-pointer
-        lg:hidden
-      "
-        >
-          <GaugeCircle size={21} strokeWidth={2} />
-        </button>
-      </DrawerTrigger>
+      <TooltipProvider delayDuration={200}>
+        <Tooltip open={open ? false : undefined}>
+          <TooltipTrigger asChild>
+            <DrawerTrigger asChild>
+              <button
+                type="button"
+                aria-label="میانبرهای داشبورد"
+                className="
+                  fixed bottom-6 right-6 z-50
+                  size-12 rounded-full
+                  bg-primary text-white
+                  flex items-center justify-center
+                  shadow-lg
+                  hover:scale-105 hover:shadow-xl
+                  active:scale-95
+                  transition-all duration-200
+                  cursor-pointer
+                  lg:hidden
+                "
+              >
+                <GaugeCircle size={21} strokeWidth={2} />
+              </button>
+            </DrawerTrigger>
+          </TooltipTrigger>
+          <TooltipContent side="left">
+            <p>میانبرهای داشبورد</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
 
       <DrawerContent
         className="
