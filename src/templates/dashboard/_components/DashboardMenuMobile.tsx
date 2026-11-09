@@ -22,7 +22,6 @@ import {
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
-import { QuickAccessButton } from "./QuickAccessButton";
 import { useState } from "react";
 
 const activeLinks = [
@@ -64,7 +63,13 @@ const activeLinks = [
   },
 ];
 
-const DashboardMenuMobile = ({ userName, userImage }:{ userName:string, userImage:string}) => {
+const DashboardMenuMobile = ({
+  userName,
+  userImage,
+}: {
+  userName: string;
+  userImage: string;
+}) => {
   const toast = useToast();
   const router = useRouter();
   const handleLogout = async () => {
@@ -96,17 +101,13 @@ const DashboardMenuMobile = ({ userName, userImage }:{ userName:string, userImag
   };
   const [open, setOpen] = useState(false);
   return (
-    <Drawer
-  direction="right"
-  open={open}
-  onOpenChange={setOpen}
->
-  <DrawerTrigger asChild>
-    <button
-      type="button"
-      aria-label="میانبرها"
-      title="میانبرها"
-      className="
+    <Drawer direction="right" open={open} onOpenChange={setOpen}>
+      <DrawerTrigger asChild>
+        <button
+          type="button"
+          aria-label="میانبرها"
+          title="میانبرها"
+          className="
         fixed bottom-6 right-6 z-50
         size-12 rounded-full
         bg-primary text-white
@@ -116,14 +117,15 @@ const DashboardMenuMobile = ({ userName, userImage }:{ userName:string, userImag
         active:scale-95
         transition-all duration-200
         cursor-pointer
+        lg:hidden
       "
-    >
-      <GaugeCircle size={21} strokeWidth={2} />
-    </button>
-  </DrawerTrigger>
+        >
+          <GaugeCircle size={21} strokeWidth={2} />
+        </button>
+      </DrawerTrigger>
 
-  <DrawerContent
-    className="
+      <DrawerContent
+        className="
       h-full w-[320px]! max-w-[90vw]
       rounded-none!
       bg-secondary
@@ -133,30 +135,25 @@ const DashboardMenuMobile = ({ userName, userImage }:{ userName:string, userImag
       gap-5
       overflow-y-auto
     "
-  >
-    <div className="w-full flex justify-center">
-      <Image
-        className="rounded-full border border-primary size-24 object-cover"
-        src={userImage}
-        width={100}
-        height={100}
-        alt="profile image"
-      />
-    </div>
+      >
+        <div className="w-full flex justify-center">
+          <Image
+            className="rounded-full border border-primary size-24 object-cover"
+            src={userImage}
+            width={100}
+            height={100}
+            alt="profile image"
+          />
+        </div>
 
-    <p className="text-primary font-semibold">
-      {userName}
-    </p>
+        <p className="text-primary font-semibold">{userName}</p>
 
-    <div className="w-full flex flex-col gap-2">
-      {activeLinks.map((link) => (
-        <DrawerClose
-          key={link.id}
-          asChild
-        >
-          <ActiveLink
-            href={link.href}
-            className="
+        <div className="w-full flex flex-col gap-2">
+          {activeLinks.map((link) => (
+            <DrawerClose key={link.id} asChild>
+              <ActiveLink
+                href={link.href}
+                className="
               flex items-center gap-2
               p-3 w-full
               bg-white rounded-md
@@ -166,18 +163,18 @@ const DashboardMenuMobile = ({ userName, userImage }:{ userName:string, userImag
               hover:border-primary/30
               transition-colors duration-200
             "
-            activeClassName="text-primary border-primary"
-          >
-            {link.icon}
-            <span>{link.title}</span>
-          </ActiveLink>
-        </DrawerClose>
-      ))}
-    </div>
+                activeClassName="text-primary border-primary"
+              >
+                {link.icon}
+                <span>{link.title}</span>
+              </ActiveLink>
+            </DrawerClose>
+          ))}
+        </div>
 
-    <button
-      onClick={handleLogout}
-      className="
+        <button
+          onClick={handleLogout}
+          className="
         flex items-center gap-2
         p-3 w-full
         bg-white text-error500
@@ -186,12 +183,12 @@ const DashboardMenuMobile = ({ userName, userImage }:{ userName:string, userImag
         hover:bg-error500 hover:text-white
         transition-colors duration-200
       "
-    >
-      <LogOutIcon size={16} />
-      <span>خروج از حساب کاربری</span>
-    </button>
-  </DrawerContent>
-</Drawer>
+        >
+          <LogOutIcon size={16} />
+          <span>خروج از حساب کاربری</span>
+        </button>
+      </DrawerContent>
+    </Drawer>
   );
 };
 
